@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bootstrap Material Admin</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="../user/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <link rel="stylesheet" href="../user/css/style.default.css" id="theme-stylesheet">
+  </head>
+  <body>
+    <div class="page login-page">
+      <div class="container d-flex align-items-center">
+        <div class="form-holder has-shadow">
+          <div class="row">
+            <!-- Logo & Information Panel-->
+            <div class="col-lg-6">
+              <div class="info d-flex align-items-center">
+                <div class="content">
+                  <div class="logo">
+                    <h1>修改密码</h1>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <!-- Form Panel    -->
+            <div class="col-lg-6 bg-white">
+              <div class="form d-flex align-items-center">
+                <div class="content">
+                  <div id="error" style="display:none"><font color="red">账号不存在</font></div>
+                    <div class="form-group">
+                      <input id="register-username" class="input-material" type="text" name="registerUsername" placeholder="请输入用户名/姓名" >
+                    </div>
+                    <div class="form-group">
+                      <input id="register-password" class="input-material" type="password" name="registerPassword" placeholder="请输入密码"   >
+                    </div>
+                    <div class="form-group">
+                      <button id="regbtn" type="button" name="registerSubmit" class="btn btn-primary">修改密码</button>
+                    </div>
+                  <small>已有账号?</small><a href="/login" class="signup">&nbsp;登录</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- JavaScript files-->
+    <script src="../user/js/jquery.min.js"></script>
+    <script src="../user/js/bootstrap.min.js"></script>
+    <script>
+    	$(function(){
+
+
+    		$("#regbtn").click(function(){
+              var name=$("#register-username").val();
+              var passWord=$("#register-password").val();
+              $.ajax({
+                type:'put',
+                url:'user/update',
+                cache: false,
+                data:{"username":name,"password":passWord},
+                dataType:'json',
+                success:function(data){
+                  if(data.code==501){
+                    $("#error").css('display','block');
+                  }
+                  if(data.code==500){
+                  alert(data.msg)
+                  }
+                  if(data.code==200){
+                    alert("index")
+                  }
+                },
+                error:function(){
+                  alert("请求失败")
+                }
+              })
+    		})
+    	})
+    </script>
+  </body>
+</html>
