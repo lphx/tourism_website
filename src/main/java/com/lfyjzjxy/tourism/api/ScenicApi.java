@@ -46,7 +46,7 @@ public class ScenicApi {
 
 
 
-    @GetMapping("findById")
+    @GetMapping("/findById")
     public ScenicEntity findById(Integer scenicId) {
         return scenicService.findOne(scenicId);
     }

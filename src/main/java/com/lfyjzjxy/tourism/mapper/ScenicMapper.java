@@ -19,7 +19,7 @@ public interface ScenicMapper{
     /**
      * 查询一条数据
      */
-    @Select("SELECT scenic_id as scenicId,name as name,picture as picture,content as content,province_id as provinceId,city_id as cityIdFROM `scenic` WHERE scenic_id = #{scenicId}")
+    @Select("SELECT scenic_id as scenicId,name as name,picture as picture,content as content,province_id as provinceId,city_id as cityId FROM `scenic` WHERE scenic_id = #{scenicId}")
     ScenicEntity findOne(@Param("scenicId") Integer scenicId);
 
 

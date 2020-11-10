@@ -72,13 +72,13 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
   <div class="layui-form-item">
     <label class="layui-form-label">景点名字</label>
     <div class="layui-input-block">
-      <input type="text" name="name" id="name" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+      <input type="text" name="name" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
     </div>
   </div>
   <div class="layui-form-item">
     <label class="layui-form-label">内容</label>
     <div class="layui-input-block">
-       <textarea name="content" id="content" placeholder="请输入内容" class="layui-textarea"></textarea>
+       <textarea name="content" placeholder="请输入内容" class="layui-textarea"></textarea>
     </div>
   </div>
  
@@ -110,60 +110,15 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
  
 <script>
     $(document).ready(function(){
-
-
-        var scenicId = [[${scenicId}]];
+        $("#provinceId").append(" <option value=\"\">请选择省</option>");
         $.ajax({
             type:'get',
-            url: "/scenic/findById?scenicId="+scenicId,
+            url: "/provinces/findPid",
             async:false,
             success: function(data){
-                $('#name').val(data.name);
-                $('#content').val(data.content);
-
-                $("#provinceId").append(" <option value=\"\">请选择省</option>");
-                $.ajax({
-                    type:'get',
-                    url: "/provinces/findPid",
-                    async:false,
-                    success: function(data){
-                        for(var i in data){
-
-                            if(data[i].id == data.provinceId){
-                                $("#provinceId").append("<option value="+data[i].id+" selected=\"\">"+data[i].name+"</option>");
-                            }else{
-                                $("#provinceId").append("<option value="+data[i].id+">"+data[i].name+"</option>");
-                            }
-                        }
-
-                    }
-                    ,
-                    error:function(){
-                        alert("请求失败")
-                    }
-                });
-                $.ajax({
-                    type:'get',
-                    url: "/provinces/findCidByPid?pid="+data.provinceId,
-                    async:false,
-                    success: function(data){
-                        $("#cityId").empty();
-                        $("#cityId").append("<option value=\"\">请选择市</option>");
-                        for(var i in data){
-                            if(data[i].id == data.cityId){
-                                $("#cityId").append("<option value="+data[i].id+" selected=\"\">"+data[i].name+"</option>");
-                            }else{
-                                $("#cityId").append("<option value="+data[i].id+">"+data[i].name+"</option>");
-                            }
-
-                        }
-
-                    }
-                    ,
-                    error:function(){
-                        alert("请求失败")
-                    }
-                });
+                for(var i in data){
+                    $("#provinceId").append("<option value="+data[i].id+">"+data[i].name+"</option>");
+                }
 
             }
             ,
@@ -171,7 +126,6 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
                 alert("请求失败")
             }
         });
-
     });
 
 
