@@ -20,6 +20,8 @@ public class UserEntity {
 
     private Integer status;
 
+    private Integer jurisdiction;
+
     private Date createTime;
 }
 

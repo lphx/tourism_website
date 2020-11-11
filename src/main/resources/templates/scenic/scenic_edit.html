@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>景点-添加</title>
+<title>景点-编辑</title>
  <link rel="stylesheet" href="https://www.layuicdn.com/layui-v2.5.6/css/layui.css"  media="all">
 <script type="text/javascript">
 window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_HTTP":"https:\/\/w.mafengwo.cn","P_HOST":"passport.mafengwo.cn","P_HTTP":"https:\/\/passport.mafengwo.cn","PAGELET_HTTP":"https:\/\/pagelet.mafengwo.cn","JS_HOST":"js.mafengwo.net","TONGJI_HOST":"tongji.mafengwo.cn","UID":0,"CSTK":"df7ffd748270844b9a988720fc83b536_c9127c92194dce0b38e72eb2bfa8da08","GOOGLE_MAP_KEY":"AIzaSyD-Su0x_rPy1xehlMBcMyTqWkU49Bk53nQ"};
@@ -17,36 +17,11 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
 
 </head>
 <body>
-    
-    
-    
-
-<div id="header" xmlns="http://www.w3.org/1999/html">
-    <div class="mfw-header">
-        <div class="header-wrap clearfix" id="_j_head_nav_warper">
-            <div class="head-logo"><a class="mfw-logo" title="马蜂窝自由行" href="https://www.mafengwo.cn/"></a></div>
-            <ul class="head-nav" data-cs-t="headnav" id="_j_head_nav">
-                <li class="head-nav-index _j_head_nav_index" data-cs-p="index" data-tab-item="首页"><a href="https://www.mafengwo.cn/">首页</a></li>
-                <li class="head-nav-place _j_head_nav_mdd" data-cs-p="mdd" data-tab-item="目的地"><a href="https://www.mafengwo.cn/mdd/" title="目的地">目的地</a></li>
-                <li class="head-nav-gonglve _j_head_nav_gonglve" data-cs-p="gonglve" data-tab-item="旅游攻略"><a href="https://www.mafengwo.cn/gonglve/" title="旅游攻略">旅游攻略</a></li>
-              
-            </ul>
-            <div class="head-search" data-online="1">
-                <div class="head-search-wrapper">
-                    <div class="head-searchform">
-                        <input name="q" type="text" id="_j_head_search_input" autocomplete="off">
-                        <a role="button" href="javascript:" class="icon-search" id="_j_head_search_link"></a>
-                    </div>
-                </div>
-            </div>
-            <div data-pagelet id="pagelet-block-5610336451748e6a4fa9f147f8a48181" class="" data-api="apps:user:pagelet:pageViewHeadInfo" data-params="{&quot;type&quot;:1}" data-async="1" data-controller="/js/pageletcommon/pageHeadUserInfoWWWNormal"></div>
-        </div>
-        <div class="shadow"></div>
-    </div>
-    
 
 
-</div>
+
+
+<div th:include="/common/common::Menu"></div>
 
 <script src="https://www.layuicdn.com/layui-v2.5.6/layui.js" charset="utf-8"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
@@ -109,18 +84,20 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
 </form>
  
 <script>
+
     $(document).ready(function(){
 
-
+        //同获取数据，不采用模板渲染
         var scenicId = [[${scenicId}]];
         $.ajax({
             type:'get',
             url: "/scenic/findById?scenicId="+scenicId,
             async:false,
             success: function(data){
-                $('#name').val(data.name);
-                $('#content').val(data.content);
-
+                var result = data;
+                $('#name').val(result.name);
+                $('#content').val(result.content);
+                //渲染省
                 $("#provinceId").append(" <option value=\"\">请选择省</option>");
                 $.ajax({
                     type:'get',
@@ -129,7 +106,7 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
                     success: function(data){
                         for(var i in data){
 
-                            if(data[i].id == data.provinceId){
+                            if(data[i].id == result.provinceId){
                                 $("#provinceId").append("<option value="+data[i].id+" selected=\"\">"+data[i].name+"</option>");
                             }else{
                                 $("#provinceId").append("<option value="+data[i].id+">"+data[i].name+"</option>");
@@ -139,9 +116,10 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
                     }
                     ,
                     error:function(){
-                        alert("请求失败")
+                        alert("省--请求失败")
                     }
                 });
+                //渲染市
                 $.ajax({
                     type:'get',
                     url: "/provinces/findCidByPid?pid="+data.provinceId,
@@ -150,7 +128,7 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
                         $("#cityId").empty();
                         $("#cityId").append("<option value=\"\">请选择市</option>");
                         for(var i in data){
-                            if(data[i].id == data.cityId){
+                            if(data[i].id == result.cityId){
                                 $("#cityId").append("<option value="+data[i].id+" selected=\"\">"+data[i].name+"</option>");
                             }else{
                                 $("#cityId").append("<option value="+data[i].id+">"+data[i].name+"</option>");
@@ -161,14 +139,32 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
                     }
                     ,
                     error:function(){
-                        alert("请求失败")
+                        alert("市--请求失败")
                     }
                 });
+                //渲染图片
+                $.ajax({
+                    type:'get',
+                    url: "/scenicPicture/findAllByScenicId?scenicId="+scenicId,
+                    async:false,
+                    success: function(res){
+                       for(var i in res){
+                           var imgId = "img"+res[i].id;
+                           $('#demo2').append('<div id="'+imgId+'"><img src="'+ res[i].img +'"  class="gl_list"><span class="layui-icon" onclick="deleteImg('+res[i].id+')"></span> </div>');
+                       }
+
+                    }
+                    ,
+                    error:function(){
+                        alert("图片--请求失败")
+                    }
+                });
+
 
             }
             ,
             error:function(){
-                alert("请求失败")
+                alert("页面数据-请求失败")
             }
         });
 
@@ -247,7 +243,30 @@ layui.use(['upload','form'], function(){
       })
     return false;
   });
+
+
+
 });
+
+    function deleteImg(id) {
+        $.ajax({
+            type:'delete',
+            url: "/scenicPicture/remove?id="+id,
+            async:false,
+            success: function(res){
+                if (res.code == 200){
+                    //a("删除成功");
+                    var imgId = "#img"+id;
+                    $(imgId).remove();
+                }
+            }
+            ,
+            error:function(){
+                alert("图片--请求失败")
+            }
+        });
+    }
+
 </script>
 	
        </div>

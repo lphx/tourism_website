@@ -6,10 +6,7 @@ import com.lfyjzjxy.tourism.util.HttpCode;
 import com.lfyjzjxy.tourism.util.SSOFileUtil;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,5 +46,16 @@ public class FileApi {
 
         return new HttpCode(200,url,null);
     }
+
+
+    @DeleteMapping("/remove")
+    public HttpCode remove(int id,HttpServletRequest request){
+        String typeName = request.getParameter("typeName");
+        HttpSession session = request.getSession();
+        List<String> list = ( List<String>)session.getAttribute(typeName);
+        list.set(id,"continue");
+        return HttpCode.success();
+    }
+
 
 }

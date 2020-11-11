@@ -1,0 +1,161 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><script type="text/javascript" async="" charset="utf-8" src="https://c.cnzz.com/core.php?web_id=30065558&amp;t=q"></script><script type="text/javascript" async="" charset="utf-8" src="https://w.cnzz.com/c.php?id=30065558&amp;async=1"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>景区列表</title>
+<meta name="author" content="">
+<meta name="renderer" content="webkit">
+
+<script src="https://hm.baidu.com/hm.js?8288b2ed37e5bc9b4c9f7008798d2de0"></script><script type="text/javascript">
+window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_HTTP":"https:\/\/w.mafengwo.cn","P_HOST":"passport.mafengwo.cn","P_HTTP":"https:\/\/passport.mafengwo.cn","PAGELET_HTTP":"https:\/\/pagelet.mafengwo.cn","JS_HOST":"js.mafengwo.net","TONGJI_HOST":"tongji.mafengwo.cn","UID":0,"CSTK":"d9c8481b891bcdbdcbc286baaf9ee60a_9ddf729c59d79a248dff3f85bf51a3cf","GOOGLE_MAP_KEY":"AIzaSyD-Su0x_rPy1xehlMBcMyTqWkU49Bk53nQ"};
+</script>
+
+<link href="https://css.mafengwo.net/css/cv/css+base:css+jquery.suggest:css+plugins:css+plugins+jquery.jgrowl:css+other+popup:css+mfw-header.2015^YlVS^1578479974.css" rel="stylesheet" type="text/css">
+
+<link href="https://css.mafengwo.net/css/mdd/mfw-place.2015.css?1559524834" rel="stylesheet" type="text/css">
+
+
+<script language="javascript" src="https://js.mafengwo.net/js/cv/js+jquery-1.8.1.min:js+global+json2:js+M+Module:js+M+M:miniapp+js+sdk:js+M+Log:js+m.statistics:js+advert+inspector^YlRX^1588130166.js" type="text/javascript" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
+<script async="" src="https://js.mafengwo.net/js/cv/js+Dropdown:js+pageletcommon+pageHeadUserInfoWWWNormal:js+jquery.tmpl:js+M+module+InputListener:js+M+module+SuggestionXHR:js+M+module+DropList:js+M+module+Suggestion:js+M+module+MesSearchEvent:js+SiteSearch:js+AHeader:js+M+module+PageAdmin:js+M+module+Storage:js+M+module+Cookie:js+M+module+ResourceKeeper:js+jquery.jgrowl.min:js+AMessage:js+M+module+dialog+Layer:js+M+module+dialog+DialogBase:js+M+module+dialog+Dialog:js+M+module+dialog+alert:js+M+module+FrequencyVerifyControl:js+M+module+FrequencySystemVerify:js+ALogin:js+M+module+ScrollObserver:js+M+module+QRCode:js+AToolbar:js+ACnzzGaLog:js+ARecruit:js+ALazyLoad^ZVdT^1577348452.js" crossorigin="anonymous"></script><script async="" src="https://js.mafengwo.net/js/BrowserState.js?1542357400" crossorigin="anonymous"></script></head>
+<body style="position: relative;">
+
+
+<div th:include="/common/common::Menu"></div>
+
+<div class="container" data-cs-t="目的地首页">
+    <div class="place-focus" data-cs-p="头图">
+        <div class="show-banner show-info-notes">
+            <div class="cover" style="height: auto;">
+                <a class="bigimg" href="http://www.mafengwo.cn/gonglve/ziyouxing/302680.html" target="_blank" data-cs-l="图片" style="height: 414px;">
+                    
+                    <div class="shade"></div>
+                <img data-ow="2000" data-oh="1333" src="https://b1-q.mafengwo.net/s15/M00/0F/5F/CoUBGV28HDuALpzxABR490kDN0M39.jpeg" style="margin: -414.511px 0px 0px; width: 100%; height: auto;"></a>
+            </div>
+            
+          
+        </div>
+        <div class="place-search-panel">
+            <h2>Don't fear the unknown</h2>
+            <form id="searchFrom" name="mdd-search-form" action="/search/s.php" method="get">
+                <div class="searchbar">
+                    <input autocomplete="off" class="search-input" type="text" th:value="${keyword}" id="keyword" placeholder="我想去...">
+                    <button id="search11" type="button" class="search-button" href="#" data-cs-l="搜索" role="button"><i class="icon-search"></i></button>
+                </div>
+
+            <div class="place-search-hot">
+                <select name="provinceId" id="provinceId"  ><option value="">请选择省</option></select>
+                <select name="cityId" id="cityId"  ><option value="">请选择市</option></select>
+
+            </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            var provinceId1 = [[${provinceId}]];
+            var cityId1 = [[${cityId}]];
+            $.ajax({
+                type:'get',
+                url: "/provinces/findPid",
+                async:false,
+                success: function(data){
+                    for(var i in data){
+
+                        if(data[i].id == provinceId1){
+                            $("#provinceId").append("<option value="+data[i].id+" selected=\"\">"+data[i].name+"</option>");
+                        }else{
+                            $("#provinceId").append("<option value="+data[i].id+">"+data[i].name+"</option>");
+                        }
+                    }
+
+
+                }
+                ,
+                error:function(){
+                    alert("请求失败")
+                }
+            });
+
+            if (provinceId1>0){
+                //渲染市
+                $.ajax({
+                    type:'get',
+                    url: "/provinces/findCidByPid?pid="+provinceId1,
+                    async:false,
+                    success: function(data){
+                        $("#cityId").empty();
+                        $("#cityId").append("<option value=\"\">请选择市</option>");
+                        for(var i in data){
+                            if(data[i].id == cityId1){
+                                $("#cityId").append("<option value="+data[i].id+" selected=\"\">"+data[i].name+"</option>");
+                            }else{
+                                $("#cityId").append("<option value="+data[i].id+">"+data[i].name+"</option>");
+                            }
+
+                        }
+
+                    }
+                    ,
+                    error:function(){
+                        alert("市--请求失败")
+                    }
+                });
+            }
+
+
+
+
+            $("#provinceId").change(function() {
+                var selected = $(this).children('option:selected').val();
+                $.ajax({
+                    type:'get',
+                    url: "/provinces/findCidByPid?pid="+selected,
+                    async:false,
+                    success: function(data){
+                        $("#cityId").empty();
+                        var html = "<option value=\"\">请选择市</option>";
+                        for(var i in data){
+                           html += "<option value="+data[i].id+">"+data[i].name+"</option>";
+                        }
+                        $("#cityId").html(html);
+                    }
+                    ,
+                    error:function(){
+                        alert("请求失败")
+                    }
+                });
+            });
+        });
+
+
+        $("#search11").click(function(){
+
+
+
+            window.location.href = "/scenic/list?keyword="+$("#keyword").val()+"&provinceId="+$("#provinceId").val()+"&cityId="+$("#cityId").val();
+
+
+
+        })
+    </script>
+    
+<div class="row-line"></div>
+    <div id="pagelet-block-03d4827bcb0c968976aeb9d7f94ca8c7" class="pagelet-block" data-api=":mdd:pagelet:seasonRecommendApi" data-params="[]" data-async="1" data-controller=""><div class="row row-season row-bg">
+    <div class="wrapper">
+        <div class="r-title"><h2>景点列表</h2></div>
+        <div class="J_seasonmdds">
+          <div class="tiles"  >
+              <div th:each="list,stat : ${list}" >
+                 <div class="item col4">
+                       <a th:href="'/scenic/detail?scenicId=' + ${list.scenicId}"  target="_blank"><img th:src="${list.img}" width="238" height="220"><div class="title"><span th:text="${list.name}"></span></div></a>
+                 </div>
+              </div>
+
+                    </div>
+    </div>
+</div>
+<div class="row-line"></div>
+
+
+</body></html>

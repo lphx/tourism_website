@@ -3,6 +3,7 @@ package com.lfyjzjxy.tourism.service.impl;
 
 import com.lfyjzjxy.tourism.entity.ScenicEntity;
 import com.lfyjzjxy.tourism.entity.ScenicPictureEntity;
+import com.lfyjzjxy.tourism.entity.ScenicVo;
 import com.lfyjzjxy.tourism.mapper.ScenicMapper;
 import com.lfyjzjxy.tourism.mapper.ScenicPictureMapper;
 import com.lfyjzjxy.tourism.service.ScenicService;
@@ -39,6 +40,9 @@ public class ScenicServiceImpl implements ScenicService {
         List<String> list = (List<String>)session.getAttribute("scenic");
         if (null != list && list.size()>0){
            for(String img : list){
+               if (img.equals("continue")){
+                   continue;
+               }
                ScenicPictureEntity scenicPicture = new ScenicPictureEntity();
                scenicPicture.setImg(img);
                scenicPicture.setScenicId(scenicId);
@@ -59,6 +63,17 @@ public class ScenicServiceImpl implements ScenicService {
 
     public List<ScenicEntity> findAllList() {
         return scenicMapper.findAllList();
+    }
+
+    @Override
+    public ScenicEntity findUserId(Integer userId, Integer scenicId) {
+        return scenicMapper.findUserId(userId,scenicId);
+    }
+
+    @Override
+    public List<ScenicVo> findKeywordAndProvince(String keyword, Integer provinceId, Integer cityId) {
+
+        return scenicMapper.findKeywordAndProvince(keyword,provinceId,cityId);
     }
 
 }

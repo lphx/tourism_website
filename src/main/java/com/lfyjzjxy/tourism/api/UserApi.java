@@ -4,6 +4,7 @@ package com.lfyjzjxy.tourism.api;
 import com.lfyjzjxy.tourism.service.UserService;
 import com.lfyjzjxy.tourism.entity.UserEntity;
 import com.lfyjzjxy.tourism.util.HttpCode;
+import com.lfyjzjxy.tourism.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,10 +49,7 @@ public class UserApi {
         }
 
         //登录成功保存session信息
-        HttpSession session = request.getSession();
-        session.setAttribute("user",userEntity);
-        //session过期时间设置，以秒为单位，即在没有活动30分钟后，session将失效
-        session.setMaxInactiveInterval(30 * 60);
+        RequestUtil.setSession(request,userEntity);
         return new HttpCode(200,"",null);
     }
 
@@ -71,10 +69,7 @@ public class UserApi {
         }
 
         //登录成功保存session信息
-        HttpSession session = request.getSession();
-        session.setAttribute("user",userEntity);
-        //session过期时间设置，以秒为单位，即在没有活动30分钟后，session将失效
-        session.setMaxInactiveInterval(30 * 60);
+        RequestUtil.setSession(request,userEntity);
         return new HttpCode(200,"",null);
     }
 

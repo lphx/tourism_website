@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>景点-添加</title>
@@ -20,33 +20,8 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
     
     
     
+<div th:include="/common/common::Menu"></div>
 
-<div id="header" xmlns="http://www.w3.org/1999/html">
-    <div class="mfw-header">
-        <div class="header-wrap clearfix" id="_j_head_nav_warper">
-            <div class="head-logo"><a class="mfw-logo" title="马蜂窝自由行" href="https://www.mafengwo.cn/"></a></div>
-            <ul class="head-nav" data-cs-t="headnav" id="_j_head_nav">
-                <li class="head-nav-index _j_head_nav_index" data-cs-p="index" data-tab-item="首页"><a href="https://www.mafengwo.cn/">首页</a></li>
-                <li class="head-nav-place _j_head_nav_mdd" data-cs-p="mdd" data-tab-item="目的地"><a href="https://www.mafengwo.cn/mdd/" title="目的地">目的地</a></li>
-                <li class="head-nav-gonglve _j_head_nav_gonglve" data-cs-p="gonglve" data-tab-item="旅游攻略"><a href="https://www.mafengwo.cn/gonglve/" title="旅游攻略">旅游攻略</a></li>
-              
-            </ul>
-            <div class="head-search" data-online="1">
-                <div class="head-search-wrapper">
-                    <div class="head-searchform">
-                        <input name="q" type="text" id="_j_head_search_input" autocomplete="off">
-                        <a role="button" href="javascript:" class="icon-search" id="_j_head_search_link"></a>
-                    </div>
-                </div>
-            </div>
-            <div data-pagelet id="pagelet-block-5610336451748e6a4fa9f147f8a48181" class="" data-api="apps:user:pagelet:pageViewHeadInfo" data-params="{&quot;type&quot;:1}" data-async="1" data-controller="/js/pageletcommon/pageHeadUserInfoWWWNormal"></div>
-        </div>
-        <div class="shadow"></div>
-    </div>
-    
-
-
-</div>
 
 <script src="https://www.layuicdn.com/layui-v2.5.6/layui.js" charset="utf-8"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
@@ -109,6 +84,7 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
 </form>
  
 <script>
+    var Imgid = 0;
     $(document).ready(function(){
         $("#provinceId").append(" <option value=\"\">请选择省</option>");
         $.ajax({
@@ -142,15 +118,18 @@ layui.use(['upload','form'], function(){
     ,multiple: true
     ,before: function(obj){
       //预读本地文件示例，不支持ie8
-      obj.preview(function(index, file, result){
+      /*obj.preview(function(index, file, result){
         $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" class="gl_list">')
-      });
+      });*/
     }
     ,done: function(res){
       //上传完毕
           if(res.code == 400){
               return layer.msg('上传失败');
           }else{
+              var img = "img"+Imgid;
+              $('#demo2').append('<div id="'+img+'"><img src="'+ res.msg +'"  class="gl_list"><span class="layui-icon" onclick="deleteImg('+Imgid+')"></span> </div>')
+              Imgid++;
               return layer.msg('上传成功');
           }
     }
@@ -202,6 +181,25 @@ layui.use(['upload','form'], function(){
     return false;
   });
 });
+
+    function deleteImg(id) {
+        $.ajax({
+            type:'delete',
+            url: "/file/remove?typeName=scenic&id="+id,
+            async:false,
+            success: function(res){
+                if (res.code == 200){
+                    //a("删除成功");
+                    var imgId = "#img"+id;
+                    $(imgId).remove();
+                }
+            }
+            ,
+            error:function(){
+                alert("图片--请求失败")
+            }
+        });
+    }
 </script>
 	
        </div>

@@ -4,7 +4,7 @@ import lombok.Data;
 
 
 @Data
-public class ScenicEntity {
+public class ScenicVo {
 
 
 
@@ -20,6 +20,8 @@ public class ScenicEntity {
     private Integer provinceId;
 
     private Integer cityId;
+
+    private String img;
 
 
 

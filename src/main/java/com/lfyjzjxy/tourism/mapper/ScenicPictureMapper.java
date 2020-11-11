@@ -29,11 +29,6 @@ public interface ScenicPictureMapper {
     @Insert("INSERT INTO  `scenic_picture` (img,scenic_id,status) VALUES(#{img},#{scenicId},#{status})")
     int save(ScenicPictureEntity scenicPictrueEntity);
 
-    /**
-     * 分页查询数据
-     */
-    @Select("SELECT id as id,img as img,scenic_id as scenicId,status as status FROM  `scenic_picture` limit #{pageSize},#{pageCount})")
-    List<ScenicPictureEntity> page(@Param("pageSize") Integer pageSize, @Param("pageCount") Integer pageCount);
 
 
     /**
@@ -43,6 +38,10 @@ public interface ScenicPictureMapper {
     void remove(@Param("id") Integer id);
 
 
+    @Select("SELECT id as id,img as img,scenic_id as scenicId,status as status FROM `scenic_picture` where scenic_id = #{scenicId}")
+    List<ScenicPictureEntity> findAllByScenicId(Integer scenicId);
 
+    @Select("SELECT id as id,img as img,scenic_id as scenicId,status as status FROM `scenic_picture` where scenic_id = #{scenicId}  limit 0,3 ")
+    List<ScenicPictureEntity> findAllByScenicIdLimitThree(Integer scenicId);
 }
 

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .head-logo .mfw-logo1 {
+        display: block;
+        height: 39px;
+        background: url(/user/img/p_big3.jpg) no-repeat 0 0;
+        position: relative;
+    }
+
+</style>
+<body>
+
+
+    <div th:fragment="Menu">
+        <div id="header" xmlns="http://www.w3.org/1999/html">
+            <div class="mfw-header">
+                <div class="header-wrap clearfix" id="_j_head_nav_warper">
+                    <div class="head-logo"><a class="mfw-logo1" title="自由行" href="#"></a></div>
+                    <ul class="head-nav" data-cs-t="headnav" id="_j_head_nav">
+                        <li><a href="#">首页</a></li>
+                        <li ><a href="/scenic/list" title="景点">景点</a></li>
+                        <li ><a href="#" title="旅游攻略">旅游攻略</a></li>
+
+                    </ul>
+
+                    <div id="pagelet-block-c216a7e9b072b794012a19225f9d8678" class="pagelet-block" data-api="apps:user:pagelet:pageViewHeadInfo" data-params="{&quot;type&quot;:1}" data-async="1" data-controller="/js/pageletcommon/pageHeadUserInfoWWWNormal">
+                        <div class="login-out">
+                            <a id="_j_showlogin" title="登录" href="/login" rel="nofollow">登录</a><span class="split">|</span><a href="/register" title="注册帐号" rel="nofollow">注册</a>
+                        </div></div>
+                <div class="shadow"></div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+</body>
+</html>
