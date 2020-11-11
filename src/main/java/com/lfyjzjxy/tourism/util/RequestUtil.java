@@ -25,5 +25,10 @@ public class RequestUtil {
         //session过期时间设置，以秒为单位，即在没有活动30分钟后，session将失效
         session.setMaxInactiveInterval(30 * 60);
     }
+    public static void  removeSession(HttpServletRequest request){
+        //登录成功保存session信息
+        HttpSession session = request.getSession();
+        session.removeAttribute("user");
+    }
 
 }

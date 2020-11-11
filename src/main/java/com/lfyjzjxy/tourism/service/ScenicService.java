@@ -19,6 +19,8 @@ public interface ScenicService{
     ScenicEntity findUserId(Integer userId, Integer scenicId);
 
     List<ScenicVo> findKeywordAndProvince(String keyword, Integer provinceId, Integer cityId);
+
+    List<ScenicEntity> findScenicByProvince(Integer pid, Integer cid);
 }
 
 

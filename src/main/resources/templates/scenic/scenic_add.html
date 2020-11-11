@@ -14,13 +14,17 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
 
 
 <script language="javascript" src="https://js.mafengwo.net/js/cv/js+jquery-1.8.1.min:js+global+json2:js+M+Module:js+M+M:miniapp+js+sdk:js+M+Log:js+m.statistics:js+advert+inspector^YlRX^1588130166.js" type="text/javascript" crossorigin="anonymous"></script>
+    <!-- 配置文件 -->
+    <script src="https://pu-protitem.oss-cn-shenzhen.aliyuncs.com/myhone/ueditor/ueditor.config.js"></script>
 
+    <!-- 编辑器源码文件 -->
+    <script src="https://pu-protitem.oss-cn-shenzhen.aliyuncs.com/myhone/ueditor/ueditor.all.js"></script>
 </head>
 <body>
     
     
     
-<div th:include="/common/common::Menu"></div>
+<div th:include="common/common::Menu"></div>
 
 
 <script src="https://www.layuicdn.com/layui-v2.5.6/layui.js" charset="utf-8"></script>
@@ -43,7 +47,7 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
 	  
 	
 	<form class="layui-form" action="">
-
+<input type="hidden" name="content" id="content">
   <div class="layui-form-item">
     <label class="layui-form-label">景点名字</label>
     <div class="layui-input-block">
@@ -53,7 +57,7 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
   <div class="layui-form-item">
     <label class="layui-form-label">内容</label>
     <div class="layui-input-block">
-       <textarea name="content" placeholder="请输入内容" class="layui-textarea"></textarea>
+        <script id="container" name="content" type="text/plain"></script>
     </div>
   </div>
  
@@ -84,6 +88,27 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
 </form>
  
 <script>
+
+    var ueditor = UE.getEditor('container', {
+        zIndex: "0" ,
+        //initialFrameWidth: 1190,       // 设置初始时的宽度
+        initialFrameHeight: 450         // 设置初始时的高度
+    });
+    UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+    UE.Editor.prototype.getActionUrl = function (action) {
+        // 如果触发了下面三个动作中，则进行文件上传操作
+        if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadimage') {
+            return '/ueditor/upload';
+        } else {
+            return this._bkGetActionUrl.call(this, action);
+        }
+    }
+
+    ueditor.addListener("contentChange", function () {
+        console.log('内容改变:' + UE.getEditor('container').getContentTxt());
+        $("#content").val(UE.getEditor('container').getContentTxt());
+    });
+
     var Imgid = 0;
     $(document).ready(function(){
         $("#provinceId").append(" <option value=\"\">请选择省</option>");

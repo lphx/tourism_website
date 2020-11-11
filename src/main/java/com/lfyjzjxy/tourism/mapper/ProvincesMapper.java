@@ -60,5 +60,8 @@ public interface ProvincesMapper{
 
     @Select("SELECT id as id,pid as pid,name as name,cid as cid FROM `provinces` WHERE pid = 0")
     List<ProvincesEntity> findPid();
+
+    @Select("SELECT id as id,pid as pid,name as name,cid as cid FROM `provinces` WHERE id = #{cid}")
+    ProvincesEntity findPidByCid(Integer cid);
 }
 

@@ -51,6 +51,11 @@ public class ScenicApi {
         return scenicService.findOne(scenicId);
     }
 
+    @GetMapping("/findScenicByProvince")
+    public List<ScenicEntity> findScenicByProvince(Integer pid,Integer cid) {
+        return scenicService.findScenicByProvince(pid,cid);
+    }
+
 
     @GetMapping("/findAll")
     public List<ScenicEntity> findAll() {

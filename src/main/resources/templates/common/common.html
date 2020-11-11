@@ -30,7 +30,13 @@
 
                     <div id="pagelet-block-c216a7e9b072b794012a19225f9d8678" class="pagelet-block" data-api="apps:user:pagelet:pageViewHeadInfo" data-params="{&quot;type&quot;:1}" data-async="1" data-controller="/js/pageletcommon/pageHeadUserInfoWWWNormal">
                         <div class="login-out">
-                            <a id="_j_showlogin" title="登录" href="/login" rel="nofollow">登录</a><span class="split">|</span><a href="/register" title="注册帐号" rel="nofollow">注册</a>
+                            <div th:if="${session.user == null}">
+                                <a id="_j_showlogin" title="登录" href="/login" rel="nofollow">登录</a><span class="split">|</span><a href="/register" title="注册帐号" rel="nofollow">注册</a>
+                            </div>
+                            <div th:if="${session.user != null}">
+                                <a id="aa" title="登录" href="/login" rel="nofollow"><span th:text="${session.user.username}"></span></a><span class="split">|</span>
+                                <a href="/loginOut" title="退出" rel="nofollow">退出</a>
+                            </div>
                         </div></div>
                 <div class="shadow"></div>
             </div>

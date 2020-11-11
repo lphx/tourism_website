@@ -57,14 +57,14 @@ public class ScenicController {
     @GetMapping("/edit")
     public String edit(Integer scenicId, Model model, HttpServletRequest request){
         //登录成功保存session信息
-        UserEntity userSession = RequestUtil.getSession(request);
+        /*UserEntity userSession = RequestUtil.getSession(request);
         if (userSession == null){
-            return "redirect:/scenic/detail?scenicId="+scenicId;
+            return "redirect:detail?scenicId="+scenicId;
         }
         ScenicEntity scenicEntity = scenicService.findUserId(userSession.getUserId(),scenicId);
         if (scenicEntity==null){
-            return "redirect:/scenic/detail?scenicId="+scenicId;
-        }
+            return "redirect:detail?scenicId="+scenicId;
+        }*/
         //假如用户没有编辑的权限就定型到详情页
 
         model.addAttribute("scenicId",scenicId);

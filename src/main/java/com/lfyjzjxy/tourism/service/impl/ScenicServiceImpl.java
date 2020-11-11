@@ -1,9 +1,11 @@
 package com.lfyjzjxy.tourism.service.impl;
 
 
+import com.lfyjzjxy.tourism.entity.ProvincesEntity;
 import com.lfyjzjxy.tourism.entity.ScenicEntity;
 import com.lfyjzjxy.tourism.entity.ScenicPictureEntity;
 import com.lfyjzjxy.tourism.entity.ScenicVo;
+import com.lfyjzjxy.tourism.mapper.ProvincesMapper;
 import com.lfyjzjxy.tourism.mapper.ScenicMapper;
 import com.lfyjzjxy.tourism.mapper.ScenicPictureMapper;
 import com.lfyjzjxy.tourism.service.ScenicService;
@@ -22,6 +24,9 @@ public class ScenicServiceImpl implements ScenicService {
 
     @Autowired
     private ScenicPictureMapper scenicPictureMapper;
+
+    @Autowired
+    ProvincesMapper provincesMapper;
 
     public  List<ScenicEntity> page(Integer pageSize, Integer pageCount) {
         return scenicMapper.page(pageSize,pageCount);
@@ -74,6 +79,15 @@ public class ScenicServiceImpl implements ScenicService {
     public List<ScenicVo> findKeywordAndProvince(String keyword, Integer provinceId, Integer cityId) {
 
         return scenicMapper.findKeywordAndProvince(keyword,provinceId,cityId);
+    }
+
+    @Override
+    public List<ScenicEntity> findScenicByProvince(Integer pid, Integer cid) {
+        if (pid == null){
+            ProvincesEntity pidByCid = provincesMapper.findPidByCid(cid);
+            pid = pidByCid.getPid();
+        }
+        return scenicMapper.findScenicByProvince(pid,cid);
     }
 
 }

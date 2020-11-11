@@ -65,5 +65,12 @@ public interface ScenicMapper{
             "<if test='cityId != null'>and city_id  = #{cityId} </if>"+
             "</script>")
     List<ScenicVo> findKeywordAndProvince(@Param("keyword")String keyword,@Param("provinceId")Integer provinceId,@Param("cityId")Integer cityId);
+
+    @Select("<script> "+
+            " SELECT scenic_id as scenicId,`name` as `name`,user_id as userId,content as content,province_id as provinceId,city_id as cityId  " +
+            " FROM `scenic`  WHERE    province_id = #{pid} " +
+            "<if test='cid != null'> or city_id  = #{cid} </if>"+
+            "</script>")
+    List<ScenicEntity> findScenicByProvince(@Param("pid")Integer pid,@Param("cid") Integer cid);
 }
 
