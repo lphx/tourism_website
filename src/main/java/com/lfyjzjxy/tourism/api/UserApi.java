@@ -69,7 +69,7 @@ public class UserApi {
         }
 
         //登录成功保存session信息
-        RequestUtil.setSession(request,userEntity);
+        RequestUtil.setSession(request,oneUser);
         return new HttpCode(200,"",null);
     }
 

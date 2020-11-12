@@ -1,6 +1,8 @@
 package com.lfyjzjxy.tourism.service;
 
 import com.lfyjzjxy.tourism.entity.RoadmapScenicEntity;
+import com.lfyjzjxy.tourism.vo.RoadmapScenicVo;
+
 import java.util.List;
 
 public interface RoadmapScenicService{
@@ -14,6 +16,7 @@ public interface RoadmapScenicService{
     List<RoadmapScenicEntity> findAllList();
 
 
+    List<RoadmapScenicVo> findByRoadmapId(Integer roadmapId);
 }
 
 

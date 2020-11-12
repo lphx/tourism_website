@@ -1,6 +1,7 @@
 package com.lfyjzjxy.tourism.mapper;
 
 import com.lfyjzjxy.tourism.entity.RoadmapScenicEntity;
+import com.lfyjzjxy.tourism.vo.RoadmapScenicVo;
 import org.apache.ibatis.annotations.*;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public interface RoadmapScenicMapper{
     /**
      * 添加数据
      */
-    @Insert("INSERT INTO  `roadmap_scenic` ( id,roadmap_id,scenic_id) VALUES(#{id},#{roadmapId},#{scenicId})")
+    @Insert("INSERT INTO  `roadmap_scenic` ( roadmap_id,scenic_id) VALUES(#{roadmapId},#{scenicId})")
     int save(RoadmapScenicEntity roadmapScenicEntity);
 
     /**
@@ -55,5 +56,13 @@ public interface RoadmapScenicMapper{
     int count();
 
 
+    @Select("SELECT rs.id as id,roadmap_id as roadmapId,rs.scenic_id as scenicId ,scenic.`name` as scenicName " +
+            " FROM `roadmap_scenic` rs " +
+            " join scenic scenic on rs.scenic_id = scenic.scenic_id " +
+            " WHERE roadmap_id = #{roadmapId}")
+    List<RoadmapScenicVo> findByRoadmapId(Integer roadmapId);
+
+    @Delete("DELETE FROM  `roadmap_scenic` where roadmap_id = #{roadmapId}")
+    void removeByRoadmapId(Integer roadmapId);
 }
 

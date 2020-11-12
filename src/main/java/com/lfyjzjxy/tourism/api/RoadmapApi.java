@@ -1,11 +1,16 @@
 package com.lfyjzjxy.tourism.api;
 
+import com.alibaba.fastjson.JSONObject;
 import com.lfyjzjxy.tourism.entity.RoadmapEntity;
 import com.lfyjzjxy.tourism.entity.RoadmapVo;
+import com.lfyjzjxy.tourism.service.RoadmapScenicService;
 import com.lfyjzjxy.tourism.service.RoadmapService;
+import com.lfyjzjxy.tourism.util.HttpCode;
+import com.lfyjzjxy.tourism.vo.RoadmapScenicVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -16,21 +21,27 @@ public class RoadmapApi {
     @Autowired
     private RoadmapService roadmapService;
 
+    @Autowired
+    RoadmapScenicService roadmapScenicService;
+
     @PostMapping("/page")
     public List<RoadmapEntity> page(Integer pageSize, Integer pageCount) {
         return roadmapService.page(pageSize,pageCount);
     }
 
     @PutMapping("/update")
-    public String update(RoadmapEntity roadmapEntity) {
-        roadmapService.update(roadmapEntity);
-        return "success";
+    public HttpCode update(RoadmapVo roadmapVo, HttpServletRequest request) {
+        roadmapService.update(roadmapVo,request);
+        return HttpCode.success(roadmapVo.getRoadmapId()+"");
     }
 
-    @PostMapping("save")
-    public int save(RoadmapVo roadmapVo) {
-        int count = roadmapService.save(roadmapVo);
-        return count;
+    @PostMapping("/save")
+    public HttpCode save(RoadmapVo roadmapVo, HttpServletRequest request) {
+        int count = roadmapService.save(roadmapVo,request);
+        if (count<0){
+            return HttpCode.fail();
+        }
+        return HttpCode.success(count+"");
     }
 
     @DeleteMapping("/remove")
@@ -39,14 +50,16 @@ public class RoadmapApi {
         return "success";
     }
 
-    @GetMapping("/count")
-    public int count() {
-        return roadmapService.count();
-    }
+
 
     @GetMapping("findById")
-    public RoadmapEntity findById(Integer roadmapId) {
-        return roadmapService.findOne(roadmapId);
+    public HttpCode findById(Integer roadmapId) {
+        JSONObject jsonObject = new JSONObject();
+        List<RoadmapScenicVo> roadmapScenicVos = roadmapScenicService.findByRoadmapId(roadmapId);
+        RoadmapEntity roadmapEntity = roadmapService.findOne(roadmapId);
+        jsonObject.put("roadmapScenicVos",roadmapScenicVos);
+        jsonObject.put("roadmapEntity",roadmapEntity);
+        return HttpCode.success(jsonObject);
     }
 
     @GetMapping("/findAll")

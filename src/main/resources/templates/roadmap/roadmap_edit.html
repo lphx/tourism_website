@@ -51,7 +51,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">标题</label>
                     <div class="layui-input-block">
-                        <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                        <input type="text" name="title" id="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -66,12 +66,12 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">景点所在省份</label>
                     <div class="layui-input-inline">
-                        <select name="provinceId" id="provinceId"    lay-filter="provinceId">
+                        <select name="provinceId" id="provinceId"   lay-filter="provinceId">
 
                         </select>
                     </div>
                     <div class="layui-input-inline">
-                        <select name="cityId" id="cityId"   lay-filter="cityId">
+                        <select name="cityId" id="cityId"  lay-filter="cityId">
                             <option value="">请选择市</option>
 
                         </select>
@@ -81,7 +81,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">景点选择</label>
                     <div class="layui-input-inline">
-                        <select name="scenicAllId" id="scenicAllId"    lay-filter="scenicAllId">
+                        <select name="scenicAllId" id="scenicAllId"   lay-filter="scenicAllId">
 
                         </select>
                     </div>
@@ -108,6 +108,40 @@
             </form>
 
             <script>
+
+                $(document).ready(function() {
+
+                    //同获取数据，不采用模板渲染
+                    var roadmapId = [[${roadmapId}]];
+                    $.ajax({
+                        type: 'get',
+                        url: "/roadmap/findById?roadmapId=" + roadmapId,
+                        async: false,
+                        success: function (data) {
+                            var result = data.data.roadmapEntity;
+                            var sceniclist = data.data.roadmapScenicVos;
+                            $('#title').val(result.title);
+                            //$('#content').val(result.content);
+                            //这个监听器是亮点
+                            ueditor.addListener('ready', function () {
+                                ueditor.execCommand('insertHtml', result.content);
+                            });
+
+                            for(var i in sceniclist){
+                                var id = sceniclist[i].scenicId;
+                                scenicIds += id+",";
+
+                                var span = "spanI"+id;
+                                $("#spanID").append('<sapn id='+span+'> <a  title="点击删除" onClick=deleteSpan('+id+')><span >'+sceniclist[i].scenicName+'</span><a> &nbsp &nbsp &nbsp &nbsp</sapn>');
+                                $("#scenicSpan").val(scenicIds)
+                            }
+
+                        },
+                        error: function () {
+                            alert("请求失败")
+                        }
+                    });
+                });
 
                 var scenicIds = "";
                 var Imgid = 0;
@@ -186,7 +220,7 @@
                         layer.msg(JSON.stringify(data.field));
                         $.ajax({
                             type:'post',
-                            url:'/roadmap/save',
+                            url:'/roadmap/update',
                             cache: false,
                             data:data.field,
                             dataType:'json',
