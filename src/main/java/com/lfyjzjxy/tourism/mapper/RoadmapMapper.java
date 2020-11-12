@@ -1,6 +1,7 @@
 package com.lfyjzjxy.tourism.mapper;
 
 import com.lfyjzjxy.tourism.entity.RoadmapEntity;
+import com.lfyjzjxy.tourism.entity.RoadmapVo;
 import org.apache.ibatis.annotations.*;
 import java.util.List;
 
@@ -56,5 +57,10 @@ public interface RoadmapMapper{
     int count();
 
 
+    @Select("SELECT rp.roadmap_id as roadmapId,rp.user_id as userId,rp.title as title,rp.content as content,rp.status as status,rp.create_time as createTime,u.username as username,u.photo as photo  " +
+            " FROM `roadmap` rp " +
+            " join `user` u on u.user_id = rp.user_id " +
+            " WHERE roadmap_id = #{roadmapId}")
+    RoadmapVo findById(Integer roadmapId);
 }
 

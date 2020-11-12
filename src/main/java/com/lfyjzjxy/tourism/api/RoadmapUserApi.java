@@ -1,10 +1,16 @@
 package com.lfyjzjxy.tourism.api;
 
 import com.lfyjzjxy.tourism.entity.RoadmapUserEntity;
+import com.lfyjzjxy.tourism.entity.UserEntity;
 import com.lfyjzjxy.tourism.service.RoadmapUserService;
+import com.lfyjzjxy.tourism.service.UserService;
+import com.lfyjzjxy.tourism.util.RequestUtil;
+import com.lfyjzjxy.tourism.vo.RoadmapUserVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -14,6 +20,9 @@ public class RoadmapUserApi {
 
     @Autowired
     private RoadmapUserService roadmapUserService;
+
+    @Autowired
+    UserService userService;
 
     @PostMapping("/page")
     public List<RoadmapUserEntity> page(Integer pageSize, Integer pageCount) {
@@ -27,9 +36,19 @@ public class RoadmapUserApi {
     }
 
     @PostMapping("save")
-    public int save(RoadmapUserEntity roadmapUserEntity) {
+    public RoadmapUserVo save(RoadmapUserEntity roadmapUserEntity, HttpServletRequest request) {
+
+        UserEntity session = RequestUtil.getSession(request);
+        roadmapUserEntity.setUserId(session.getUserId());
         int count = roadmapUserService.save(roadmapUserEntity);
-        return count;
+
+        UserEntity userEntity = userService.findOne(session.getUserId());
+        RoadmapUserVo roadmapUserVo = new RoadmapUserVo();
+
+        BeanUtils.copyProperties(userEntity,roadmapUserVo);
+        BeanUtils.copyProperties(roadmapUserEntity,roadmapUserVo);
+
+        return roadmapUserVo;
     }
 
     @DeleteMapping("/remove")

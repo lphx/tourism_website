@@ -5,8 +5,10 @@ import com.lfyjzjxy.tourism.entity.RoadmapEntity;
 import com.lfyjzjxy.tourism.entity.RoadmapVo;
 import com.lfyjzjxy.tourism.service.RoadmapScenicService;
 import com.lfyjzjxy.tourism.service.RoadmapService;
+import com.lfyjzjxy.tourism.service.RoadmapUserService;
 import com.lfyjzjxy.tourism.util.HttpCode;
 import com.lfyjzjxy.tourism.vo.RoadmapScenicVo;
+import com.lfyjzjxy.tourism.vo.RoadmapUserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +25,9 @@ public class RoadmapApi {
 
     @Autowired
     RoadmapScenicService roadmapScenicService;
+
+    @Autowired
+    RoadmapUserService roadmapUserService;
 
     @PostMapping("/page")
     public List<RoadmapEntity> page(Integer pageSize, Integer pageCount) {
@@ -52,12 +57,22 @@ public class RoadmapApi {
 
 
 
-    @GetMapping("findById")
+    @GetMapping("/findById")
     public HttpCode findById(Integer roadmapId) {
         JSONObject jsonObject = new JSONObject();
         List<RoadmapScenicVo> roadmapScenicVos = roadmapScenicService.findByRoadmapId(roadmapId);
         RoadmapEntity roadmapEntity = roadmapService.findOne(roadmapId);
         jsonObject.put("roadmapScenicVos",roadmapScenicVos);
+        jsonObject.put("roadmapEntity",roadmapEntity);
+        return HttpCode.success(jsonObject);
+    }
+
+    @GetMapping("/findRoadmapAndUserById")
+    public HttpCode findRoadmapAndUserById(Integer roadmapId) {
+        JSONObject jsonObject = new JSONObject();
+        List<RoadmapUserVo> roadmapUserVos = roadmapUserService.findByRoadmapId(roadmapId);
+        RoadmapEntity roadmapEntity = roadmapService.findOne(roadmapId);
+        jsonObject.put("roadmapUserVos",roadmapUserVos);
         jsonObject.put("roadmapEntity",roadmapEntity);
         return HttpCode.success(jsonObject);
     }

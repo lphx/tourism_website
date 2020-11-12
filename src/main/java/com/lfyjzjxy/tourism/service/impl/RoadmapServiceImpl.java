@@ -2,9 +2,11 @@ package com.lfyjzjxy.tourism.service.impl;
 
 import com.lfyjzjxy.tourism.entity.RoadmapEntity;
 import com.lfyjzjxy.tourism.entity.RoadmapScenicEntity;
+import com.lfyjzjxy.tourism.entity.RoadmapUserEntity;
 import com.lfyjzjxy.tourism.entity.RoadmapVo;
 import com.lfyjzjxy.tourism.mapper.RoadmapMapper;
 import com.lfyjzjxy.tourism.mapper.RoadmapScenicMapper;
+import com.lfyjzjxy.tourism.mapper.RoadmapUserMapper;
 import com.lfyjzjxy.tourism.service.RoadmapService;
 import com.lfyjzjxy.tourism.util.RequestUtil;
 import org.springframework.beans.BeanUtils;
@@ -25,16 +27,20 @@ public class RoadmapServiceImpl implements RoadmapService {
     @Autowired
     private RoadmapScenicMapper roadmapScenicMapper;
 
+    @Autowired
+    RoadmapUserMapper roadmapUserMapper;
+
     public  List<RoadmapEntity> page(Integer pageSize,Integer pageCount) {
         return roadmapMapper.page(pageSize,pageCount);
     }
 
 
     public int save(RoadmapVo roadmapVo, HttpServletRequest request) {
+        Integer userId = RequestUtil.getSession(request).getUserId();
         RoadmapEntity roadmapEntity = new RoadmapEntity();
         BeanUtils.copyProperties(roadmapVo,roadmapEntity);
         roadmapEntity.setStatus(0);
-        roadmapEntity.setUserId(RequestUtil.getSession(request).getUserId());
+        roadmapEntity.setUserId(userId);
         roadmapMapper.save(roadmapEntity);
         String scenicSpan = roadmapVo.getScenicSpan();
         if (!StringUtils.isEmpty(scenicSpan)){
@@ -48,7 +54,11 @@ public class RoadmapServiceImpl implements RoadmapService {
             });
         }
 
-
+        RoadmapUserEntity roadmapUserEntity = new RoadmapUserEntity();
+        roadmapUserEntity.setRoadmapId(roadmapEntity.getRoadmapId());
+        roadmapUserEntity.setUserId(userId);
+        roadmapUserEntity.setStatus(0);
+        roadmapUserMapper.save(roadmapUserEntity);
 
         return roadmapEntity.getRoadmapId();
     }
@@ -85,6 +95,13 @@ public class RoadmapServiceImpl implements RoadmapService {
             });
         }
     }
+
+    @Override
+    public RoadmapVo findById(Integer roadmapId) {
+        return  roadmapMapper.findById(roadmapId);
+    }
+
+
 
 }
 

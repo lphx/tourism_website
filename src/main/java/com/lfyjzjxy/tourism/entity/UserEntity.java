@@ -23,5 +23,6 @@ public class UserEntity {
     private Integer jurisdiction;
 
     private Date createTime;
+    private String photo;
 }
 

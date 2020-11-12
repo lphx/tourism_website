@@ -3,6 +3,8 @@ package com.lfyjzjxy.tourism.service.impl;
 import com.lfyjzjxy.tourism.entity.RoadmapUserEntity;
 import com.lfyjzjxy.tourism.mapper.RoadmapUserMapper;
 import com.lfyjzjxy.tourism.service.RoadmapUserService;
+import com.lfyjzjxy.tourism.vo.RoadmapScenicVo;
+import com.lfyjzjxy.tourism.vo.RoadmapUserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -39,6 +41,16 @@ public class RoadmapUserServiceImpl implements RoadmapUserService {
 
     public List<RoadmapUserEntity> findAllList() {
         return roadmapUserMapper.findAllList();
+    }
+
+    @Override
+    public List<RoadmapUserVo> findByRoadmapId(Integer roadmapId) {
+        return roadmapUserMapper.findByRoadmapId(roadmapId);
+    }
+
+    @Override
+    public RoadmapUserEntity findByUserAndId(Integer userId, Integer roadmapId) {
+        return roadmapUserMapper.findByUserAndId(userId,roadmapId);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.lfyjzjxy.tourism.mapper;
 
 import com.lfyjzjxy.tourism.entity.RoadmapUserEntity;
+import com.lfyjzjxy.tourism.vo.RoadmapUserVo;
 import org.apache.ibatis.annotations.*;
 import java.util.List;
 
@@ -26,7 +27,8 @@ public interface RoadmapUserMapper{
     /**
      * 添加数据
      */
-    @Insert("INSERT INTO  `roadmap_user` ( id,roadmap_id,user_id,status) VALUES(#{id},#{roadmapId},#{userId},#{status})")
+    @Options(useGeneratedKeys = true, keyProperty = "id",keyColumn="id")
+    @Insert("INSERT INTO  `roadmap_user` ( roadmap_id,user_id,status) VALUES(#{roadmapId},#{userId},#{status})")
     int save(RoadmapUserEntity roadmapUserEntity);
 
     /**
@@ -55,5 +57,13 @@ public interface RoadmapUserMapper{
     int count();
 
 
+    @Select("SELECT ru.id as id,ru.roadmap_id as roadmapId,ru.user_id as userId,ru.status as status,u.username as username,u.photo as photo " +
+            " FROM `roadmap_user` ru " +
+            " join `user` u on u.user_id = ru.user_id " +
+            " WHERE roadmap_id = #{roadmap_id}")
+    List<RoadmapUserVo> findByRoadmapId(Integer roadmapId);
+
+    @Select("SELECT id as id,roadmap_id as roadmapId,user_id as userId,status as status FROM `roadmap_user` WHERE user_id = #{userId} and roadmap_id = #{roadmapId}")
+    RoadmapUserEntity findByUserAndId(Integer userId, Integer roadmapId);
 }
 

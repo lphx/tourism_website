@@ -16,6 +16,8 @@ public interface RoadmapService{
 
 
     void update(RoadmapVo roadmapVo, HttpServletRequest request);
+
+   RoadmapVo findById(Integer roadmapId);
 }
 
 

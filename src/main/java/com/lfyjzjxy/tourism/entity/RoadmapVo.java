@@ -25,4 +25,20 @@ public class RoadmapVo {
     private Integer status;
 
     private Date createTime;
+
+    private String username;
+
+    private String photo;
+
+    public String getStatusName(){
+        if (this.status == 1){
+            return "招募中";
+        }else if(this.status == 2){
+            return "招募结束";
+        }else if(this.status == 3){
+            return "旅行结束";
+        }else{
+            return "起草";
+        }
+    }
 }
