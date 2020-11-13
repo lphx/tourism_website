@@ -34,9 +34,9 @@ public class RoadmapController {
 
     @GetMapping("/add")
     public String add(HttpServletRequest request){
-        if (RequestUtil.getSession(request) == null){
+       /* if (RequestUtil.getSession(request) == null){
             return "redirect:list";
-        }
+        }*/
         return "roadmap/roadmap_add";
     }
 
