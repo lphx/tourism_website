@@ -1,8 +1,10 @@
 package com.lfyjzjxy.tourism.entity;
 
+import com.lfyjzjxy.tourism.vo.RoadmapScenicVo;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author: Penghong Li
@@ -22,13 +24,19 @@ public class RoadmapVo {
 
     private String content;
 
+    private String picture;
+
     private Integer status;
+
+    private Integer userNum;
 
     private Date createTime;
 
     private String username;
 
     private String photo;
+
+    private List<RoadmapScenicVo> roadmapScenicList;
 
     public String getStatusName(){
         if (this.status == 1){

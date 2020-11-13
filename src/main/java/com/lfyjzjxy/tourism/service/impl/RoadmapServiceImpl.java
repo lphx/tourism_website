@@ -7,6 +7,7 @@ import com.lfyjzjxy.tourism.entity.RoadmapVo;
 import com.lfyjzjxy.tourism.mapper.RoadmapMapper;
 import com.lfyjzjxy.tourism.mapper.RoadmapScenicMapper;
 import com.lfyjzjxy.tourism.mapper.RoadmapUserMapper;
+import com.lfyjzjxy.tourism.mapper.ScenicMapper;
 import com.lfyjzjxy.tourism.service.RoadmapService;
 import com.lfyjzjxy.tourism.util.RequestUtil;
 import org.springframework.beans.BeanUtils;
@@ -30,6 +31,8 @@ public class RoadmapServiceImpl implements RoadmapService {
     @Autowired
     RoadmapUserMapper roadmapUserMapper;
 
+
+
     public  List<RoadmapEntity> page(Integer pageSize,Integer pageCount) {
         return roadmapMapper.page(pageSize,pageCount);
     }
@@ -39,7 +42,6 @@ public class RoadmapServiceImpl implements RoadmapService {
         Integer userId = RequestUtil.getSession(request).getUserId();
         RoadmapEntity roadmapEntity = new RoadmapEntity();
         BeanUtils.copyProperties(roadmapVo,roadmapEntity);
-        roadmapEntity.setStatus(0);
         roadmapEntity.setUserId(userId);
         roadmapMapper.save(roadmapEntity);
         String scenicSpan = roadmapVo.getScenicSpan();
@@ -57,7 +59,7 @@ public class RoadmapServiceImpl implements RoadmapService {
         RoadmapUserEntity roadmapUserEntity = new RoadmapUserEntity();
         roadmapUserEntity.setRoadmapId(roadmapEntity.getRoadmapId());
         roadmapUserEntity.setUserId(userId);
-        roadmapUserEntity.setStatus(0);
+        roadmapUserEntity.setStatus(roadmapVo.getStatus());
         roadmapUserMapper.save(roadmapUserEntity);
 
         return roadmapEntity.getRoadmapId();
@@ -72,9 +74,6 @@ public class RoadmapServiceImpl implements RoadmapService {
         return roadmapMapper.findOne(roadmapId);
     }
 
-    public List<RoadmapEntity> findAllList() {
-        return roadmapMapper.findAllList();
-    }
 
     @Override
     public void update(RoadmapVo roadmapVo, HttpServletRequest request) {
@@ -101,6 +100,25 @@ public class RoadmapServiceImpl implements RoadmapService {
         return  roadmapMapper.findById(roadmapId);
     }
 
+    @Override
+    public List<RoadmapVo> findAllAndScnicList(Integer num, String keyword,Integer searchId,Integer page,Integer pageSize) {
+
+        if (page == null){
+            page = 1;
+        }
+        page = (page-1)*pageSize;
+
+        if (num != null){
+            if (num == 0){
+                return roadmapMapper.findAllAndScnicList(null,keyword,searchId,page,pageSize);
+            }
+            if (num == 1){
+                return roadmapMapper.findAllAndScnicList(keyword,null,searchId,page,pageSize);
+            }
+        }
+
+        return roadmapMapper.findAllAndScnicList(null,null,searchId,page,pageSize);
+    }
 
 
 }

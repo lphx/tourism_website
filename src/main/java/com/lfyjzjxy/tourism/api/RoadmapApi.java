@@ -10,6 +10,7 @@ import com.lfyjzjxy.tourism.util.HttpCode;
 import com.lfyjzjxy.tourism.vo.RoadmapScenicVo;
 import com.lfyjzjxy.tourism.vo.RoadmapUserVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -77,10 +78,14 @@ public class RoadmapApi {
         return HttpCode.success(jsonObject);
     }
 
-    @GetMapping("/findAll")
-    public List<RoadmapEntity> findAll() {
-        return roadmapService.findAllList();
+    @GetMapping("/listAjax")
+    public HttpCode listAjax(Integer num, String keyword, Integer searchId , Integer page){
+        JSONObject jsonObject = new JSONObject();
+        List<RoadmapVo> roadmapList = roadmapService.findAllAndScnicList(num,keyword,searchId,page,10);
+        jsonObject.put("roadmapList",roadmapList);
+        return HttpCode.success(jsonObject);
     }
+
 
 }
 

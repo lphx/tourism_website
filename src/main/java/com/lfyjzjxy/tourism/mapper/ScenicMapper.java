@@ -72,5 +72,8 @@ public interface ScenicMapper{
             "<if test='cid != null'> or city_id  = #{cid} </if>"+
             "</script>")
     List<ScenicEntity> findScenicByProvince(@Param("pid")Integer pid,@Param("cid") Integer cid);
+
+    @Select("SELECT scenic_id as scenicId FROM `scenic` WHERE `name` like '%${keyword}%'")
+    List<Integer> findLikeName(String keyword);
 }
 

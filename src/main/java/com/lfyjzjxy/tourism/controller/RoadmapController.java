@@ -33,8 +33,27 @@ public class RoadmapController {
     RoadmapUserService roadmapUserService;
 
     @GetMapping("/add")
-    public String add(){
+    public String add(HttpServletRequest request){
+        if (RequestUtil.getSession(request) == null){
+            return "redirect:/";
+        }
         return "roadmap/roadmap_add";
+    }
+
+    @GetMapping("/list")
+    public String list(Integer num,String keyword,Integer searchId ,Model model){
+        searchId = searchId==null?1:searchId;
+        List<RoadmapVo> roadmapList = roadmapService.findAllAndScnicList(num,keyword,searchId,1,10);
+
+        //List<RoadmapVo> roadmapNewList = roadmapService.findAllAndScnicList(3,null,1,1,3);
+        List<RoadmapVo> roadmapHotList = roadmapService.findAllAndScnicList(3,null,2,1,5);
+        model.addAttribute("roadmapList",roadmapList);
+        model.addAttribute("num",num);
+        model.addAttribute("keyword",keyword);
+        model.addAttribute("searchId",searchId);
+       // model.addAttribute("roadmapNewList",roadmapNewList);
+        model.addAttribute("roadmapHotList",roadmapHotList);
+        return "roadmap/roadmap_list";
     }
 
     @GetMapping("/detail")

@@ -12,12 +12,13 @@ public interface RoadmapService{
     int save(RoadmapVo roadmapEntity, HttpServletRequest request);
     void remove(Integer roadmapId);
     RoadmapEntity findOne(Integer roadmapId);
-    List<RoadmapEntity> findAllList();
 
 
     void update(RoadmapVo roadmapVo, HttpServletRequest request);
 
    RoadmapVo findById(Integer roadmapId);
+
+    List<RoadmapVo> findAllAndScnicList(Integer num, String keyword,Integer searchId,Integer page,Integer pageSize);
 }
 
 

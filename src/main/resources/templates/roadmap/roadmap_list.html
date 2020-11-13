@@ -1,0 +1,312 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>路线</title>
+<meta name="renderer" content="webkit">
+
+<script type="text/javascript" async="" charset="utf-8" src="https://c.cnzz.com/core.php?web_id=30065558&amp;t=q"></script><script type="text/javascript" async="" charset="utf-8" src="https://w.cnzz.com/c.php?id=30065558&amp;async=1"></script><script src="https://hm.baidu.com/hm.js?8288b2ed37e5bc9b4c9f7008798d2de0"></script><script type="text/javascript">
+window.Env = {"qa_page":"index","WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_HTTP":"https:\/\/w.mafengwo.cn","P_HOST":"passport.mafengwo.cn","P_HTTP":"https:\/\/passport.mafengwo.cn","PAGELET_HTTP":"https:\/\/pagelet.mafengwo.cn","JS_HOST":"js.mafengwo.net","TONGJI_HOST":"tongji.mafengwo.cn","UID":0,"CSTK":"77423bb017cac639966e0393d5865dc2_fd9ce16c8dccd5580c9fb0bf38e29761","GOOGLE_MAP_KEY":"AIzaSyD-Su0x_rPy1xehlMBcMyTqWkU49Bk53nQ"};
+</script>
+    <script type="text/javascript">
+        window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_HTTP":"https:\/\/w.mafengwo.cn","P_HOST":"passport.mafengwo.cn","P_HTTP":"https:\/\/passport.mafengwo.cn","PAGELET_HTTP":"https:\/\/pagelet.mafengwo.cn","JS_HOST":"js.mafengwo.net","TONGJI_HOST":"tongji.mafengwo.cn","UID":0,"CSTK":"df7ffd748270844b9a988720fc83b536_c9127c92194dce0b38e72eb2bfa8da08","GOOGLE_MAP_KEY":"AIzaSyD-Su0x_rPy1xehlMBcMyTqWkU49Bk53nQ"};
+    </script>
+
+    <link href="https://css.mafengwo.net/css/cv/css+base:css+jquery.suggest:css+plugins:css+plugins+jquery.jgrowl:css+other+popup:css+mfw-header.2015^YlVS^1578479974.css" rel="stylesheet" type="text/css"/>
+
+    <link href="https://css.mafengwo.net/css/gonglve/gonglve.css?1544785097" rel="stylesheet" type="text/css"/>
+
+<link href="https://css.mafengwo.net/css/cv/css+base:css+jquery.suggest:css+plugins:css+plugins+jquery.jgrowl:css+other+popup:css+app+topbar_v2^alw^1542357401.css" rel="stylesheet" type="text/css">
+
+
+<link href="https://css.mafengwo.net/css/mfw-ask/mfw-ask.css?1552011937" rel="stylesheet" type="text/css">
+
+<script language="javascript" src="https://js.mafengwo.net/js/cv/js+jquery-1.8.1.min:js+global+json2:js+M+Module:js+M+M:miniapp+js+sdk:js+M+Log:js+m.statistics:js+advert+inspector^YlRX^1588130166.js" type="text/javascript" crossorigin="anonymous"></script>
+
+<script async="" src="https://js.mafengwo.net/js/cv/js+pageletcommon+pageHeadUserInfoWWWDark:js+qa+QaCommon:js+jquery.tmpl:js+M+module+InputListener:js+M+module+SuggestionXHR:js+M+module+DropList:js+M+module+Suggestion:js+qa+QaSeach:js+qa+QaSlide:js+mSnsShare:js+M+module+dialog+Layer:js+M+module+dialog+DialogBase:js+M+module+dialog+Dialog:js+M+module+dialog+alert:js+qa+DoShare:js+qa+QaShare:js+M+module+PageAdmin:js+M+module+Storage:js+M+module+Cookie:js+M+module+ResourceKeeper:js+jquery.jgrowl.min:js+AMessage:js+M+module+FrequencyVerifyControl:js+M+module+FrequencySystemVerify:js+ALogin:js+M+module+ScrollObserver:js+M+module+QRCode:js+AToolbar:js+ACnzzGaLog:js+ARecruit:js+ALazyLoad^ZVZb^1577348452.js" crossorigin="anonymous"></script><script async="" src="https://js.mafengwo.net/js/BrowserState.js?1542357400" crossorigin="anonymous"></script></head>
+<body style="position: relative;">
+<div class="topBar">
+<div th:include="common/common::Menu"></div>
+</div>
+
+<input type="hidden" id="_j_param" data-type="0" data-key="" data-mddid="" data-tid="" data-more="1" data-time="">
+<div class="wrapper wrapper-new" style="margin-top: 50px" data-cs-t="wenda">
+    <div class="col-main">
+        
+        <div class="i-main">
+            <div class="mt-nav clearfix i_link">
+        
+</div>
+
+            
+<div class="search-box">
+    <div class="search-panel" >
+        <div class="clearfix _j_suggest_hd">
+            <div class="sp-input">
+                <input type="text" name="keyword" th:value="${keyword}" id="keyword" value="" placeholder="输入关键字进行搜索">
+            </div>
+            <input type="button" onclick="searchRoadmap(1)"  class="sp-button" >
+        </div>
+		<div style="margin-top: 10px">
+            <input type="radio" name="num" value="0"  th:checked="${num == 0}">标题 &nbsp&nbsp&nbsp&nbsp
+            <input type="radio" name="num" value="1" th:checked="${num == 1}">景点名字
+        </div>
+        <div class="bd _j_suggest_box hide">
+        </div>
+    </div>
+</div>
+                                                            </div>
+                <div class="newcate-wrap _j_qa_list">
+    <div class="hd">
+        <input id="searchId" th:value="${searchId}" type="hidden">
+        <ul class="cate-tab">
+            <li class=""th:classappend="${searchId == 2} ? 'on _j_change_type' : '_j_change_type' " data-type="0"  onclick="searchRoadmap(2)">
+                <a>
+                                            热门路线
+                                    </a>
+            </li>
+            <li class=""th:classappend="${searchId == 1} ? 'on _j_change_type' : '_j_change_type' " data-type="1"  onclick="searchRoadmap(1)">
+                <a>
+                    最新路线
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="bd newcate-bd">
+        <ul class="_j_pager_box" id="ulDataAppend">
+                                
+        <li class="item clearfix " data-qid="10224813" th:each="roadmapList : ${roadmapList}" >
+             <div class="title">
+                   <a th:href="@{'/roadmap/detail?roadmapId='+${roadmapList.roadmapId}}" target="_blank">[[${roadmapList.title}]]</a>
+             </div>
+             <div class="container">
+                 <div class="avatar">
+                      <a href="/wenda/u/10121911/answer.html" target="_blank" class="_j_filter_click">
+                            <img class="_j_filter_click" th:src="${roadmapList.photo}">
+                      </a>
+                 </div>
+                 <div class="user-info">
+                     <a class="name _j_filter_click" href="/wenda/u/10121911/answer.html" target="_blank">[[${roadmapList.username}]]</a>
+                 </div>
+                 <div class="desc clearfix">
+                     <a th:href="@{'/roadmap/detail?roadmapId='+${roadmapList.roadmapId}}" target="_blank" style="color: #666;">
+                         <img th:src="${roadmapList.picture}" width="150" height="100">
+                         <p >[[${roadmapList.content}]]... 旅行真的能改变人生吗？ 这也是我一直在想的问题，看到楼上好多的童鞋答的都如此之好，我也忍不住换个方式补充两句。 旅行真的能改变人生，至少是改变了我的。 先来一段自我介绍： 我是一个普通的上班狗， 普通到每天和你一样，两点一线， 对，那根线一般是地铁...</p>
+                     </a>
+                 </div>
+                 <div class="tags">
+                     <div th:each="scenicList : ${roadmapList.roadmapScenicList}">
+                        <a class="a-tag _j_filter_click" th:href="@{'/roadmap/list?num=1&keyword='+${scenicList.scenicName}}" target="_blank">[[${scenicList.scenicName}]]</a>
+                     </div>
+                 </div>
+                 <div class="operate">
+
+                     <a th:href="@{'/roadmap/detail?roadmapId='+${roadmapList.roadmapId}}" target="_blank" style="text-decoration: none;">
+                         <span class="reply">参与人数([[${roadmapList.userNum}]])</span>
+                     </a>
+                     <span class="date">发布于[[${#dates.format(roadmapList.createTime, 'yyyy-MM-dd HH:mm:ss')}]]</span>
+                </div>
+            </div>
+        </li>
+        
+
+
+    
+        </ul>
+    </div>
+        <div class="_j_pager">
+            <div id="jiazai">
+                <div class="ft ft_load_btn">
+                    <div class="answer-more _j_add_more_button " onclick="searchRoadmapAjax(2)">
+                        <a>加载更多<i></i></a>
+                    </div>
+                </div>
+                <div class="ft ft_loading _j_add_loading_button hide">
+                    <div class="answer-loading">正在加载<i></i></div>
+                </div>
+            </div>
+        </div>
+</div>
+    </div>
+    <div class="col-side">
+    
+  
+
+    
+       <!--     <div class="i_total">
+            
+                <div class="i_total" data-cs-t="wenda">
+        <div class="mod mod-slide _j_slide">
+            <ul class="slide-img _j_slide_img" data-cs-p="topic_recommend_pic">
+                <li style="display: none;" th:each="newList : ${roadmapNewList}">
+                        <span><a target="_blank" th:href="@{'/roadmap/detail?roadmapId='+${newList.roadmapId}}">
+                            <img th:src="${newList.picture}"></a></span>
+
+                    </li>
+                                    </ul>
+            <div class="slide-trigger" id="_j_slide_btn">
+                                    <span class="" data="0"></span>
+                                    <span data="1" class=""></span>
+                                    <span data="2" class="on"></span>
+                            </div>
+        </div>
+    </div>
+
+
+         
+        </div>-->
+        
+
+        
+
+        
+        
+ 
+        
+        <div class="rank _j_rank" style="margin-top: 20px;">
+    <div class="bd">
+        <ul class="tab-num" data-cs-p="rank_list">
+            <div align="center">
+              热门参与
+            </div>
+            
+        </ul>
+        <ul class="rank-list _j_rank_list">
+            <li th:each="hotLis,stat : ${roadmapHotList}" class="" th:classappend="${stat.index == 0} ? 'r-top r-top1 clearfix' : (${stat.index == 1} ?'r-top r-top2 clearfix' : (${stat.index == 2} ?'r-top r-top3 clearfix' : 'clearfix'))">
+            <em class="num">[[${stat.index}]]</em>
+            <div class="user no_qid">
+                <a class="avatar" th:href="@{'/roadmap/detail?roadmapId='+${hotLis.roadmapId}}" target="_blank" rel="nofollow"><img th:src="${hotLis.picture}"></a>
+                <span class="name"><a th:href="@{'/roadmap/detail?roadmapId='+${hotLis.roadmapId}}" target="_blank" rel="nofollow">[[${hotLis.title}]]</a></span>
+                <span class="level"><a  target="_blank" rel="nofollow">[[${hotLis.createTime}]]</a></span>
+            </div>
+            <span class="num">[[${hotLis.userNum}]]</span>
+
+           
+
+    
+        
+        
+            
+            
+            
+            
+        
+        
+    
+
+        </ul>
+    </div>
+</div>
+    </div>
+</div>
+
+
+<script>
+
+    function  searchRoadmap(searchId) {
+        var keyword = $("#keyword").val();
+        var num = $("input[name='num']:checked").val();
+        if (keyword != null){
+           if (num == null){
+               alert("请选择景区/标题");
+           }
+        }
+        window.location.href = "/roadmap/list?num="+num+"&keyword="+keyword+"&searchId="+searchId;
+    }
+
+    function searchRoadmapAjax(page){
+        var keyword = $("#keyword").val();
+        var searchId = $("#searchId").val();
+        var num = $("input[name='num']:checked").val();
+
+        let url = "/roadmap/listAjax?num="+num+"&keyword="+keyword+"&searchId="+searchId+"&page="+page;
+        if (keyword == null || num == null){
+            url = "/roadmap/listAjax?searchId="+searchId+"&page="+page;
+        }
+
+        $.ajax({
+            type:'get',
+            url: url,
+            async:false,
+            success: function(data){
+                if (data.code == 200){
+                    let result =  data.data.roadmapList;
+
+                    let html = "";
+                    for(var i in result){
+                        html += '<li class="item clearfix " data-qid="10224813" > ' +
+                            '             <div class="title"> ' +
+                            '                   <a href="\'/roadmap/detail?roadmapId=\''+result[i].roadmapId+'" target="_blank">'+result[i].title+'</a>\n' +
+                            '             </div>\n' +
+                            '             <div class="container">\n' +
+                            '                 <div class="avatar">\n' +
+                            '                      <a href="/wenda/u/10121911/answer.html" target="_blank" class="_j_filter_click">\n' +
+                            '                            <img class="_j_filter_click" src="'+result[i].photo+'">\n' +
+                            '                      </a>\n' +
+                            '                 </div>\n' +
+                            '                 <div class="user-info">\n' +
+                            '                     <a class="name _j_filter_click" href="/wenda/u/10121911/answer.html" target="_blank">'+result[i].username+'</a>\n' +
+                            '                 </div>\n' +
+                            '                 <div class="desc clearfix">\n' +
+                            '                     <a href="\'/roadmap/detail?roadmapId=\''+result[i].roadmapId+'" target="_blank" style="color: #666;">\n' +
+                            '                         <img src="'+result[i].picture+'" width="150" height="100">\n' +
+                            '                         <p >'+result[i].content+'...</p>\n' +
+                            '                     </a>\n' +
+                            '                 </div>\n' +
+                            '                 <div class="tags">\n';
+                            for(var j in result[i].roadmapScenicList){
+                                html +=
+                                    '    <a class="a-tag _j_filter_click" href="@{\'/roadmap/list?num=1&keyword=\''+result[i].roadmapScenicList[j].scenicName+'" target="_blank">'+result[i].roadmapScenicList[j].scenicName+'</a>\n' ;
+                            }
+
+                            html +=
+                            '                 </div>\n' +
+                            '                 <div class="operate">\n' +
+                            '\n' +
+                            '                     <a href="@{\'/roadmap/detail?roadmapId=\''+result[i].roadmapId+'" target="_blank" style="text-decoration: none;">\n' +
+                            '                         <span class="reply">参与人数('+result[i].userNum+')</span>\n' +
+                            '                     </a>\n' +
+                            '                     <span class="date">发布于'+result[i].createTime+'</span>\n' +
+                            '                </div>\n' +
+                            '            </div>\n' +
+                            '        </li>';
+                    }
+
+                    $("#ulDataAppend").append(html);
+                    page  = page+1;
+
+                    if (result.length > 0) {
+                        $("#jiazai").html(' <div class="ft ft_load_btn">\n' +
+                            '                    <div class="answer-more _j_add_more_button " onclick="searchRoadmapAjax(' + page + ')">\n' +
+                            '                        <a>加载更多<i></i></a>\n' +
+                            '                    </div>\n' +
+                            '                </div>\n' +
+                            '                <div class="ft ft_loading _j_add_loading_button hide">\n' +
+                            '                    <div class="answer-loading">正在加载<i></i></div>\n' +
+                            '                </div>\n' +
+                            '            </div>');
+                    }else {
+                        $("#jiazai").html("");
+                    }
+
+
+
+
+                }
+
+
+            }
+            ,
+            error:function(){
+                alert("请求失败")
+            }
+        });
+    }
+
+
+
+
+
+</script>
+
+</body>
+</html>

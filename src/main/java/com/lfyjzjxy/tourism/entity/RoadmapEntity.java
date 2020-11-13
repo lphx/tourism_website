@@ -18,6 +18,7 @@ public class RoadmapEntity {
     private String title;
 
     private String content;
+    private String picture;
 
     private Integer status;
 

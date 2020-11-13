@@ -31,23 +31,24 @@
 
 <div class="wrapper">
     <div class="gonglve_wrap clearfix">
-        <!--<div class="sidebar">
+        <div class="sidebar">
             <div class="layui-upload">
                 <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
-                    <button type="button" class="layui-btn" id="test2">多图片上传</button>
+                    <button type="button" class="layui-btn" id="test2">上传插图</button>
 
                 </blockquote>
                 <div class="layui-upload-list" id="demo2"></div>
 
             </div>
 
-        </div>-->
+        </div>
         <div class="cont-main _j_feed_list">
 
 
             <form class="layui-form" action="">
                 <input id="scenicSpan" name="scenicSpan" type="hidden">
                 <input id="content" name="content" type="hidden">
+                <input id="picture" name="picture" type="hidden">
                 <div class="layui-form-item">
                     <label class="layui-form-label">标题</label>
                     <div class="layui-input-block">
@@ -61,6 +62,17 @@
                     </div>
                 </div>
 
+                <div class="layui-form-item">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-inline">
+                        <select name="status" id="status"    lay-filter="status">
+                            <option value="0">起草</option>
+                            <option value="1">招募中</option>
+                            <option value="2">招募结束</option>
+                            <option value="3">旅行结束</option>
+                        </select>
+                    </div>
+                </div>
 
 
                 <div class="layui-form-item">
@@ -173,9 +185,8 @@
                             if(res.code == 400){
                                 return layer.msg('上传失败');
                             }else{
-                                var img = "img"+Imgid;
-                                $('#demo2').append('<div id="'+img+'"><img src="'+ res.msg +'"  class="gl_list"><span class="layui-icon" onclick="deleteImg('+Imgid+')"></span> </div>')
-                                Imgid++;
+                                $('#demo2').html('<img src="'+ res.msg +'"  class="gl_list">')
+                                $("#picture").val(res.msg);
                                 return layer.msg('上传成功');
                             }
                         }
@@ -196,6 +207,7 @@
                                 }
                                 if(data.code==200){
                                     layer.msg('保存成功'+data.msg);
+                                    window.location.href = "/roadmap/detail?roadmapId="+data.msg;
 
                                 }
                             },
@@ -295,24 +307,7 @@
 
                 }
 
-                function deleteImg(id) {
-                    $.ajax({
-                        type:'delete',
-                        url: "/file/remove?typeName=roadmap&id="+id,
-                        async:false,
-                        success: function(res){
-                            if (res.code == 200){
-                                //a("删除成功");
-                                var imgId1 = "#img"+id;
-                                $(imgId1).remove();
-                            }
-                        }
-                        ,
-                        error:function(){
-                            alert("图片--请求失败")
-                        }
-                    });
-                }
+
             </script>
 
         </div>
