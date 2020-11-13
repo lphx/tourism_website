@@ -38,7 +38,7 @@ public class ScenicController {
     @GetMapping("/add")
     public String add(HttpServletRequest request){
         if (RequestUtil.getSession(request) == null){
-            return "redirect:/";
+            return "redirect:list";
         }
         return "scenic/scenic_add";
     }
