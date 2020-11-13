@@ -59,16 +59,17 @@ window.Env = {"qa_page":"index","WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.
     <div class="hd">
         <input id="searchId" th:value="${searchId}" type="hidden">
         <ul class="cate-tab">
-            <li class=""th:classappend="${searchId == 2} ? 'on _j_change_type' : '_j_change_type' " data-type="0"  onclick="searchRoadmap(2)">
-                <a>
-                                            热门路线
-                                    </a>
-            </li>
-            <li class=""th:classappend="${searchId == 1} ? 'on _j_change_type' : '_j_change_type' " data-type="1"  onclick="searchRoadmap(1)">
+            <li class=""th:classappend="${searchId == 1} ? 'on _j_change_type' : '_j_change_type' " data-type="1"  onclick="searchRoadmap1(1)">
                 <a>
                     最新路线
                 </a>
             </li>
+            <li class=""th:classappend="${searchId == 2} ? 'on _j_change_type' : '_j_change_type' " data-type="0"  onclick="searchRoadmap1(2)">
+                <a>
+                                            热门路线
+                                    </a>
+            </li>
+
         </ul>
     </div>
     <div class="bd newcate-bd">
@@ -208,9 +209,21 @@ window.Env = {"qa_page":"index","WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.
         if (keyword != null){
            if (num == null){
                alert("请选择景区/标题");
+               return;
            }
         }
         window.location.href = "/roadmap/list?num="+num+"&keyword="+keyword+"&searchId="+searchId;
+    }
+    function  searchRoadmap1(searchId) {
+        let url = "";
+        var keyword = $("#keyword").val();
+        var num = $("input[name='num']:checked").val();
+        if (keyword == null || num == null){
+            url = "/roadmap/list?searchId="+searchId;
+        }else {
+            url = "/roadmap/list?num="+num+"&keyword="+keyword+"&searchId="+searchId;
+        }
+        window.location.href = url;
     }
 
     function searchRoadmapAjax(page){
