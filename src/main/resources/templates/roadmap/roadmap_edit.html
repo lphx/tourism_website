@@ -67,8 +67,8 @@
                     <div class="layui-input-inline">
                         <select name="status" id="status"    lay-filter="status">
                             <option value="0">起草</option>
-                            <option value="1">招募中</option>
-                            <option value="2">招募结束</option>
+                            <option value="1">结伴中</option>
+                            <option value="2">结伴结束</option>
                             <option value="3">旅行结束</option>
                             <option value="4">取消</option>
                         </select>
@@ -183,24 +183,7 @@
                 });
 
 
-                $(document).ready(function(){
-                    $("#provinceId").append(" <option value=\"\">请选择省</option>");
-                    $.ajax({
-                        type:'get',
-                        url: "/provinces/findPid",
-                        async:false,
-                        success: function(data){
-                            for(var i in data){
-                                $("#provinceId").append("<option value="+data[i].id+">"+data[i].name+"</option>");
-                            }
 
-                        }
-                        ,
-                        error:function(){
-                            alert("请求失败")
-                        }
-                    });
-                });
 
                 //Demo
                 layui.use(['upload','form'], function(){
@@ -234,7 +217,7 @@
                     form.on('submit(formDemo)', function(data){
                         layer.msg(JSON.stringify(data.field));
                         $.ajax({
-                            type:'post',
+                            type:'put',
                             url:'/roadmap/update',
                             cache: false,
                             data:data.field,

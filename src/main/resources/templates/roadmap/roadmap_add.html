@@ -67,9 +67,10 @@
                     <div class="layui-input-inline">
                         <select name="status" id="status"    lay-filter="status">
                             <option value="0">起草</option>
-                            <option value="1">招募中</option>
-                            <option value="2">招募结束</option>
+                            <option value="1">结伴中</option>
+                            <option value="2">结伴结束</option>
                             <option value="3">旅行结束</option>
+                            <option value="4">取消</option>
                         </select>
                     </div>
                 </div>
@@ -194,7 +195,7 @@
 
                     //监听提交
                     form.on('submit(formDemo)', function(data){
-                        layer.msg(JSON.stringify(data.field));
+                        //layer.msg(JSON.stringify(data.field));
                         $.ajax({
                             type:'post',
                             url:'/roadmap/save',

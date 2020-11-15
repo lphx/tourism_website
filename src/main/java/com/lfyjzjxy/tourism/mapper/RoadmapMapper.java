@@ -15,7 +15,7 @@ public interface RoadmapMapper{
       *获取所有数据
       */
     @Select("<script> "+
-            " SELECT rp.roadmap_id as roadmapId,rp.user_id as userId,rp.title as title,left(rp.content,150) as content,rp.`status` as `status`,rp.create_time as createTime,picture as picture,u.username as username,u.photo as photo ,ifnull((select count(*) from roadmap_user ru where ru.roadmap_id = rp.roadmap_id),0) as userNum " +
+            " SELECT rp.roadmap_id as roadmapId,rp.user_id as userId,rp.title as title,left(rp.content,100) as content,rp.`status` as `status`,rp.create_time as createTime,picture as picture,u.username as username,u.photo as photo ,ifnull((select count(*) from roadmap_user ru where ru.roadmap_id = rp.roadmap_id),0) as userNum " +
             " FROM `roadmap` rp " +
             " join `user` u on u.user_id = rp.user_id " +
             " where rp.status in(1,2) " +
@@ -63,7 +63,7 @@ public interface RoadmapMapper{
     /**
      * 更新数据
      */
-    @Update("UPDATE `roadmap` set roadmap_id=#{roadmapId},user_id=#{userId},title=#{title},content=#{content},status=#{status},create_time=#{createTime},picture=#{picture} where roadmap_id = #{roadmapId}")
+    @Update("UPDATE `roadmap` set roadmap_id=#{roadmapId},user_id=#{userId},title=#{title},content=#{content},status=#{status},picture=#{picture} where roadmap_id = #{roadmapId}")
     void update(RoadmapEntity roadmapEntity);
 
 

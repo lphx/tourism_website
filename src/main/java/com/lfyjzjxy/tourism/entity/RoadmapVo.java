@@ -40,11 +40,13 @@ public class RoadmapVo {
 
     public String getStatusName(){
         if (this.status == 1){
-            return "招募中";
+            return "结伴中";
         }else if(this.status == 2){
-            return "招募结束";
+            return "结伴结束";
         }else if(this.status == 3){
             return "旅行结束";
+        }else if(this.status == 4){
+            return "取消";
         }else{
             return "起草";
         }

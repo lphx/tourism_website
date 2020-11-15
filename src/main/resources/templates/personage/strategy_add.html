@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>攻略添加</title>
+<meta name="renderer" content="webkit" />
+ <link rel="stylesheet" href="https://www.layuicdn.com/layui-v2.5.6/css/layui.css"  media="all">
+<script type="text/javascript">
+window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_HTTP":"https:\/\/w.mafengwo.cn","P_HOST":"passport.mafengwo.cn","P_HTTP":"https:\/\/passport.mafengwo.cn","PAGELET_HTTP":"https:\/\/pagelet.mafengwo.cn","JS_HOST":"js.mafengwo.net","TONGJI_HOST":"tongji.mafengwo.cn","UID":0,"CSTK":"df7ffd748270844b9a988720fc83b536_c9127c92194dce0b38e72eb2bfa8da08","GOOGLE_MAP_KEY":"AIzaSyD-Su0x_rPy1xehlMBcMyTqWkU49Bk53nQ"};
+</script>
+
+<link href="https://css.mafengwo.net/css/cv/css+base:css+jquery.suggest:css+plugins:css+plugins+jquery.jgrowl:css+other+popup:css+mfw-header.2015^YlVS^1578479974.css" rel="stylesheet" type="text/css"/>
+
+<link href="https://css.mafengwo.net/css/gonglve/gonglve.css?1544785097" rel="stylesheet" type="text/css"/>
+
+
+<script language="javascript" src="https://js.mafengwo.net/js/cv/js+jquery-1.8.1.min:js+global+json2:js+M+Module:js+M+M:miniapp+js+sdk:js+M+Log:js+m.statistics:js+advert+inspector^YlRX^1588130166.js" type="text/javascript" crossorigin="anonymous"></script>
+<!-- 配置文件 -->
+    <script src="https://pu-protitem.oss-cn-shenzhen.aliyuncs.com/myhone/ueditor/ueditor.config.js"></script>
+
+    <!-- 编辑器源码文件 -->
+    <script src="https://pu-protitem.oss-cn-shenzhen.aliyuncs.com/myhone/ueditor/ueditor.all.js"></script>
+</head>
+<body>
+
+
+
+<div th:include="common/common::Menu"></div>
+
+
+<script src="https://www.layuicdn.com/layui-v2.5.6/layui.js" charset="utf-8"></script>
+
+<div class="wrapper">
+    <div class="gonglve_wrap clearfix">
+	 <div class="sidebar">
+		<div class="layui-upload">
+		  <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+			<button type="button" class="layui-btn" id="test2">多图片上传</button> 
+
+		</blockquote>
+    <div class="layui-upload-list" id="demo2"></div>
+
+</div>
+	 
+	 </div>
+	  <div class="cont-main _j_feed_list">
+	  
+	
+	<form class="layui-form" action="">
+	    <input id="content" name="content" type="hidden">
+        <input id="headImg" name="headImg" type="hidden">
+        <input id="roadmapId" name="roadmapId" th:value="${roadmapId}" type="hidden">
+  <div class="layui-form-item">
+    <label class="layui-form-label">标题</label>
+    <div class="layui-input-block">
+      <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">内容</label>
+    <div class="layui-input-block" >
+      <script id="container" name="container" type="text/plain"></script>
+    </div>
+  </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">花费</label>
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="text" name="priceMin" placeholder="￥" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid">-</div>
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="text" name="priceMax" placeholder="￥" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+ 
+  <div class="layui-form-item">
+    <label class="layui-form-label">交通</label>
+    <div class="layui-input-inline">
+      <select name="traffic" lay-verify="required">
+        <option value="0">一般</option>
+        <option value="1">便捷</option>
+        <option value="2">落后</option>   
+      </select>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <label class="layui-form-label">游玩天数</label>
+      <div class="layui-input-block">
+        <input type="text" name="playDay" id="playDay" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+	</div>
+	
+
+  
+ 
+ 
+  
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+</form>
+ 
+<script>
+
+var scenicIds = "";
+
+    function getContent() {
+        var arr = [];
+        arr.push("使用editor.getContent()方法可以获得编辑器的内容");
+        arr.push("内容为：");
+        arr.push(UE.getEditor('container').getContent());
+        alert(arr.join("\n"));
+    }
+
+    var ueditor = UE.getEditor('container', {
+        //initialFrameWidth: 1190,       // 设置初始时的宽度
+		zIndex: "0" ,
+        initialFrameHeight: 350         // 设置初始时的高度
+    });
+    UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+    UE.Editor.prototype.getActionUrl = function (action) {
+        // 如果触发了下面三个动作中，则进行文件上传操作
+        if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadimage') {
+            return '/ueditor/upload';
+        } else {
+            return this._bkGetActionUrl.call(this, action);
+        }
+    }
+
+    ueditor.addListener("contentChange", function () {
+        console.log('内容改变:' + UE.getEditor('container').getContentTxt());
+        $("#content").val(UE.getEditor('container').getContentTxt());
+    });
+
+
+//Demo
+layui.use(['upload','form'], function(){
+ var $ = layui.jquery;
+  var form = layui.form,upload = layui.upload;
+
+    //多图片上传
+    upload.render({
+        elem: '#test2'
+        ,url: '/file/upload?typeName=roadmap1'
+        ,multiple: true
+        ,before: function(obj){
+            //预读本地文件示例，不支持ie8
+            /*obj.preview(function(index, file, result){
+              $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" class="gl_list">')
+            });*/
+        }
+        ,done: function(res){
+            //上传完毕
+            if(res.code == 400){
+                return layer.msg('上传失败');
+            }else{
+                $('#demo2').html('<img src="'+ res.msg +'"  class="gl_list">')
+                $("#headImg").val(res.msg);
+                return layer.msg('上传成功');
+            }
+        }
+    });
+  
+  //监听提交
+  form.on('submit(formDemo)', function(data){
+    //layer.msg(JSON.stringify(data.field));
+      $.ajax({
+          type:'post',
+          url:'/roadmapStrategy/save',
+          cache: false,
+          data:data.field,
+          dataType:'json',
+          success:function(data){
+              if(data.code==500){
+                  layer.msg('保存失败');
+              }
+              if(data.code==200){
+                  layer.msg('保存成功'+data.msg);
+                  window.location.href = "/roadmapStrategy/detail?roadmapId="+data.msg;
+
+              }
+          },
+          error:function(){
+              alert("请求失败")
+          }
+      })
+    return false;
+  });
+  
+
+  
+});
+
+
+</script>
+	
+       </div>
+    </div>
+
+    
+</div>
+
+<script type="text/javascript">
+
+
+
+
+  
+
+</script>
+
+</body>
+</html>

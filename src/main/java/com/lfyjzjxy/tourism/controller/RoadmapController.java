@@ -5,8 +5,10 @@ import com.lfyjzjxy.tourism.entity.RoadmapUserEntity;
 import com.lfyjzjxy.tourism.entity.RoadmapVo;
 import com.lfyjzjxy.tourism.entity.UserEntity;
 import com.lfyjzjxy.tourism.service.RoadmapService;
+import com.lfyjzjxy.tourism.service.RoadmapStrategyService;
 import com.lfyjzjxy.tourism.service.RoadmapUserService;
 import com.lfyjzjxy.tourism.util.RequestUtil;
+import com.lfyjzjxy.tourism.vo.RoadmapStrategyVo;
 import com.lfyjzjxy.tourism.vo.RoadmapUserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,11 +34,14 @@ public class RoadmapController {
     @Autowired
     RoadmapUserService roadmapUserService;
 
+    @Autowired
+    RoadmapStrategyService roadmapStrategyService;
+
     @GetMapping("/add")
     public String add(HttpServletRequest request){
-       /* if (RequestUtil.getSession(request) == null){
-            return "redirect:list";
-        }*/
+       if (RequestUtil.getSession(request) == null){
+           return "common/error";
+        }
         return "roadmap/roadmap_add";
     }
 
@@ -79,10 +84,38 @@ public class RoadmapController {
         RoadmapEntity roadmapEntity = roadmapService.findOne(roadmapId);
         UserEntity session = RequestUtil.getSession(request);
         if (session == null || roadmapEntity.getUserId() != session.getUserId()){
-            return "redirect:detail?roadmapId="+roadmapId;
+            //return "redirect:detail?roadmapId="+roadmapId;
+            return "common/error";
         }
         model.addAttribute("roadmapId",roadmapId);
         return "roadmap/roadmap_edit";
     }
 
+    @GetMapping("/strategyAdd")
+    public String strategyAdd(Integer roadmapId,Model model){
+        model.addAttribute("roadmapId",roadmapId);
+        return "personage/strategy_add";
+    }
+
+    @GetMapping("/strategyEdit")
+    public String strategyEdit(Integer strategyId,Model model){
+        model.addAttribute("strategyId",strategyId);
+        return "personage/strategy_edit";
+    }
+
+    @GetMapping("/strategyList")
+    public String strategyList(Integer num,String keyword,Integer searchId ,Model model){
+        searchId = searchId==null?1:searchId;
+        List<RoadmapStrategyVo> strategyList = roadmapStrategyService.findAllAndScenicAndCommentAmdLikeList(num,keyword,searchId,1,10);
+
+        //List<RoadmapVo> roadmapNewList = roadmapService.findAllAndScnicList(3,null,1,1,3);
+        List<RoadmapStrategyVo> strategyHotList = roadmapStrategyService.findAllAndScenicAndCommentAmdLikeList(4,null,4,1,10);
+        model.addAttribute("strategyList",strategyList);
+        model.addAttribute("num",num);
+        model.addAttribute("keyword",keyword);
+        model.addAttribute("searchId",searchId);
+        // model.addAttribute("roadmapNewList",roadmapNewList);
+        model.addAttribute("strategyHotList",strategyHotList);
+        return "personage/strategy_list";
+    }
 }

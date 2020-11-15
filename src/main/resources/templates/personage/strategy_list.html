@@ -61,12 +61,17 @@ window.Env = {"qa_page":"index","WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.
         <ul class="cate-tab">
             <li class=""th:classappend="${searchId == 1} ? 'on _j_change_type' : '_j_change_type' " data-type="1"  onclick="searchRoadmap1(1)">
                 <a>
-                    最新路线
+                    最新攻略
                 </a>
             </li>
             <li class=""th:classappend="${searchId == 2} ? 'on _j_change_type' : '_j_change_type' " data-type="0"  onclick="searchRoadmap1(2)">
                 <a>
-                                            热门路线
+                                            评论最多
+                                    </a>
+            </li>
+            <li class=""th:classappend="${searchId == 3} ? 'on _j_change_type' : '_j_change_type' " data-type="0"  onclick="searchRoadmap1(3)">
+                <a>
+                                            点赞最多
                                     </a>
             </li>
 
@@ -75,37 +80,37 @@ window.Env = {"qa_page":"index","WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.
     <div class="bd newcate-bd">
         <ul class="_j_pager_box" id="ulDataAppend">
                                 
-        <li class="item clearfix " data-qid="10224813" th:each="roadmapList : ${roadmapList}" >
+        <li class="item clearfix " data-qid="10224813" th:each="strategyList : ${strategyList}" >
              <div class="title">
-                   <a th:href="@{'/roadmap/detail?roadmapId='+${roadmapList.roadmapId}}" target="_blank">[[${roadmapList.title}]]</a>
+                   <a th:href="@{'/roadmap/detail?roadmapId='+${strategyList.roadmapId}}" target="_blank">[[${strategyList.title}]]</a>
              </div>
              <div class="container">
                  <div class="avatar">
                       <a href="/wenda/u/10121911/answer.html" target="_blank" class="_j_filter_click">
-                            <img class="_j_filter_click" th:src="${roadmapList.photo}">
+                            <img class="_j_filter_click" th:src="${strategyList.photo}">
                       </a>
                  </div>
                  <div class="user-info">
-                     <a class="name _j_filter_click" href="/wenda/u/10121911/answer.html" target="_blank">[[${roadmapList.username}]]</a>
-                     <span class="name level _j_filter_click"  target="_blank">[[${roadmapList.status == 1?'结伴中':'结伴结束'}]]</span>
+                     <a class="name _j_filter_click" href="/wenda/u/10121911/answer.html" target="_blank">[[${strategyList.username}]]</a>
+
                  </div>
                  <div class="desc clearfix">
-                     <a th:href="@{'/roadmap/detail?roadmapId='+${roadmapList.roadmapId}}" target="_blank" style="color: #666;">
-                         <img th:src="${roadmapList.picture}" width="150" height="100">
-                         <p >[[${roadmapList.content}]]... 旅行真的能改变人生吗？ 这也是我一直在想的问题，看到楼上好多的童鞋答的都如此之好，我也忍不住换个方式补充两句。 旅行真的能改变人生，至少是改变了我的。 先来一段自我介绍： 我是一个普通的上班狗， 普通到每天和你一样，两点一线， 对，那根线一般是地铁...</p>
+                     <a th:href="@{'/roadmap/detail?roadmapId='+${strategyList.roadmapId}}" target="_blank" style="color: #666;">
+                         <img th:src="${strategyList.headImg}" width="150" height="100">
+                         <p >[[${strategyList.content}]]... 旅行真的能改变人生吗？ 这也是我一直在想的问题，看到楼上好多的童鞋答的都如此之好，我也忍不住换个方式补充两句。 旅行真的能改变人生，至少是改变了我的。 先来一段自我介绍： 我是一个普通的上班狗， 普通到每天和你一样，两点一线， 对，那根线一般是地铁...</p>
                      </a>
                  </div>
                  <div class="tags">
-                     <div th:each="scenicList : ${roadmapList.roadmapScenicList}">
+                     <div th:each="scenicList : ${strategyList.roadmapScenicList}">
                         <a class="a-tag _j_filter_click" th:href="@{'/roadmap/list?num=1&keyword='+${scenicList.scenicName}}" target="_blank">[[${scenicList.scenicName}]]</a>
                      </div>
                  </div>
                  <div class="operate">
 
-                     <a th:href="@{'/roadmap/detail?roadmapId='+${roadmapList.roadmapId}}" target="_blank" style="text-decoration: none;">
-                         <span class="reply">参与人数([[${roadmapList.userNum}]])</span>
+                     <a th:href="@{'/roadmap/detail?roadmapId='+${strategyList.roadmapId}}" target="_blank" style="text-decoration: none;">
+                         <span class="reply">参与人数([[${strategyList.userNum}]])</span>
                      </a>
-                     <span class="date">发布于[[${#dates.format(roadmapList.createTime, 'yyyy-MM-dd HH:mm:ss')}]]</span>
+                     <span class="date">发布于[[${#dates.format(strategyList.createTime, 'yyyy-MM-dd HH:mm:ss')}]]</span>
                 </div>
             </div>
         </li>
@@ -173,14 +178,10 @@ window.Env = {"qa_page":"index","WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.
             
         </ul>
         <ul class="rank-list _j_rank_list">
-            <li th:each="hotLis,stat : ${roadmapHotList}" class="" th:classappend="${stat.index == 0} ? 'r-top r-top1 clearfix' : (${stat.index == 1} ?'r-top r-top2 clearfix' : (${stat.index == 2} ?'r-top r-top3 clearfix' : 'clearfix'))">
-            <em class="num">[[${stat.index}]]</em>
-            <div class="user no_qid">
-                <a class="avatar" th:href="@{'/roadmap/detail?roadmapId='+${hotLis.roadmapId}}" target="_blank" rel="nofollow"><img th:src="${hotLis.picture}"></a>
-                <span class="name"><a th:href="@{'/roadmap/detail?roadmapId='+${hotLis.roadmapId}}" target="_blank" rel="nofollow">[[${hotLis.title}]]</a></span>
-                <span class="level"><a  target="_blank" rel="nofollow">[[${hotLis.createTime}]]</a></span>
-            </div>
-            <span class="num">[[${hotLis.userNum}]]</span>
+            <li th:each="hotLis,stat : ${strategyHotList}" >
+
+                <a class="avatar" th:href="@{'/roadmap/detail?roadmapId='+${hotLis.roadmapId}}" target="_blank" rel="nofollow">[[${hotLis.title}]]</a>
+
 
             </li>
 
@@ -243,7 +244,7 @@ window.Env = {"qa_page":"index","WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.
             async:false,
             success: function(data){
                 if (data.code == 200){
-                    let result =  data.data.roadmapList;
+                    let result =  data.data.strategyList;
 
                     let html = "";
                     for(var i in result){
