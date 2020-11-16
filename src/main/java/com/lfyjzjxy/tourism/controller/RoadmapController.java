@@ -1,13 +1,9 @@
 package com.lfyjzjxy.tourism.controller;
 
-import com.lfyjzjxy.tourism.entity.RoadmapEntity;
-import com.lfyjzjxy.tourism.entity.RoadmapUserEntity;
-import com.lfyjzjxy.tourism.entity.RoadmapVo;
-import com.lfyjzjxy.tourism.entity.UserEntity;
-import com.lfyjzjxy.tourism.service.RoadmapService;
-import com.lfyjzjxy.tourism.service.RoadmapStrategyService;
-import com.lfyjzjxy.tourism.service.RoadmapUserService;
+import com.lfyjzjxy.tourism.entity.*;
+import com.lfyjzjxy.tourism.service.*;
 import com.lfyjzjxy.tourism.util.RequestUtil;
+import com.lfyjzjxy.tourism.vo.RoadmapScenicVo;
 import com.lfyjzjxy.tourism.vo.RoadmapStrategyVo;
 import com.lfyjzjxy.tourism.vo.RoadmapUserVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +32,12 @@ public class RoadmapController {
 
     @Autowired
     RoadmapStrategyService roadmapStrategyService;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    RoadmapScenicService roadmapScenicService;
 
     @GetMapping("/add")
     public String add(HttpServletRequest request){
@@ -118,4 +120,22 @@ public class RoadmapController {
         model.addAttribute("strategyHotList",strategyHotList);
         return "personage/strategy_list";
     }
+
+    @GetMapping("/strategyDetail")
+    public String strategyDetail(Integer strategyId,Model model){
+
+        //查询到攻略信息
+        RoadmapStrategyEntity roadmapStrategy = roadmapStrategyService.findOne(strategyId);
+        //查询用户信息
+        UserEntity userEntity = userService.findOne(roadmapStrategy.getUserId());
+        //查询该攻略里的路线里的景点名称
+        List<RoadmapScenicVo> roadmapScenicList = roadmapScenicService.findByRoadmapId(roadmapStrategy.getRoadmapId());
+
+
+        model.addAttribute("roadmapStrategy",roadmapStrategy);
+        model.addAttribute("userEntity",userEntity);
+        model.addAttribute("roadmapScenicList",roadmapScenicList);
+        return "personage/strategy_detail";
+    }
+
 }

@@ -2,6 +2,7 @@ package com.lfyjzjxy.tourism.api;
 
 import com.lfyjzjxy.tourism.entity.RoadmapStrategyEntity;
 import com.lfyjzjxy.tourism.service.RoadmapStrategyService;
+import com.lfyjzjxy.tourism.util.HttpCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,15 +23,15 @@ public class RoadmapStrategyApi {
     }
 
     @PutMapping("/update")
-    public String update(RoadmapStrategyEntity roadmapStrategyEntity, HttpServletRequest request) {
+    public HttpCode update(RoadmapStrategyEntity roadmapStrategyEntity, HttpServletRequest request) {
         roadmapStrategyService.update(roadmapStrategyEntity,request);
-        return "success";
+        return HttpCode.success(roadmapStrategyEntity.getStrategyId().toString());
     }
 
     @PostMapping("save")
-    public int save(RoadmapStrategyEntity roadmapStrategyEntity, HttpServletRequest request) {
+    public HttpCode save(RoadmapStrategyEntity roadmapStrategyEntity, HttpServletRequest request) {
         int count = roadmapStrategyService.save(roadmapStrategyEntity,request);
-        return count;
+        return HttpCode.success(roadmapStrategyEntity.getStrategyId()+"");
     }
 
     @DeleteMapping("/remove")

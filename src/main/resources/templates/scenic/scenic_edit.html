@@ -47,7 +47,7 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
 	  
 	
 	<form class="layui-form" action="">
-        <input type="hidden" name="content" id="content">
+     <!--   <input type="hidden" name="content" id="content">-->
   <div class="layui-form-item">
     <label class="layui-form-label">景点名字</label>
     <div class="layui-input-block">
@@ -104,8 +104,8 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
     }
 
     ueditor.addListener("contentChange", function () {
-        console.log('内容改变:' + UE.getEditor('container').getContentTxt());
-        $("#content").val(UE.getEditor('container').getContentTxt());
+       // console.log('内容改变:' + UE.getEditor('container').getContentTxt());
+        //$("#content").val(UE.getEditor('container').getContentTxt());
     });
 
     $(document).ready(function(){

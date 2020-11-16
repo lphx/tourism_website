@@ -47,7 +47,7 @@
 
             <form class="layui-form" action="">
                 <input id="scenicSpan" name="scenicSpan" type="hidden">
-                <input id="content" name="content" type="hidden">
+              <!--  <input id="content" name="content" type="hidden">-->
                 <input id="picture" name="picture" type="hidden">
                 <div class="layui-form-item">
                     <label class="layui-form-label">标题</label>
@@ -58,7 +58,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">内容</label>
                     <div class="layui-input-block" >
-                        <script id="container" name="container" type="text/plain"></script>
+                        <script id="container" name="content" type="text/plain"></script>
                     </div>
                 </div>
 
@@ -178,8 +178,8 @@
                 }
 
                 ueditor.addListener("contentChange", function () {
-                    console.log('内容改变:' + UE.getEditor('container').getContentTxt());
-                    $("#content").val(UE.getEditor('container').getContentTxt());
+                    //console.log('内容改变:' + UE.getEditor('container').getContentTxt());
+                   // $("#content").val(UE.getEditor('container').getContentTxt());
                 });
 
 
