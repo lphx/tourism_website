@@ -17,6 +17,14 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
 <script language="javascript" src="https://js.mafengwo.net/js/cv/js+jquery-1.8.1.min:js+global+json2:js+M+Module:js+M+M:miniapp+js+sdk:js+M+Log:js+m.statistics:js+advert+inspector^YlRX^1588130166.js" type="text/javascript" crossorigin="anonymous"></script>
 
 <script async="" src="https://js.mafengwo.net/js/cv/js+Dropdown:js+pageletcommon+pageHeadUserInfoWWWNormal:js+jquery.tmpl:js+M+module+InputListener:js+M+module+SuggestionXHR:js+M+module+DropList:js+M+module+Suggestion:js+M+module+MesSearchEvent:js+SiteSearch:js+AHeader:js+jquery.jplayer:js+M+module+TopTip:js+M+module+dialog+Layer:js+M+module+dialog+DialogBase:js+M+module+dialog+Dialog:js+M+module+dialog+alert:js+M+module+dialog+confirm:js+M+module+ScrollObserver:js+note+PagesCommunication:js+note+ControllerHead:js+home+NewerGuide:js+M+module+Slider:js+note+ControllerRelate:js+note+ControllerRec:js+note+ControllerCatalog:js+jquery.mousewheel.min:js+M+module+ScrollBar:js+M+module+StickyAndStayBlock:js+note+ASideSticky:js+note+ControllerExpand:js+M+module+Storage:js+M+module+ClickToggle:js+EmotionsHd:js+module+app+Page:js+M+module+FrequencyVerifyControl:js+M+module+FrequencyAppVerify:js+Selection:js+EmotionFastDelete:js+M+module+dialog+BindMobileAlert:js+note+GiveSign:js+note+GinfoReply:js+M+module+Caret:js+M+module+HoverTip:js+note+ControllerReply:js+purl:js+M+module+Movearound:js+note+ADetail:js+note+ADetailContent:js+jquery.upnum:js+note+ADetailImageBar:js+jquery.easing.1.3:js+M+module+Toggle:js+M+module+CopyrightProtecte:js+jquery.lazyload:js+common+TextSelectionTip:js+note+ACommon:js+note+anotice:js+note+poiofnote:js+M+module+RollNumbers:js+note+initHlsVideo:js+note+play.video:js+M+module+PowWorker:js+note+NotePoW:js+M+module+PageAdmin:js+M+module+Cookie:js+M+module+ResourceKeeper:js+jquery.jgrowl.min:js+AMessage:js+M+module+FrequencySystemVerify:js+ALogin:js+M+module+QRCode:js+AToolbar:js+ACnzzGaLog^YlBURQ^1602583826.js" crossorigin="anonymous"></script><script async="" src="https://js.mafengwo.net/js/cv/js+ARecruit:js+ALazyLoad^YVE^1555469567.js" crossorigin="anonymous"></script><style type="text/css">._j_fix_block_fix_1{position:fixed;top:-150px;bottom:0px}</style><style type="text/css">._j_fix_block_abs_2{position:absolute;bottom:0px;height:904px}</style><script async="" src="https://js.mafengwo.net/js/cv/js+jquery.mousewheel.min:js+M+module+ScrollBar:js+note+ControllerCatalogDirectory^a1Q^1542356960.js" crossorigin="anonymous"></script><script async="" src="https://js.mafengwo.net/js/hls/hls.min.js?1538295818" crossorigin="anonymous"></script><link rel="stylesheet" href="https://css.mafengwo.net/css/app/smart_guide_u120.css?1537192876"><script async="" src="https://js.mafengwo.net/js/cv/js+jquery.mousewheel.min:js+M+module+ScrollBar:js+M+module+Cookie:js+M+module+Storage:js+xdate:js+M+module+dialog+Layer:js+M+module+dialog+DialogBase:js+M+module+dialog+Dialog:im+js+client+ImEventEntity:js+BrowserState^YVRb^1542357400.js" crossorigin="anonymous"></script><style type="text/css">._j_fix_block_abs_3{position:absolute;bottom:0px;height:477px}</style></head>
+<style>
+    .aa{
+        line-height: 24px;
+        font-size: 14px;
+        color: #666;
+        width: 30px;
+    }
+</style>
 <body style="position: relative;">
 
 
@@ -49,15 +57,10 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
 
     
     <div class="view_title clearfix">
-        <div id="pagelet-block-fd9f157b072d7f48873c1d8bf4726150" class="pagelet-block" data-api=":note:pagelet:headOperateApi" data-params="{&quot;iid&quot;:&quot;12065706&quot;}" data-async="1" data-controller="/js/note/ControllerHead"><div class="vt_center">
-            <div class="ding _j_ding_father">
-            <a role="button" data-japp="articleding" rel="nofollow" data-iid="12065706" data-vote="368" class="up_act " title="顶">顶</a>
-<div class="num _j_up_num topvote12065706">368</div>
 
-        </div>
         <div class="person" data-cs-t="ginfo_person_operate">
         <a href="/u/57385149.html" target="_blank" class="per_pic"><img width="120" height="120" th:src="${userEntity.photo}" alt=""></a>
-                <strong><a href="/u/57385149.html" target="_blank" class="per_name" title="银发魔男">[[${userEntity.username}]]</a></strong>
+                <strong><a href="/u/57385149.html" target="_blank" class="per_name">[[${userEntity.username}]]</a></strong>
             </a>
                 <div class="vc_time">
             <span class="time">[[${roadmapStrategy.createTime}]]</span>
@@ -65,9 +68,58 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
             </div>
             
        
-    
+
+
+            <div class="bar_share _j_share_father _j_top_share_group" th:if="${session.user != null}">
+
+                <div class="bs_collect " id="likeAddOrDelete">
+                    <a th:if="${strategyLikeEntity == null}" th:onclick="'addLike('+${roadmapStrategy.strategyId}+','+${session.user.userId}+')'" href="javascript:void(0);"  class="aa" ><span></span><strong>点赞</strong></a>
+                    <a th:if="${strategyLikeEntity != null}" th:onclick="'deleteLike('+${strategyLikeEntity.id}+','+${roadmapStrategy.strategyId}+','+${session.user.userId}+')'" href="javascript:void(0);"  class="aa" ><span></span><strong>取消点赞</strong></a>
+                </div>
+
+            </div>
 </div>
-</div>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
+<script>
+    var $1=jQuery.noConflict();
+    function addLike(strategyId,userId) {
+
+        $1.ajax({
+            type:'post',
+            url:'/strategyLike/save',
+            cache: false,
+            data:{"strategyId":strategyId,"userId":userId},
+            dataType:'json',
+            success:function(data){
+                $1("#likeAddOrDelete").html(' <a onclick="deleteLike('+data+','+strategyId+','+userId+')" href="javascript:void(0);"  class="aa" ><span></span><strong>取消点赞</strong></a>');
+            },
+            error:function(){
+                alert("请求失败")
+            }
+        })
+
+    }
+
+    function deleteLike(id,strategyId,userId) {
+
+        $1.ajax({
+            type:'get',
+            url:'/strategyLike/del',
+            cache: false,
+            data:{"id":id},
+            dataType:'json',
+            success:function(data){
+                $1("#likeAddOrDelete").html(' <a onclick="addLike('+strategyId+','+userId+')" href="javascript:void(0);"   class="aa" ><span></span><strong>点赞</strong></a>');
+            },
+            error:function(){
+                alert("请求失败")
+            }
+        })
+
+    }
+
+</script>
+
     </div>
     
     <div class="view clearfix" style="position:relative;">
@@ -82,10 +134,10 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
                                 <div class="travel_directory _j_exscheduleinfo">
         <div class="tarvel_dir_list clearfix">
             <ul>
-                                <li class="time">出发时间<span>/</span>2019-01-30<i></i></li>
-                                                <li class="day">出行天数<span>/</span>5 天</li>
-                                                <li class="people">人物<span>/</span>家庭出游</li>
-                                                <li class="cost">人均费用<span>/</span>1000RMB</li>
+                               <!-- <li class="time">出发时间<span>/</span>2019-01-30<i></i></li>-->
+                                                <li class="day">出行天数<span>/</span>[[${roadmapStrategy.playDay}]] 天</li>
+                                            <!--    <li class="people">人物<span>/</span>家庭出游</li>-->
+                                                <li class="cost">费用<span>/</span>[[${roadmapStrategy.priceMin}]]RMB-[[${roadmapStrategy.priceMax}]]</li>
                             </ul>
         </div>
             </div>
@@ -103,261 +155,151 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
             <div id="note-reply-bottomReplyApi" data-api=":note:pagelet:bottomReplyApi" data-controller="/js/note/ControllerReply" data-params="{&quot;iid&quot;:12065706,&quot;page&quot;:1}" class=""><div class="mfw-cmt-wrap" id="_j_top_reply_list">
 	</div>
 <div class="mfw-cmt-wrap" id="_j_reply_list">
+    <input type="hidden" th:id="rowNum" th:value="${strategyCommentList.size()}">
+    <form id="formOne" action="/strategyComment/saveAjaxPid" th:if="${session.user != null}">
 <div class="comment-add clearfix _j_word">
-                        <textarea class="_j_content _j_word_check"></textarea>
+                        <input type="hidden" name="strategyId" th:value="${roadmapStrategy.strategyId}">
+                        <input type="hidden" name="pid" value="0">
+                        <textarea class="_j_content _j_word_check" name="content"></textarea>
                         <span class="word-count"><span class="_j_word_num">0</span>/<span class="_j_max_num">600</span> 字</span>
-                        <input class="btn-comment _j_publish_comment" type="button" value="回复">
+                        <input class="btn-comment _j_publish_comment" type="button" onclick="requestAsync()" value="回复">
                     </div>
-					
+    </form>
 					<hr>
-        <div class="mfw-cmt _j_reply_item" id="reply_78969738" data-rid="78969738" data-username="杏花村">
+<div id="commentPid">
+	    <div class="mfw-cmt _j_reply_item"  data-rid="126114298" th:each="commentList,stat : ${strategyCommentList}" >
         <div class="mcmt-info">
-            <div class="mcmt-photo">
-                <a href="/u/93883298.html" title="杏花村" target="_blank">
-                    <img src="https://n1-q.mafengwo.net/s9/M00/9C/BB/wKgBs1hICbSARZzRABbIrTgYFW019.jpeg?imageMogr2%2Fthumbnail%2F%2148x48r%2Fgravity%2FCenter%2Fcrop%2F%2148x48%2Fquality%2F90" width="48" height="48" alt="杏花村">
-                </a>
-			</div>
-			<div class="mcmt-user">
-				<a href="/u/93883298.html" target="_blank" class="name">杏花村(吉林市)</a>
-                				<a href="/user/lv.php" class="level">LV.36</a>
-												                                                    <a href="javascript:void(0);" class="per_attention" data-japp="following" data-uid="93883298" data-follow_class="hide">
-                        <img src="http://images.mafengwo.net/images/home/tweet/btn_sfollow.gif" width="38" height="13" border="0" title="关注TA">
-                    </a>
-                			</div>
-			<div class="mcmt-other">
-								
-				<span class="floor">1F</span>
-			</div>
-        </div> 
-		<div class="mcmt-con-wrap clearfix">
-			<div class="mcmt-con">
-				<div class="mcmt-quote">
-									<p>引用 银发魔男 的图片：</p>
-					<p><img style="height:400px;display: block;" src="https://b1-q.mafengwo.net/s13/M00/AF/EB/wKgEaVx1OZaAC9FPAAljgDGTkW011.jpeg?imageView2%2F2%2Fw%2F300%2Fh%2F5000%2Fq%2F90%7CimageMogr2%2Fstrip%2Fquality%2F90" alt=""></p>
-								</div>
-				<div class="mcmt-word">
-					<p class="_j_reply_content" data-content="(祈祷)(祈祷)(祈祷)"><img src="https://images.mafengwo.net/images/i/face/daily_v2/78@2x.png" style="width:23px;"><img src="https://images.mafengwo.net/images/i/face/daily_v2/78@2x.png" style="width:23px;"><img src="https://images.mafengwo.net/images/i/face/daily_v2/78@2x.png" style="width:23px;"></p>
-				</div>
-			</div>
-            
-            <div class="mcmt-tag">
-                                                                </div>
-		</div>
-        <div class="mcmt-bot">
-            <div class="time">2019-03-15 08:12</div>
-                        <div class="form">
-                此评论来自<i></i><a href="/app/intro/gonglve.php" target="_blank" class="_j_fromapp_link" title="马蜂窝自由行APP">马蜂窝自由行APP<img src="http://p1-q.mafengwo.net/s12/M00/73/2D/wKgED1uu3ceAOId1AAAtMTzjcHg086.png" alt="马蜂窝自由行APP"></a>
-            </div>
-                        <div class="option">
-                                                            </div>
-        </div>
-    </div>
-	    <div class="mfw-cmt _j_reply_item" id="reply_118386118" data-rid="118386118" data-username="billy">
-        <div class="mcmt-info">
-            <div class="mcmt-photo">
-                <a href="/u/64649893.html" title="billy" target="_blank">
-                    <img src="https://b1-q.mafengwo.net/s11/M00/BF/35/wKgBEFpUOBGAcplGAAxoRaCbkqA86.jpeg?imageMogr2%2Fthumbnail%2F%2148x48r%2Fgravity%2FCenter%2Fcrop%2F%2148x48%2Fquality%2F90" width="48" height="48" alt="billy">
-                </a>
-			</div>
-			<div class="mcmt-user">
-				<a href="/u/64649893.html" target="_blank" class="name">billy(广州)</a>
-                				<a href="/user/lv.php" class="level">LV.15</a>
-												                                                    <a href="javascript:void(0);" class="per_attention" data-japp="following" data-uid="64649893" data-follow_class="hide">
-                        <img src="http://images.mafengwo.net/images/home/tweet/btn_sfollow.gif" width="38" height="13" border="0" title="关注TA">
-                    </a>
-                			</div>
-			<div class="mcmt-other">
-								
-				<span class="floor">2F</span>
-			</div>
-        </div> 
-		<div class="mcmt-con-wrap clearfix">
-			<div class="mcmt-con">
-				<div class="mcmt-quote">
-									<p>引用 银发魔男 的图片：</p>
-					<p><img style="height:400px;display: block;" src="https://p1-q.mafengwo.net/s13/M00/5C/87/wKgEaVx2kb6Adc_hAAfjqDYVPoo52.jpeg?imageView2%2F2%2Fw%2F300%2Fh%2F5000%2Fq%2F90%7CimageMogr2%2Fstrip%2Fquality%2F90" alt=""></p>
-								</div>
-				<div class="mcmt-word">
-					<p class="_j_reply_content" data-content="哈哈哈哈是淡季没啥人吗？怎么看不到人群的">哈哈哈哈是淡季没啥人吗？怎么看不到人群的</p>
-				</div>
-			</div>
-            
-            <div class="mcmt-tag">
-                                                                </div>
-		</div>
-        <div class="mcmt-bot">
-            <div class="time">2019-08-28 17:49</div>
-                        <div class="option">
-                                                            </div>
-        </div>
-    </div>
-	    <div class="mfw-cmt _j_reply_item" id="reply_118476931" data-rid="118476931" data-username="银发魔男">
-        <div class="mcmt-info">
-            <div class="mcmt-photo">
+           <!-- <div class="mcmt-photo">
                 <a href="/u/57385149.html" title="银发魔男" target="_blank">
                     <img src="https://b1-q.mafengwo.net/s13/M00/B3/78/wKgEaVy4eYyAO0IsAACpTD8s_Ws40.jpeg?imageMogr2%2Fthumbnail%2F%2148x48r%2Fgravity%2FCenter%2Fcrop%2F%2148x48%2Fquality%2F90" width="48" height="48" alt="银发魔男">
                 </a>
-			</div>
+			</div>-->
 			<div class="mcmt-user">
-				<a href="/u/57385149.html" target="_blank" class="name">银发魔男(北京)</a>
-                				<a href="/user/lv.php" class="level">LV.28</a>
-												                                                    <a href="javascript:void(0);" class="per_attention" data-japp="following" data-uid="57385149" data-follow_class="hide">
-                        <img src="http://images.mafengwo.net/images/home/tweet/btn_sfollow.gif" width="38" height="13" border="0" title="关注TA">
+				<a href="/u/57385149.html" target="_blank" class="name">[[${commentList.username1}]] &nbsp;&nbsp;&nbsp;[[${commentList.createTime}]]</a>
+                				<!--<a href="/user/lv.php" class="level">LV.28</a>
+							 <a href="javascript:void(0);" class="per_attention" data-japp="following" data-uid="57385149" data-follow_class="hide">-->
                     </a>
                 			</div>
 			<div class="mcmt-other">
 								
-				<span class="floor">3F</span>
+				<span class="floor">[[${stat.count}]]F</span>
 			</div>
         </div> 
 		<div class="mcmt-con-wrap clearfix">
-			<div class="mcmt-con">
-				<div class="mcmt-quote">
-									<p>引用 billy 发表于 2019-08-29 10:49:25 的回复：</p>
-					<p>哈哈哈哈是淡季没啥人吗？怎么看不到人群的</p>
-								</div>
-				<div class="mcmt-word">
-					<p class="_j_reply_content" data-content="零下10来度，都给冻跑了(大笑小蜂)">回复billy：零下10来度，都给冻跑了<img src="https://images.mafengwo.net/images/i/face/brands_v3/5@2x.png" style="width:28px;"></p>
-				</div>
-			</div>
-            
-            <div class="mcmt-tag">
-                                                                </div>
-		</div>
-        <div class="mcmt-bot">
-            <div class="time">2019-08-29 10:49</div>
-                        <div class="form">
-                此评论来自<i></i><a href="/app/intro/gonglve.php" target="_blank" class="_j_fromapp_link" title="马蜂窝自由行APP">马蜂窝自由行APP<img src="http://p1-q.mafengwo.net/s12/M00/73/2D/wKgED1uu3ceAOId1AAAtMTzjcHg086.png" alt="马蜂窝自由行APP"></a>
-            </div>
-                        <div class="option">
-                                                            </div>
-        </div>
-    </div>
-	    <div class="mfw-cmt _j_reply_item" id="reply_125131690" data-rid="125131690" data-username="Jeffrey">
-        <div class="mcmt-info">
-            <div class="mcmt-photo">
-                <a href="/u/19557384.html" title="Jeffrey" target="_blank">
-                    <img src="https://p1-q.mafengwo.net/s14/M00/CD/E1/wKgE2l1YHXWAZH-MAAKVtlMiWlE66.jpeg?imageMogr2%2Fthumbnail%2F%2148x48r%2Fgravity%2FCenter%2Fcrop%2F%2148x48%2Fquality%2F90" width="48" height="48" alt="Jeffrey">
-                </a>
-			</div>
-			<div class="mcmt-user">
-				<a href="/u/19557384.html" target="_blank" class="name">Jeffrey(广州)</a>
-                				<a href="/user/lv.php" class="level">LV.15</a>
-												                                                    <a href="javascript:void(0);" class="per_attention" data-japp="following" data-uid="19557384" data-follow_class="hide">
-                        <img src="http://images.mafengwo.net/images/home/tweet/btn_sfollow.gif" width="38" height="13" border="0" title="关注TA">
-                    </a>
-                			</div>
-			<div class="mcmt-other">
-								
-				<span class="floor">4F</span>
-			</div>
-        </div> 
-		<div class="mcmt-con-wrap clearfix">
-			<div class="mcmt-con">
-				<div class="mcmt-quote">
-									<p>引用 银发魔男 发表于 2020-07-09 13:19:36 的回复：</p>
-					<p>零下10来度，都给冻跑了<img src="https://images.mafengwo.net/images/i/face/brands_v3/5@2x.png" style="width:28px;"></p>
-								</div>
-				<div class="mcmt-word">
-					<p class="_j_reply_content" data-content="好像也没下雪 哦">回复银发魔男：好像也没下雪&nbsp;哦</p>
-				</div>
-			</div>
-            
-            <div class="mcmt-tag">
-                                                                </div>
-		</div>
-        <div class="mcmt-bot">
-            <div class="time">2020-07-09 13:19</div>
-                        <div class="option">
-                                                            </div>
-        </div>
-    </div>
-	    <div class="mfw-cmt _j_reply_item" id="reply_125532415" data-rid="125532415" data-username="一笑">
-        <div class="mcmt-info">
-            <div class="mcmt-photo">
-                <a href="/u/93946098.html" title="一笑" target="_blank">
-                    <img src="https://n1-q.mafengwo.net/s9/M00/F6/8A/wKgBs1hba0SAUvkaACJlXXRzysI96.jpeg?imageMogr2%2Fthumbnail%2F%2148x48r%2Fgravity%2FCenter%2Fcrop%2F%2148x48%2Fquality%2F90" width="48" height="48" alt="一笑">
-                </a>
-			</div>
-			<div class="mcmt-user">
-				<a href="/u/93946098.html" target="_blank" class="name">一笑(北京)</a>
-                				<a href="/user/lv.php" class="level">LV.28</a>
-												                                                    <a href="javascript:void(0);" class="per_attention" data-japp="following" data-uid="93946098" data-follow_class="hide">
-                        <img src="http://images.mafengwo.net/images/home/tweet/btn_sfollow.gif" width="38" height="13" border="0" title="关注TA">
-                    </a>
-                			</div>
-			<div class="mcmt-other">
-								
-				<span class="floor">5F</span>
-			</div>
-        </div> 
-		<div class="mcmt-con-wrap clearfix">
-			<div class="mcmt-con">
-				<div class="mcmt-quote">
-								</div>
-				<div class="mcmt-word">
-					<p class="_j_reply_content" data-content="游记很丰富(赞)请问永安寺壁画保留情况如何？值得一看不？">游记很丰富<img src="https://images.mafengwo.net/images/i/face/daily_v2/28@2x.png" style="width:23px;">请问永安寺壁画保留情况如何？值得一看不？</p>
-				</div>
-			</div>
-            
-            <div class="mcmt-tag">
-                                                                </div>
-		</div>
-        <div class="mcmt-bot">
-            <div class="time">2020-08-29 08:08</div>
-                        <div class="form">
-                此评论来自<i></i><a href="/app/intro/gonglve.php" target="_blank" class="_j_fromapp_link" title="马蜂窝自由行APP">马蜂窝自由行APP<img src="http://p1-q.mafengwo.net/s12/M00/73/2D/wKgED1uu3ceAOId1AAAtMTzjcHg086.png" alt="马蜂窝自由行APP"></a>
-            </div>
-                        <div class="option">
-                                                            </div>
-        </div>
-    </div>
-	    <div class="mfw-cmt _j_reply_item" id="reply_126114298" data-rid="126114298" data-username="银发魔男">
-        <div class="mcmt-info">
-            <div class="mcmt-photo">
-                <a href="/u/57385149.html" title="银发魔男" target="_blank">
-                    <img src="https://b1-q.mafengwo.net/s13/M00/B3/78/wKgEaVy4eYyAO0IsAACpTD8s_Ws40.jpeg?imageMogr2%2Fthumbnail%2F%2148x48r%2Fgravity%2FCenter%2Fcrop%2F%2148x48%2Fquality%2F90" width="48" height="48" alt="银发魔男">
-                </a>
-			</div>
-			<div class="mcmt-user">
-				<a href="/u/57385149.html" target="_blank" class="name">银发魔男(北京)</a>
-                				<a href="/user/lv.php" class="level">LV.28</a>
-												                                                    <a href="javascript:void(0);" class="per_attention" data-japp="following" data-uid="57385149" data-follow_class="hide">
-                        <img src="http://images.mafengwo.net/images/home/tweet/btn_sfollow.gif" width="38" height="13" border="0" title="关注TA">
-                    </a>
-                			</div>
-			<div class="mcmt-other">
-								
-				<span class="floor">6F</span>
-			</div>
-        </div> 
-		<div class="mcmt-con-wrap clearfix">
-			<div class="mcmt-con">
-				<div class="mcmt-quote">
+			<div class="mcmt-con" th:id="'commentAdd'+${commentList.id}">
+				<!--<div class="mcmt-quote">
 									<p>引用 一笑 发表于 2020-11-10 00:41:42 的回复：</p>
 					<p>游记很丰富<img src="https://images.mafengwo.net/images/i/face/daily_v2/28@2x.png" style="width:23px;">请问永安寺壁画保留情况如何？值得一看不？</p>
-								</div>
-				<div class="mcmt-word">
-					<p class="_j_reply_content" data-content="保存情况还可以，没必要特意跑一趟去看，去悬空寺的时候顺路看看">回复一笑：保存情况还可以，没必要特意跑一趟去看，去悬空寺的时候顺路看看</p>
+								</div>-->
+                <div class="mcmt-word" >
+                    <p class="_j_reply_content"  >评论：<span th:text="${commentList.content}">保存情况还可以，没必要特意跑一趟去看，去悬空寺的时候顺路看看</span> &nbsp;<a th:if="${session.user != null}" th:onclick="'showAndComment('+${commentList.id}+','+${commentList.userId}+')'" title="回复">回复</a></p>
+                </div>
+				<div class="mcmt-word" th:each="childList : ${commentList.childList}" th:id="'ch'+${childList.id}">
+					<p class="_j_reply_content" th:id="'commentShow'+${commentList.id}">[[${childList.username1}]]评论[[${childList.username2}]]：[[${childList.content}]] &nbsp;<a th:if="${session.user != null || session.user.userId == childList.userId}" th:onclick="'showAndComment('+${childList.id}+','+${childList.userId}+')'" title="回复">回复</a></p>
 				</div>
 			</div>
             
             <div class="mcmt-tag">
                                                                 </div>
 		</div>
-        <div class="mcmt-bot">
-            <div class="time">2020-11-10 00:41</div>
-                        <div class="form">
-                此评论来自<i></i><a href="/app/intro/gonglve.php" target="_blank" class="_j_fromapp_link" title="马蜂窝自由行APP">马蜂窝自由行APP<img src="http://p1-q.mafengwo.net/s12/M00/73/2D/wKgED1uu3ceAOId1AAAtMTzjcHg086.png" alt="马蜂窝自由行APP"></a>
-            </div>
-                        <div class="option">
-                                                            </div>
-        </div>
+
     </div>
+</div>
 	</div>
 
 
 
+<script>
+    var rowNum = $("#rowNum").val()+1;
+    function requestAsync() {
+
+        ajaxComment('#formOne');
+    }
+
+    var suser = [[${session.user}]];
+    function requestAsync(id) {
+        var formOne =  '#formOne'+id;
+        $.ajax({
+            type:'post',
+            url:'/strategyComment/saveAjaxPidAndChild',
+            cache: false,
+            data: $(formOne).serialize(),
+            dataType:'json',
+            success:function(res){
+                var data = res.data;
+
+                var commentAdd = "#commentAdd"+id;
+                var html1 = '<div class="mcmt-word" >\n' +
+                    ' <p class="_j_reply_content" >'+data.username1+'评论'+data.username2+'：'+data.content+'>&nbsp;';
+                if(suser.userId != data.userId) {
+                    html1 += '<a onclick="showAndComment('+data.id+','+data.userId+')" title="回复">回复</a></p>\n';
+                }
+                   html1+= ' </div>';
+                $(commentAdd).append();
+            },
+            error:function(){
+                alert("请求失败")
+            }
+        })
+
+    }
+
+    function ajaxComment(formId) {
+        $.ajax({
+            type:'post',
+            url:'/strategyComment/saveAjaxPid',
+            cache: false,
+            data: $(formId).serialize(),
+            dataType:'json',
+            success:function(res){
+                var data = res.data;
+                $("#commentPid").append('<div class="mfw-cmt _j_reply_item"  data-rid="126114298"  > ' +
+                    '                    <div class="mcmt-info">\n' +
+                    '                      \n' +
+                    '                        <div class="mcmt-user">\n' +
+                    '                            <a href="/u/57385149.html" target="_blank" class="name">'+data.username1+' &nbsp;&nbsp;&nbsp;'+data.createTime+'</a>\n' +
+                    '                            </a>\n' +
+                    '                        </div>\n' +
+                    '                        <div class="mcmt-other">\n' +
+                    '\n' +
+                    '                            <span class="floor">'+rowNum+'F</span>\n' +
+                    '                        </div>\n' +
+                    '                    </div>\n' +
+                    '                    <div class="mcmt-con-wrap clearfix">\n' +
+                    '                        <div class="mcmt-con">\n' +
+                    '                          \n' +
+                    '                            <div class="mcmt-word" >\n' +
+                    '                                <p class="_j_reply_content" id="commentAdd'+data.id+'" >评论：<span>'+data.content+'</span> &nbsp;<a  th:onclick="\'showAndComment(\'+${commentList.id}+\')\'" title="回复">回复</a></p>\n' +
+                    '                            </div>\n' +
+                    '                        </div>\n' +
+                    '                    </div>\n' +
+                    '                </div>')
+                rowNum+=1;
+            },
+            error:function(){
+                alert("请求失败")
+            }
+        })
+    }
+
+    //展示主评论的回复
+    var addstrategyId = [[${roadmapStrategy.strategyId}]];
+
+    function showAndComment(id,userId) {
+        var aa = "#commentAdd"+id;
+        $(aa).append('<form id="formOne'+id+'" action="/strategyComment/saveAjaxPid" ">\n' +
+            '<div class="comment-add clearfix _j_word">\n' +
+            '                        <input type="hidden" name="strategyId" value="'+addstrategyId+'">\n' +
+            '                        <input type="hidden" name="pid" value="'+id+'">\n' +
+            '                        <input type="hidden" name="sendUserId" value="'+userId+'">\n' +
+            '                        <textarea class="_j_content _j_word_check" style="width: 456px" name="content"></textarea>\n' +
+            '                        <span class="word-count"><span class="_j_word_num">0</span>/<span class="_j_max_num">600</span> 字</span>\n' +
+            '                        <input class="btn-comment _j_publish_comment" type="button" onclick="requestAsync('+id+')" value="回复">\n' +
+            '                    </div>\n' +
+            '    </form>');
+    }
+
+</script>
 
 </div>
             

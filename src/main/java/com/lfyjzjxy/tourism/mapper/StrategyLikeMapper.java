@@ -26,7 +26,8 @@ public interface StrategyLikeMapper{
     /**
      * 添加数据
      */
-    @Insert("INSERT INTO  `strategy_like` ( id,strategy_id,user_id) VALUES(#{id},#{strategyId},#{userId})")
+    @Options(useGeneratedKeys = true, keyProperty = "id",keyColumn="id")
+    @Insert("INSERT INTO  `strategy_like` ( strategy_id,user_id) VALUES(#{strategyId},#{userId})")
     int save(StrategyLikeEntity strategyLikeEntity);
 
     /**
@@ -55,5 +56,7 @@ public interface StrategyLikeMapper{
     int count();
 
 
+    @Select("SELECT id as id,strategy_id as strategyId,user_id as userId FROM  `strategy_like` where user_id = #{userId} and strategy_id = #{strategyId}")
+    StrategyLikeEntity findOneByUserAndStrategy(Integer userId, Integer strategyId);
 }
 

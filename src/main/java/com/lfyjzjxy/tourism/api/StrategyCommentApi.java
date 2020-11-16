@@ -2,9 +2,13 @@ package com.lfyjzjxy.tourism.api;
 
 import com.lfyjzjxy.tourism.entity.StrategyCommentEntity;
 import com.lfyjzjxy.tourism.service.StrategyCommentService;
+import com.lfyjzjxy.tourism.util.HttpCode;
+import com.lfyjzjxy.tourism.util.RequestUtil;
+import com.lfyjzjxy.tourism.vo.StrategyCommentVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -30,6 +34,22 @@ public class StrategyCommentApi {
     public int save(StrategyCommentEntity strategyCommentEntity) {
         int count = strategyCommentService.save(strategyCommentEntity);
         return count;
+    }
+
+    @PostMapping("/saveAjaxPid")
+    public HttpCode saveAjaxPid(StrategyCommentEntity strategyCommentEntity, HttpServletRequest request) {
+        strategyCommentEntity.setUserId(RequestUtil.getSession(request).getUserId());
+        int count = strategyCommentService.save(strategyCommentEntity);
+        StrategyCommentVo strategyCommentVo = strategyCommentService.findOneByUsename(strategyCommentEntity.getId());
+        return HttpCode.success(strategyCommentVo);
+    }
+
+    @PostMapping("/saveAjaxPidAndChild")
+    public HttpCode saveAjaxPidAndChild(StrategyCommentEntity strategyCommentEntity, HttpServletRequest request) {
+        strategyCommentEntity.setUserId(RequestUtil.getSession(request).getUserId());
+        int count = strategyCommentService.save(strategyCommentEntity);
+        StrategyCommentVo strategyCommentVo = strategyCommentService.findOneByUsename(strategyCommentEntity.getId());
+        return HttpCode.success(strategyCommentVo);
     }
 
     @DeleteMapping("/remove")

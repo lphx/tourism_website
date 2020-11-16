@@ -1,6 +1,7 @@
 package com.lfyjzjxy.tourism.mapper;
 
 import com.lfyjzjxy.tourism.entity.StrategyCommentEntity;
+import com.lfyjzjxy.tourism.vo.StrategyCommentVo;
 import org.apache.ibatis.annotations.*;
 import java.util.List;
 
@@ -26,7 +27,8 @@ public interface StrategyCommentMapper{
     /**
      * 添加数据
      */
-    @Insert("INSERT INTO  `strategy_comment` ( id,strategy_id,content,user_id,send_user_id,pid,create_time,state) VALUES(#{id},#{strategyId},#{content},#{userId},#{sendUserId},#{pid},#{createTime},#{state})")
+    @Options(useGeneratedKeys = true, keyProperty = "id",keyColumn="id")
+    @Insert("INSERT INTO  `strategy_comment` ( strategy_id,content,user_id,send_user_id,pid,create_time,state) VALUES(#{strategyId},#{content},#{userId},#{sendUserId},#{pid},now(),1)")
     int save(StrategyCommentEntity strategyCommentEntity);
 
     /**
@@ -54,6 +56,18 @@ public interface StrategyCommentMapper{
     @Select("SELECT COUNT(*) FROM  `strategy_comment`")
     int count();
 
+    @Select("SELECT sc.id as id,sc.strategy_id as strategyId,sc.content as content,sc.user_id as userId,sc.send_user_id as sendUserId,sc.pid as pid,sc.create_time as createTime,sc.state as state," +
+            "(select `username` from `user` u where u.user_id = sc.user_id) as username1," +
+            "(select `username` from `user` u where u.user_id = sc.send_user_id) as username2 " +
+            "FROM `strategy_comment` sc " +
+            "where strategy_id=#{strategyId} and sc.pid = #{pid}")
+    List<StrategyCommentVo> findOneByStrategy(Integer strategyId,Integer pid);
 
+    @Select("SELECT sc.id as id,sc.strategy_id as strategyId,sc.content as content,sc.user_id as userId,sc.send_user_id as sendUserId,sc.pid as pid,sc.create_time as createTime,sc.state as state," +
+            "(select `username` from `user` u where u.user_id = sc.user_id) as username1," +
+            "(select `username` from `user` u where u.user_id = sc.send_user_id) as username2 " +
+            "FROM `strategy_comment` sc " +
+            "where  sc.id = #{id}")
+    StrategyCommentVo findOneByUsename(Integer id);
 }
 

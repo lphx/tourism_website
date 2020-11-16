@@ -3,6 +3,7 @@ package com.lfyjzjxy.tourism.service.impl;
 import com.lfyjzjxy.tourism.entity.StrategyCommentEntity;
 import com.lfyjzjxy.tourism.mapper.StrategyCommentMapper;
 import com.lfyjzjxy.tourism.service.StrategyCommentService;
+import com.lfyjzjxy.tourism.vo.StrategyCommentVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -39,6 +40,24 @@ public class StrategyCommentServiceImpl implements StrategyCommentService {
 
     public List<StrategyCommentEntity> findAllList() {
         return strategyCommentMapper.findAllList();
+    }
+
+    @Override
+    public List<StrategyCommentVo> findOneByStrategy(Integer strategyId) {
+
+        List<StrategyCommentVo> pList = strategyCommentMapper.findOneByStrategy(strategyId, 0);
+        pList.stream().forEach(item ->{
+            List<StrategyCommentVo> childList = strategyCommentMapper.findOneByStrategy(strategyId, item.getId());
+            item.setChildList(childList);
+        });
+
+
+        return pList;
+    }
+
+    @Override
+    public StrategyCommentVo findOneByUsename(Integer id) {
+        return strategyCommentMapper.findOneByUsename(id);
     }
 
 }

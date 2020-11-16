@@ -2,9 +2,11 @@ package com.lfyjzjxy.tourism.api;
 
 import com.lfyjzjxy.tourism.entity.StrategyLikeEntity;
 import com.lfyjzjxy.tourism.service.StrategyLikeService;
+import com.lfyjzjxy.tourism.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -29,13 +31,14 @@ public class StrategyLikeApi {
     @PostMapping("save")
     public int save(StrategyLikeEntity strategyLikeEntity) {
         int count = strategyLikeService.save(strategyLikeEntity);
-        return count;
+        return strategyLikeEntity.getId();
     }
 
-    @DeleteMapping("/remove")
-    public String remove(Integer id) {
+
+    @GetMapping("del")
+    public int remove(Integer id) {
         strategyLikeService.remove(id);
-        return "success";
+        return 1;
     }
 
     @GetMapping("/count")

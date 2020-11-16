@@ -41,6 +41,11 @@ public class StrategyLikeServiceImpl implements StrategyLikeService {
         return strategyLikeMapper.findAllList();
     }
 
+    @Override
+    public StrategyLikeEntity findOneByUserAndStrategy(Integer userId, Integer strategyId) {
+        return strategyLikeMapper.findOneByUserAndStrategy(userId,strategyId);
+    }
+
 }
 
 

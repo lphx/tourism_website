@@ -15,6 +15,7 @@ public interface StrategyLikeService{
     List<StrategyLikeEntity> findAllList();
 
 
+    StrategyLikeEntity findOneByUserAndStrategy(Integer userId, Integer strategyId);
 }
 
 

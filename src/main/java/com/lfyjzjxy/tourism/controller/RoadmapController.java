@@ -6,6 +6,7 @@ import com.lfyjzjxy.tourism.util.RequestUtil;
 import com.lfyjzjxy.tourism.vo.RoadmapScenicVo;
 import com.lfyjzjxy.tourism.vo.RoadmapStrategyVo;
 import com.lfyjzjxy.tourism.vo.RoadmapUserVo;
+import com.lfyjzjxy.tourism.vo.StrategyCommentVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +39,12 @@ public class RoadmapController {
 
     @Autowired
     RoadmapScenicService roadmapScenicService;
+
+    @Autowired
+    StrategyLikeService strategyLikeService;
+
+    @Autowired
+    StrategyCommentService strategyCommentService;
 
     @GetMapping("/add")
     public String add(HttpServletRequest request){
@@ -122,7 +129,7 @@ public class RoadmapController {
     }
 
     @GetMapping("/strategyDetail")
-    public String strategyDetail(Integer strategyId,Model model){
+    public String strategyDetail(Integer strategyId,Model model,HttpServletRequest request){
 
         //查询到攻略信息
         RoadmapStrategyEntity roadmapStrategy = roadmapStrategyService.findOne(strategyId);
@@ -130,11 +137,20 @@ public class RoadmapController {
         UserEntity userEntity = userService.findOne(roadmapStrategy.getUserId());
         //查询该攻略里的路线里的景点名称
         List<RoadmapScenicVo> roadmapScenicList = roadmapScenicService.findByRoadmapId(roadmapStrategy.getRoadmapId());
-
+        //点赞信息
+        UserEntity session = RequestUtil.getSession(request);
+        StrategyLikeEntity strategyLikeEntity = null;
+        if (session != null){
+            strategyLikeEntity = strategyLikeService.findOneByUserAndStrategy(session.getUserId(),strategyId);
+        }
+        //评论信息
+        List<StrategyCommentVo> strategyCommentList = strategyCommentService.findOneByStrategy(strategyId);
 
         model.addAttribute("roadmapStrategy",roadmapStrategy);
         model.addAttribute("userEntity",userEntity);
         model.addAttribute("roadmapScenicList",roadmapScenicList);
+        model.addAttribute("strategyCommentList",strategyCommentList);
+        model.addAttribute("strategyLikeEntity",strategyLikeEntity);
         return "personage/strategy_detail";
     }
 
