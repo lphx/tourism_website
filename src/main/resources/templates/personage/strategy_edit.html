@@ -47,7 +47,7 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
 	  
 	
 	<form class="layui-form" action="">
-	   <!-- <input id="content" name="content" type="hidden">-->
+        <input id="shortContent" name="shortContent" type="hidden">
         <input id="headImg" name="headImg" type="hidden">
         <input id="roadmapId" name="roadmapId"  type="hidden">
         <input id="strategyId" name="strategyId"  type="hidden">
@@ -125,6 +125,7 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
                 $('#headImg').val(result.headImg);
                 $('#strategyId').val(result.strategyId);
                 $('#roadmapId').val(result.roadmapId);
+                $('#shortContent').val(result.shortContent);
                 $('#priceMax').val(result.priceMax);
                 $('#priceMin').val(result.priceMin);
                 $('#playDay').val(result.playDay);
@@ -172,8 +173,8 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
     }
 
     ueditor.addListener("contentChange", function () {
-        //console.log('内容改变:' + UE.getEditor('container'));
-        //$("#content").val(UE.getEditor('container').getContentTxt());
+        console.log('内容改变:' + UE.getEditor('container'));
+        $("#shortContent").val(UE.getEditor('container').getContentTxt());
     });
 
 
@@ -220,7 +221,7 @@ layui.use(['upload','form'], function(){
               }
               if(data.code==200){
                   layer.msg('保存成功'+data.msg);
-                  window.location.href = "/roadmap/strategyDetail/detail?strategyId="+data.msg;
+                  window.location.href = "/roadmap/strategyDetail?strategyId="+data.msg;
 
               }
           },

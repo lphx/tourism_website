@@ -63,7 +63,7 @@ public interface RoadmapMapper{
     /**
      * 更新数据
      */
-    @Update("UPDATE `roadmap` set roadmap_id=#{roadmapId},user_id=#{userId},title=#{title},content=#{content},status=#{status},picture=#{picture} where roadmap_id = #{roadmapId}")
+    @Update("UPDATE `roadmap` set roadmap_id=#{roadmapId},user_id=#{userId},title=#{title},content=#{content},picture=#{picture} where roadmap_id = #{roadmapId}")
     void update(RoadmapEntity roadmapEntity);
 
 

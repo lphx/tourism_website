@@ -95,9 +95,9 @@ window.Env = {"qa_page":"index","WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.
 
                  </div>
                  <div class="desc clearfix">
-                     <a th:href="@{'/roadmap/detail?roadmapId='+${strategyList.roadmapId}}" target="_blank" style="color: #666;">
+                     <a th:href="@{'/roadmap/strategyDetail?strategyId='+${strategyList.strategyId}}" target="_blank" style="color: #666;">
                          <img th:src="${strategyList.headImg}" width="150" height="100">
-                         <p >[[${strategyList.content}]]... 旅行真的能改变人生吗？ 这也是我一直在想的问题，看到楼上好多的童鞋答的都如此之好，我也忍不住换个方式补充两句。 旅行真的能改变人生，至少是改变了我的。 先来一段自我介绍： 我是一个普通的上班狗， 普通到每天和你一样，两点一线， 对，那根线一般是地铁...</p>
+                         <p >[[${strategyList.shortContent}]]<!--一段自我介绍： 我是一个普通的上班狗， 普通到每天和你一样，两点一线， 对，那根线一般是地铁-->...</p>
                      </a>
                  </div>
                  <div class="tags">
@@ -107,8 +107,11 @@ window.Env = {"qa_page":"index","WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.
                  </div>
                  <div class="operate">
 
-                     <a th:href="@{'/roadmap/detail?roadmapId='+${strategyList.roadmapId}}" target="_blank" style="text-decoration: none;">
-                         <span class="reply">参与人数([[${strategyList.userNum}]])</span>
+                     <a th:href="@{'/roadmap/strategyDetail?strategyId='+${strategyList.strategyId}}" target="_blank" style="text-decoration: none;">
+                         <span class="reply">评论人数([[${strategyList.commentNum}]])</span>
+                     </a>
+                     <a th:href="@{'/roadmap/strategyDetail?strategyId='+${strategyList.strategyId}}" target="_blank" style="text-decoration: none;">
+                         <span class="reply">点赞人数([[${strategyList.likeNum}]])</span>
                      </a>
                      <span class="date">发布于[[${#dates.format(strategyList.createTime, 'yyyy-MM-dd HH:mm:ss')}]]</span>
                 </div>
@@ -180,7 +183,7 @@ window.Env = {"qa_page":"index","WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.
         <ul class="rank-list _j_rank_list">
             <li th:each="hotLis,stat : ${strategyHotList}" >
 
-                <a class="avatar" th:href="@{'/roadmap/detail?roadmapId='+${hotLis.roadmapId}}" target="_blank" rel="nofollow">[[${hotLis.title}]]</a>
+                <a class="" th:href="@{'/roadmap/strategyDetail?strategyId='+${hotLis.strategyId}}" target="_blank" rel="nofollow">[[${hotLis.title}]]</a>
 
 
             </li>

@@ -23,6 +23,7 @@ public class RoadmapStrategyEntity {
     private String content;
 
     private String headImg;
+    private String shortContent;
 
     private BigDecimal priceMax;
 

@@ -22,6 +22,7 @@ public class RoadmapStrategyVo {
     private String title;
 
     private String content;
+    private String shortContent;
 
     private String headImg;
 
