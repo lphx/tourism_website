@@ -142,9 +142,14 @@ public class RoadmapController {
         StrategyLikeEntity strategyLikeEntity = null;
         if (session != null){
             strategyLikeEntity = strategyLikeService.findOneByUserAndStrategy(session.getUserId(),strategyId);
+            model.addAttribute("sessionUser",session.getUserId());
+        }else {
+            model.addAttribute("sessionUser",0);
         }
         //评论信息
         List<StrategyCommentVo> strategyCommentList = strategyCommentService.findOneByStrategy(strategyId);
+
+
 
         model.addAttribute("roadmapStrategy",roadmapStrategy);
         model.addAttribute("userEntity",userEntity);

@@ -70,7 +70,7 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
        
 
 
-            <div class="bar_share _j_share_father _j_top_share_group" th:if="${session.user != null}">
+            <div class="bar_share _j_share_father _j_top_share_group" th:if="${sessionUser != 0}">
 
                 <div class="bs_collect " id="likeAddOrDelete">
                     <a th:if="${strategyLikeEntity == null}" th:onclick="'addLike('+${roadmapStrategy.strategyId}+','+${session.user.userId}+')'" href="javascript:void(0);"  class="aa" ><span></span><strong>点赞</strong></a>
@@ -156,7 +156,7 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
 	</div>
 <div class="mfw-cmt-wrap" id="_j_reply_list">
     <input type="hidden" th:id="rowNum" th:value="${strategyCommentList.size()}">
-    <form id="formOne" action="/strategyComment/saveAjaxPid" th:if="${session.user != null}">
+    <form id="formOne" action="/strategyComment/saveAjaxPid" th:if="${sessionUser != 0}">
 <div class="comment-add clearfix _j_word">
                         <input type="hidden" name="strategyId" th:value="${roadmapStrategy.strategyId}">
                         <input type="hidden" name="pid" value="0">
@@ -192,10 +192,30 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
 					<p>游记很丰富<img src="https://images.mafengwo.net/images/i/face/daily_v2/28@2x.png" style="width:23px;">请问永安寺壁画保留情况如何？值得一看不？</p>
 								</div>-->
                 <div class="mcmt-word" >
-                    <p class="_j_reply_content"  >评论：<span th:text="${commentList.content}">保存情况还可以，没必要特意跑一趟去看，去悬空寺的时候顺路看看</span> &nbsp;<a th:if="${session.user != null}" th:onclick="'showAndComment('+${commentList.id}+','+${commentList.userId}+')'" title="回复">回复</a></p>
+                    <p class="_j_reply_content"  >评论：<span th:text="${commentList.content}">保存情况还可以，没必要特意跑一趟去看，去悬空寺的时候顺路看看</span> &nbsp;<button th:if="${sessionUser != 0  }"  th:data-id="${commentList.id}" onclick="showAndComment(this.getAttribute('data-id'))" title="回复">回复</button></p>
+                    <form th:id="'formOne'+${commentList.id}" style="display:none;" action="/strategyComment/saveAjaxPid" th:if="${sessionUser != 0 }">
+                        <div class="comment-add clearfix _j_word">
+                            <input type="hidden" name="strategyId" th:value="${roadmapStrategy.strategyId}">
+                            <input type="hidden" name="pid" th:value="${commentList.id}">
+                            <input type="hidden" name="sendUserId" th:value="${session.user.userId}">
+                            <textarea class="_j_content _j_word_check" name="content"></textarea>
+                            <span class="word-count"><span class="_j_word_num">0</span>/<span class="_j_max_num">600</span> 字</span>
+                            <input class="btn-comment _j_publish_comment" type="button" onclick="requestAsync()" value="回复">
+                        </div>
+                    </form>
                 </div>
 				<div class="mcmt-word" th:each="childList : ${commentList.childList}" th:id="'ch'+${childList.id}">
-					<p class="_j_reply_content" th:id="'commentShow'+${commentList.id}">[[${childList.username1}]]评论[[${childList.username2}]]：[[${childList.content}]] &nbsp;<a th:if="${session.user != null || session.user.userId == childList.userId}" th:onclick="'showAndComment('+${childList.id}+','+${childList.userId}+')'" title="回复">回复</a></p>
+					<p class="_j_reply_content" th:id="'commentShow'+${commentList.id}">[[${childList.username1}]]评论[[${childList.username2}]]：[[${childList.content}]] &nbsp;<a th:if="${sessionUser != 0  }" th:data-id="${childList.id}" onclick="showAndComment(this.getAttribute('data-id'))"  title="回复">回复</a></p>
+                    <form th:id="'formOne'+${childList.id}" style="display:none;" action="/strategyComment/saveAjaxPid" th:if="${sessionUser!= 0  }">
+                        <div class="comment-add clearfix _j_word">
+                            <input type="hidden" name="strategyId" th:value="${roadmapStrategy.strategyId}">
+                            <input type="hidden" name="pid" th:value="${commentList.id}">
+                            <input type="hidden" name="sendUserId" th:value="${session.user.userId}">
+                            <textarea class="_j_content _j_word_check" name="content"></textarea>
+                            <span class="word-count"><span class="_j_word_num">0</span>/<span class="_j_max_num">600</span> 字</span>
+                            <input class="btn-comment _j_publish_comment" type="button" onclick="requestAsync()" value="回复">
+                        </div>
+                    </form>
 				</div>
 			</div>
             
@@ -210,13 +230,21 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
 
 
 <script>
+
+    function showAndComment(id) {
+        var aa = "#formOne"+id;
+        $(aa).css('display','block');
+
+
+    }
+
     var rowNum = $("#rowNum").val()+1;
     function requestAsync() {
 
         ajaxComment('#formOne');
     }
 
-    var suser = [[${session.user}]];
+    var suser = [[${sessionUser}]];
     function requestAsync(id) {
         var formOne =  '#formOne'+id;
         $.ajax({
@@ -231,11 +259,11 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
                 var commentAdd = "#commentAdd"+id;
                 var html1 = '<div class="mcmt-word" >\n' +
                     ' <p class="_j_reply_content" >'+data.username1+'评论'+data.username2+'：'+data.content+'>&nbsp;';
-                if(suser.userId != data.userId) {
+                if(suser != data.userId) {
                     html1 += '<a onclick="showAndComment('+data.id+','+data.userId+')" title="回复">回复</a></p>\n';
                 }
                    html1+= ' </div>';
-                $(commentAdd).append();
+                $(commentAdd).append(html1);
             },
             error:function(){
                 alert("请求失败")
@@ -269,7 +297,7 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
                     '                        <div class="mcmt-con">\n' +
                     '                          \n' +
                     '                            <div class="mcmt-word" >\n' +
-                    '                                <p class="_j_reply_content" id="commentAdd'+data.id+'" >评论：<span>'+data.content+'</span> &nbsp;<a  th:onclick="\'showAndComment(\'+${commentList.id}+\')\'" title="回复">回复</a></p>\n' +
+                    '                                <p class="_j_reply_content" id="commentAdd'+data.id+'" >评论：<span>'+data.content+'</span> &nbsp;<a  onclick="showAndComment('+data.id+')" title="回复">回复</a></p>\n' +
                     '                            </div>\n' +
                     '                        </div>\n' +
                     '                    </div>\n' +
@@ -283,21 +311,9 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
     }
 
     //展示主评论的回复
-    var addstrategyId = [[${roadmapStrategy.strategyId}]];
+   // var addstrategyId = [[${roadmapStrategy.strategyId}]];
 
-    function showAndComment(id,userId) {
-        var aa = "#commentAdd"+id;
-        $(aa).append('<form id="formOne'+id+'" action="/strategyComment/saveAjaxPid" ">\n' +
-            '<div class="comment-add clearfix _j_word">\n' +
-            '                        <input type="hidden" name="strategyId" value="'+addstrategyId+'">\n' +
-            '                        <input type="hidden" name="pid" value="'+id+'">\n' +
-            '                        <input type="hidden" name="sendUserId" value="'+userId+'">\n' +
-            '                        <textarea class="_j_content _j_word_check" style="width: 456px" name="content"></textarea>\n' +
-            '                        <span class="word-count"><span class="_j_word_num">0</span>/<span class="_j_max_num">600</span> 字</span>\n' +
-            '                        <input class="btn-comment _j_publish_comment" type="button" onclick="requestAsync('+id+')" value="回复">\n' +
-            '                    </div>\n' +
-            '    </form>');
-    }
+
 
 </script>
 
@@ -473,91 +489,13 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
 -->
     
     <div id="pnl_pop_reply"></div>
-<script id="_j_pnl_pop_reply" type="text/x-jquery-tmpl">
-    <div>
-        <div class="_j_comment_layer">
-                <div class="quoteWrap">
-                    <p class="tit">${title}</p>
-                    <div class="quoteInfo" style="display: ${display};">${word}</div>
-                    <div class="quick_reply_box">
-                        <div class="vc_reply">
-                            <div class="reply_con _j_article_mode _j_editor" id="_j_editor_quote" data-flag="${flag}" data-objid="0" data-link="${link}" data-ajax="1" data-quick="0" data-quote="${word}">
-                                <dl>
-                                    <dt>
-                                        <!--已选择的举牌-->
-                                        <i class="show-selected-give-sign" id="_js_quoteSelectedGiveSign">
-                                            <span class="close-selected-give-sign" id="_js_quoteDeleteShowGiveSign"></span>
-                                        </i>
-                                    <div class="art_title reply_choice">
-                                        <a href="javascript:void(0);" class="expression _j_show_expression" title="选择表情"></a>
-                                        <a href="javascript:void(0);" class="at _j_show_at" title="@他/她"></a>
-                                        <a href="javascript:void(0);" class="give_sign_btn _j_show_tags give_sign_btn _quote_give_sign_btn" title="举牌" style="display: none;"></a>
-                                        <!--<a href="javascript:void(0);" class="tags l17 on" title="举牌">举牌<i></i><span>经验值<strong>+5</strong></span></a>-->
-                                        <div class="clear"></div>
-                                        <div class="art_pop hide">
-                                            <div class="art_pop_title"></div>
-                                            <a href="#" class="exp_close">×</a>
-                                            <i class="art_arrow"></i>
-                                        </div>
-                                        <!--表情弹窗-->
-                                        <div class="art_pop _j_face_pop hide" data-cid="124">
-                                            <div class="art_pop_box art_face">
-                                                <ul class="clearfix">
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <!--@弹层-->
-                                        <div class="art_pop _j_at_pop at_pop hide">
-                                            <div class="at_someone _j_at_pop_box">
-                                                <div class="art_search at_input _j_at_inner">
-                                                    <input type="text" placeholder="请输入用户名号" class="_j_at_txt" value="">
-                                                    <ul class="result hide">
-                                                    </ul>
-                                                </div>
-                                                <div class="art_opt">
-                                                    <a href="javascript:void(0);" class="art_submit" title="确定">确定</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--举牌-->
-                                        <div class="art_pop mark_tags _j_tags_pop _j_quick_card_ch give-sign-details small-sign hide" id="_js_quoteGiveSign">
-                                            <p class="give-sign-details-title-section">
-                                                <span class="title">举牌子</span>
-                                                <span class="about-amount">
-                                                    <label>金币 : </label>
-                                                    <span class="amount"></span>
-                                                    <span class="need-amount"></span>
-                                                </span>
-                                            </p>
-                                            <ul class="give-sign-details-list-section small-sign">
-                                            </ul>
-                                        </div>
-                                </div>
-                                <div class="clear"></div>
-                                </dt>
-                                <dd>
-                                    <div class="reply_text">
-                                        <textarea class="_j_replyarea" name="reply_content" cols="30" rows="10"></textarea>
-                                    </div>
-                                </dd>
-                            </dl>
-                            <div class="publish_reply">
-                                <a href="javascript:void(0);" class="btn_big _j_publish_reply" title="回复">回复</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-        </div>
-    </div>
-</script>
 
 
 </div>
 
 
 
-
+</div>
 
 </body></html>
