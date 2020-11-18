@@ -65,5 +65,8 @@ public interface RoadmapUserMapper{
 
     @Select("SELECT id as id,roadmap_id as roadmapId,user_id as userId,status as status FROM `roadmap_user` WHERE user_id = #{userId} and roadmap_id = #{roadmapId}")
     RoadmapUserEntity findByUserAndId(Integer userId, Integer roadmapId);
+
+    @Update("UPDATE `roadmap_user` set status=#{status} where roadmap_id=#{roadmapId}")
+    void updateRoadmap(Integer roadmapId, Integer status);
 }
 

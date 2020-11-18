@@ -19,6 +19,8 @@ public interface RoadmapStrategyService{
 
 
     List<RoadmapStrategyVo> findAllAndScenicAndCommentAmdLikeList(Integer num, String keyword, Integer searchId, Integer page, Integer pageSize);
+
+    List<RoadmapStrategyVo> findByUser(Integer userId);
 }
 
 

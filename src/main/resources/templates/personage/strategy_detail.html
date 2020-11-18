@@ -64,6 +64,7 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
             </a>
                 <div class="vc_time">
             <span class="time">[[${#dates.format(roadmapStrategy.createTime, 'yyyy-MM-dd HH:mm:ss')}]]</span>
+                    &nbsp;&nbsp;<a th:if="${sessionUser == roadmapStrategy.userId}" th:href="'/roadmap/strategyEdit?strategyId='+${roadmapStrategy.strategyId}"><span >编辑</span></a>
                     </div>
             </div>
             
@@ -175,7 +176,7 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
                 </a>
 			</div>-->
 			<div class="mcmt-user">
-				<a href="/u/57385149.html" target="_blank" class="name">[[${commentList.username1}]] &nbsp;&nbsp;&nbsp;[[${commentList.createTime}]]</a>
+				<a th:href="'/user/detail?userId='+${userEntity.userId}" target="_blank" class="name">[[${commentList.username1}]] &nbsp;&nbsp;[[${#dates.format(commentList.createTime, 'yyyy-MM-dd HH:mm:ss')}]]</a>
                 				<!--<a href="/user/lv.php" class="level">LV.28</a>
 							 <a href="javascript:void(0);" class="per_attention" data-japp="following" data-uid="57385149" data-follow_class="hide">-->
                     </a>
@@ -330,7 +331,7 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
         <div id="pagelet-block-c255ebf3e6947a68fc7c0f737d4dec11" class="pagelet-block" data-api=":note:pagelet:rightMddApi" data-params="{&quot;iid&quot;:&quot;12065706&quot;}" data-async="1" data-controller="">    <div class="slide-right-container">
                 <div class="relation_mdd">相关目的地：
                                                                         &nbsp;&nbsp;
-                    <a href="/travel-scenic-spot/mafengwo/13033.html" target="_blank"  class="_j_mdd_stas" th:each="list : ${roadmapScenicList}"><span th:text="${list.scenicName}"></span>&nbsp;<!--山西--></a>
+                    <a   target="_blank"  class="_j_mdd_stas" th:each="list : ${roadmapScenicList}" th:href="@{'/roadmap/strategyList?num=1&keyword='+${list.scenicName}}"><span th:text="${list.scenicName}" ></span>&nbsp;<!--山西--></a>
                                                                                 &nbsp;&nbsp;
 
                                                         </div>

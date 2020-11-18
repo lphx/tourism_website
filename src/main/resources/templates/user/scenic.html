@@ -1,7 +1,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head><script type="text/javascript" async="" charset="utf-8" src="https://c.cnzz.com/core.php?web_id=30065558&amp;t=q"></script><script type="text/javascript" async="" charset="utf-8" src="https://w.cnzz.com/c.php?id=30065558&amp;async=1"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>线路</title>
 
 <script src="https://hm.baidu.com/hm.js?8288b2ed37e5bc9b4c9f7008798d2de0"></script><script type="text/javascript">
 window.Env = {"target_uid":62368924,"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_HTTP":"https:\/\/w.mafengwo.cn","P_HOST":"passport.mafengwo.cn","P_HTTP":"https:\/\/passport.mafengwo.cn","PAGELET_HTTP":"https:\/\/pagelet.mafengwo.cn","JS_HOST":"js.mafengwo.net","TONGJI_HOST":"tongji.mafengwo.cn","UID":0,"CSTK":"adb18f5707f3c55847d51499f03c4b48_466dfa4343d12ed051c7ed095d0a6aeb","GOOGLE_MAP_KEY":"AIzaSyD-Su0x_rPy1xehlMBcMyTqWkU49Bk53nQ"};
@@ -61,7 +60,7 @@ window.Env = {"target_uid":62368924,"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"ima
 </div>
                 <ul class="flt2">
                     <li ><a class="tags_link" th:href="'/user/detail?userId='+${userEntity.userId}" >主页</a></li>
-                    <li th:if="${userEntity.jurisdiction == 1}"><a class="tags_link" th:href="'/user/scenic?userId='+${userEntity.userId}">景点</a></li>
+                    <li th:if="${userSession != 0 && session.user.jurisdiction == 1}"><a class="tags_link" th:href="'/user/scenic?userId='+${userEntity.userId}">景点</a></li>
                     <li class="on"> <a class="tags_link" th:href="'/user/roadmap?userId='+${userEntity.userId}" >线路</a></li>
                     <li><a class="tags_link" href="/wenda/u/77119521/answer.html" >线路攻略</a></li>
                     </ul>
@@ -74,13 +73,13 @@ window.Env = {"target_uid":62368924,"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"ima
     <div class="row row-bg">
         <div class="wrapper mod-mylist">
             <div class="hd">
-               <span><a href="/roadmap/add" class="_j_care_add" data-type="0">添加路线 <em></em></a></span>
+               <span><a href="/scenic/add" class="_j_care_add" data-type="0">添加景点<em></em></a></span>
             </div>
             <div class="bd">
                 <table>
                     <thead>
                     <tr>
-                        <td class="event">景点名称</td>
+                        <td class="event">计划名称</td>
                        <td class="departure"></td>
                         <td class="destination"></td>
                        <td class="date"></td>
@@ -88,10 +87,10 @@ window.Env = {"target_uid":62368924,"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"ima
                     </tr>
                     </thead>
                     <tbody class="_j_tbody">
-                                <tr class="self" xmlns="http://www.w3.org/1999/html" th:each="list : ${roadmapList}" th:id="list+${list.roadmapId}">
+                                <tr class="self" xmlns="http://www.w3.org/1999/html" th:each="list : ${scenicList}" th:id="list+${list.scenicId}">
         <td class="event">
-            <span class="image"><a href="/together/detail/1378597.html" th:href="'/roadmap/detail?roadmapId=' + ${list.roadmapId}" ><img th:src="${list.picture}" src="https://n1-q.mafengwo.net/s7/M00/9A/A6/wKgB6lSor-OAU4smAAaUrOFQe9A574.png?imageMogr2%2Fthumbnail%2F%21200x130r%2Fgravity%2FCenter%2Fcrop%2F%21200x130%2Fquality%2F100" height="80" width="120"></a></span>
-            <h3 class="title"><a th:href="'/user/detail?userId=' + ${list.userId}"><span class="tag" th:text="${list.username}">solene2010</span>[[${list.title}]]</a></h3>
+
+            <h3 class="title"><a th:href="'/user/detail?userId=' + ${list.userId}">[[${list.name}]]</a></h3>
             <!--<span class="count"><i class="icon-view"></i>334</span>
             <span class="count"><i class="icon-reply"></i>9</span>-->
         </td>
@@ -101,15 +100,13 @@ window.Env = {"target_uid":62368924,"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"ima
         </td>
       <td class="date"></td>
         <td class="date">
-            <div class="time _j_time">
-                <span th:text="${#dates.format(list.createTime, 'yyyy-MM-dd HH:mm:ss')}">08月25日</span>
-            </div>
+
             <div class="action" style="margin-top: 10px;">
 
-                <span th:if="${userSession == list.userId}">
-                    <a class="btn" th:if="${ list.status == 3}" th:href="'/roadmap/strategyAdd?roadmapId='+${list.roadmapId}" >
-                        <span > 写攻略</span></a>&nbsp;
-                    <a class="btn"  th:onclick="'deleteRoadmap('+${list.roadmapId}+')'" >
+                <span >
+                    <a class="btn"  th:href="'/scenic/edit?scenicId='+${list.scenicId}" >
+                        <span >编辑</span></a>&nbsp;
+                    <a class="btn"  th:onclick="'deleteScenic('+${list.scenicId}+')'" >
                         <span > 删除</span></a>&nbsp;
                 </span>
 
@@ -132,12 +129,12 @@ window.Env = {"target_uid":62368924,"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"ima
 
     <script>
 
-        function deleteRoadmap(id) {
+        function deleteScenic(id) {
             var formOne =  '#list'+id;
             $(formOne).remove();
             $.ajax({
                 type:'delete',
-                url:'/roadmap/remove?roadmapId='+id,
+                url:'/scenic/remove?scenicId='+id,
                 cache: false,
                 dataType:'json',
                 success:function(res){

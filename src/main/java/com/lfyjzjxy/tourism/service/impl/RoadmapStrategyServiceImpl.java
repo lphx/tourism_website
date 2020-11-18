@@ -71,6 +71,11 @@ public class RoadmapStrategyServiceImpl implements RoadmapStrategyService {
         return roadmapStrategyMapper.findAllAndScenicAndCommentAmdLikeList(null,null,searchId,page,pageSize);
     }
 
+    @Override
+    public List<RoadmapStrategyVo> findByUser(Integer userId) {
+        return roadmapStrategyMapper.findByUser(userId);
+    }
+
 }
 
 

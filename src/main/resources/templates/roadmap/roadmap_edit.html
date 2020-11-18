@@ -47,6 +47,7 @@
 
             <form class="layui-form" action="">
                 <input id="scenicSpan" name="scenicSpan" type="hidden">
+                <input id="roadmapId" name="roadmapId" th:value="${roadmapId}" type="hidden">
               <input id="shortContent" name="shortContent" type="hidden">
                 <input id="picture" name="picture" type="hidden">
                 <div class="layui-form-item">
@@ -215,7 +216,7 @@
 
                     //监听提交
                     form.on('submit(formDemo)', function(data){
-                        layer.msg(JSON.stringify(data.field));
+                        //layer.msg(JSON.stringify(data.field));
                         $.ajax({
                             type:'put',
                             url:'/roadmap/update',

@@ -1,7 +1,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head><script type="text/javascript" async="" charset="utf-8" src="https://c.cnzz.com/core.php?web_id=30065558&amp;t=q"></script><script type="text/javascript" async="" charset="utf-8" src="https://w.cnzz.com/c.php?id=30065558&amp;async=1"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>少女鹿西的窝 - 马蜂窝</title>
+<title>主页</title>
 <meta name="renderer" content="webkit">
 
 <script src="https://hm.baidu.com/hm.js?8288b2ed37e5bc9b4c9f7008798d2de0"></script><script type="text/javascript">
@@ -85,9 +85,9 @@ window.Env = {"profileSetting":{"banner_cover":"","banner_cover_url":"","banner_
 
 </div>
                 <ul class="flt2">
-            <li class="on"><a class="tags_link" th:href="'/user/detail?userId='+${userId}" >小窝</a></li>
-            <li><a class="tags_link" href="/u/77119521/note.html">游记</a></li>
-            <li><a class="tags_link" th:href="'/user/roadmap?userId='+${userId}" >线路</a></li>
+            <li class="on"><a class="tags_link" th:href="'/user/detail?userId='+${userEntity.userId}" >主页</a></li>
+            <li th:if="${userSession != 0 && session.user.jurisdiction == 1}"><a class="tags_link" th:href="'/user/scenic?userId='+${userEntity.userId}">景点</a></li>
+            <li><a class="tags_link" th:href="'/user/roadmap?userId='+${userEntity.userId}" >线路</a></li>
             <li><a class="tags_link" href="/wenda/u/77119521/answer.html" >线路攻略</a></li>
          <!--   <li id="_j_pathnav"><a class="tags_link" href="/path/77119521.html" title="TA的足迹">TA的足迹</a></li>
                         <li><a class="tags_link" href="/u/77119521/together.html" title="TA的结伴">TA的结伴</a></li>-->
@@ -166,14 +166,14 @@ window.Env = {"profileSetting":{"banner_cover":"","banner_cover_url":"","banner_
 
 <div class="MAvatar">
     <div class="MAvaImg hasAva">
-        <img src="https://p1-q.mafengwo.net/s16/M00/F5/66/CoUBUl6n6MGAFclFABmSH9bbhRI71.jpeg?imageMogr2%2Fthumbnail%2F%21200x200r%2Fgravity%2FCenter%2Fcrop%2F%21200x200%2Fquality%2F90" height="120" width="120" alt="少女鹿西">
+        <img th:src="${userEntity.photo}" src="https://p1-q.mafengwo.net/s16/M00/F5/66/CoUBUl6n6MGAFclFABmSH9bbhRI71.jpeg?imageMogr2%2Fthumbnail%2F%21200x200r%2Fgravity%2FCenter%2Fcrop%2F%21200x200%2Fquality%2F90" height="120" width="120" alt="少女鹿西">
     </div>
-    <div class="MAvaName">少女鹿西
+    <div class="MAvaName">[[${userEntity.username}]]
     
                     <i class="MGenderFemale"></i>
                 </div>
 
-        <div class="its_tags">
+        <!--<div class="its_tags">
         <a href="/home/vip_show.php" target="_blank" title="VIP"><i class="vip"></i></a>
     <a href="/rudder/info.php" target="_blank" title="分舵"><i class="duo"></i>
     </a><a href="/qa/expert_apply.php?type=1" target="_blank" title="指路人"><i class="zhiluren"></i></a>
@@ -181,7 +181,7 @@ window.Env = {"profileSetting":{"banner_cover":"","banner_cover_url":"","banner_
     <div class="MAvaInfo clearfix">
         <span class="MAvaLevel flt1">等级：<a title="Lv.27" target="_blank">Lv.27</a></span>
         <span class="MAvaPlace flt1" title="上海">现居：上海</span>        <span class="MAvaSet"><a title="设置" href="/setting/" target="_blank"></a></span>
-    </div>
+    </div>-->
        </div>
 
 
@@ -191,8 +191,8 @@ window.Env = {"profileSetting":{"banner_cover":"","banner_cover_url":"","banner_
         <div class="content flt2">
                             <div class="common_block main_links">
                     <ul class="clearfix">
-                        <li><a href="/note/create_index.php" target="_blank"><i class="write_note"></i><span>写游记</span></a></li>
-                        <li class="last"><a href="/together/" target="_blank"><i class="invite_friends"></i><span>发布结伴</span></a></li>
+                       <!-- <li><a href="#" target="_blank"><i class="write_note"></i><span>写游记</span></a></li>-->
+                        <li class="last"><a href="/roadmap/add" target="_blank"><i class="invite_friends"></i><span>发布线路</span></a></li>
                     </ul>
                                     </div>
                           
@@ -201,46 +201,29 @@ window.Env = {"profileSetting":{"banner_cover":"","banner_cover_url":"","banner_
 
         <div class="notes_list">
         <ul>
-                            <li data-order="1" data-top="0">
+                          <li data-order="1" data-top="0" th:each="vlist : ${voList}">
                     <dl>
                         <dt>
-                            <a href="/i/20968030.html" target="_blank" id="_j_coverlink_20968030"><img src="https://b1-q.mafengwo.net/s17/M00/41/AE/CoUBXl9_1nyAOCycAAuwJTyt3xA80.jpeg?imageMogr2%2Fthumbnail%2F%21680x400r%2Fgravity%2FCenter%2Fcrop%2F%21680x400%2Fquality%2F90" height="400" width="680" alt="封面"></a>
-                        <div class="hover_item">
-                            <div class="thumb_description">
-                                                                    <strong>上海/</strong>
-                                                                                                    <span>中国/</span>
-                                                                                                <span>10月</span>
-                                                            </div>
+                            <a th:href="@{'/roadmap/strategyDetail?strategyId='+${vlist.strategyId}}" target="_blank" id="_j_coverlink_20968030"><img th:src="${vlist.headImg}" src="https://b1-q.mafengwo.net/s17/M00/41/AE/CoUBXl9_1nyAOCycAAuwJTyt3xA80.jpeg?imageMogr2%2Fthumbnail%2F%21680x400r%2Fgravity%2FCenter%2Fcrop%2F%21680x400%2Fquality%2F90" height="400" width="680" alt="封面"></a>
 
-                            <a class="note_up _j_up_icon" style="display: none" data-iid="20968030" title="置顶"></a>
-                            
-                        </div>
                         </dt>
                         <dd>
                             <div class="note_title clearfix">
-                                <div class="MDing">
-                                    <span id="topvote20968030">25</span><a role="button" data-japp="articleding" rel="nofollow" data-iid="20968030" data-vote="25" title="顶一下">顶</a>
-                                </div>
+
                                 <div class="note_info">
                                     <h3>
-                                                                                <a href="/i/20968030.html" target="_blank" title="上海 | 不得不知道的五大Brunch餐厅，吃的就是那份口味和情调">上海 | 不得不知道的五大Brunch餐厅，吃的就是那份口味和情调</a></h3>
-                                    <div class="note_more">
+                                     <a th:href="@{'/roadmap/strategyDetail?strategyId='+${vlist.strategyId}}" target="_blank" >[[${vlist.title}]]</a></h3>
 
-                                        <span class="MInfoNum"><i class="MIcoView"></i><em>255/0</em></span>
-                                        
-                                        <span class="MInfoNum"><i class="MIcoStar"></i><em>5</em></span>
-                                        <span class="time">2020-10-09 19:46:41</span>
-                                    </div>
 
                                 </div>
                             </div>
-                            <div class="note_word">
-                                今天是国庆节假期的第一天，没想到吧？我来更新上海Brunch推荐啦！
+                            <div class="note_word"><span th:text="${vlist.shortContent}"></span>...
+                              <!--  今天是国庆节假期的第一天，没想到吧？我来更新上海Brunch推荐啦！
 
 一番略带焦急的开场之后，就开始重磅推出来第一家：
 1. all day brunch Bistro
 地址：镇宁路217号
-这家店可谓是网红店的代言，颜值和口味都值得一提再提，每次来每次惊喜，闭着眼睛点菜...
+这家店可谓是网红店的代言，颜值和口味都值得一提再提，每次来每次惊喜，闭着眼睛点菜...-->
                             </div>
                         </dd>
                     </dl>

@@ -82,7 +82,7 @@ window.Env = {"qa_page":"index","WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.
                                 
         <li class="item clearfix " data-qid="10224813" th:each="strategyList : ${strategyList}" >
              <div class="title">
-                   <a th:href="@{'/roadmap/detail?roadmapId='+${strategyList.roadmapId}}" target="_blank">[[${strategyList.title}]]</a>
+                   <a th:href="@{'/roadmap/strategyDetail?strategyId='+${strategyList.strategyId}}" target="_blank">[[${strategyList.title}]]</a>
              </div>
              <div class="container">
                  <div class="avatar">
@@ -102,7 +102,7 @@ window.Env = {"qa_page":"index","WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.
                  </div>
                  <div class="tags">
                      <div th:each="scenicList : ${strategyList.roadmapScenicList}">
-                        <a class="a-tag _j_filter_click" th:href="@{'/roadmap/list?num=1&keyword='+${scenicList.scenicName}}" target="_blank">[[${scenicList.scenicName}]]</a>
+                        <a class="a-tag _j_filter_click" th:href="@{'/roadmap/strategyList?num=1&keyword='+${scenicList.scenicName}}" target="_blank">[[${scenicList.scenicName}]]</a>
                      </div>
                  </div>
                  <div class="operate">
@@ -176,7 +176,7 @@ window.Env = {"qa_page":"index","WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.
     <div class="bd">
         <ul class="tab-num" data-cs-p="rank_list">
             <div align="center">
-              热门参与
+              热门线路攻略
             </div>
             
         </ul>
@@ -217,16 +217,16 @@ window.Env = {"qa_page":"index","WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.
                return;
            }
         }
-        window.location.href = "/roadmap/list?num="+num+"&keyword="+keyword+"&searchId="+searchId;
+        window.location.href = "/roadmap/strategyList?num="+num+"&keyword="+keyword+"&searchId="+searchId;
     }
     function  searchRoadmap1(searchId) {
         let url = "";
         var keyword = $("#keyword").val();
         var num = $("input[name='num']:checked").val();
         if (keyword == null || num == null){
-            url = "/roadmap/list?searchId="+searchId;
+            url = "/roadmap/strategyList?searchId="+searchId;
         }else {
-            url = "/roadmap/list?num="+num+"&keyword="+keyword+"&searchId="+searchId;
+            url = "/roadmap/strategyList?num="+num+"&keyword="+keyword+"&searchId="+searchId;
         }
         window.location.href = url;
     }
@@ -236,9 +236,9 @@ window.Env = {"qa_page":"index","WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.
         var searchId = $("#searchId").val();
         var num = $("input[name='num']:checked").val();
 
-        let url = "/roadmap/listAjax?num="+num+"&keyword="+keyword+"&searchId="+searchId+"&page="+page;
+        let url = "/roadmapStrategy/listAjax?num="+num+"&keyword="+keyword+"&searchId="+searchId+"&page="+page;
         if (keyword == null || num == null){
-            url = "/roadmap/listAjax?searchId="+searchId+"&page="+page;
+            url = "/roadmapStrategy/listAjax?searchId="+searchId+"&page="+page;
         }
 
         $.ajax({
@@ -253,21 +253,21 @@ window.Env = {"qa_page":"index","WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.
                     for(var i in result){
                         html += '<li class="item clearfix " data-qid="10224813" > ' +
                             '             <div class="title"> ' +
-                            '                   <a href="\'/roadmap/detail?roadmapId=\''+result[i].roadmapId+'" target="_blank">'+result[i].title+'</a>\n' +
+                            '                   <a href="\'/roadmap/strategyDetail?strategyId=\''+result[i].strategyId+'" target="_blank">'+result[i].title+'</a>\n' +
                             '             </div>\n' +
                             '             <div class="container">\n' +
                             '                 <div class="avatar">\n' +
-                            '                      <a href="/wenda/u/10121911/answer.html" target="_blank" class="_j_filter_click">\n' +
+                            '                      <a href="\'/user/detail?userId=\''+result[i].userId+'" target="_blank" class="_j_filter_click">\n' +
                             '                            <img class="_j_filter_click" src="'+result[i].photo+'">\n' +
                             '                      </a>\n' +
                             '                 </div>\n' +
                             '                 <div class="user-info">\n' +
-                            '                     <a class="name _j_filter_click" href="/wenda/u/10121911/answer.html" target="_blank">'+result[i].username+'</a>\n' +
+                            '                     <a class="name _j_filter_click" href="\'/user/detail?userId=\''+result[i].userId+'" target="_blank">'+result[i].username+'</a>\n' +
                             '                 </div>\n' +
                             '                 <div class="desc clearfix">\n' +
-                            '                     <a href="\'/roadmap/detail?roadmapId=\''+result[i].roadmapId+'" target="_blank" style="color: #666;">\n' +
-                            '                         <img src="'+result[i].picture+'" width="150" height="100">\n' +
-                            '                         <p >'+result[i].content+'...</p>\n' +
+                            '                     <a href="\'/roadmap/strategyDetail?strategyId=\''+result[i].strategyId+'" target="_blank" style="color: #666;">\n' +
+                            '                         <img src="'+result[i].headImg+'" width="150" height="100">\n' +
+                            '                         <p >'+result[i].shortContent+'...</p>\n' +
                             '                     </a>\n' +
                             '                 </div>\n' +
                             '                 <div class="tags">\n';
@@ -278,13 +278,16 @@ window.Env = {"qa_page":"index","WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.
 
                             html +=
                             '                 </div>\n' +
-                            '                 <div class="operate">\n' +
-                            '\n' +
-                            '                     <a href="@{\'/roadmap/detail?roadmapId=\''+result[i].roadmapId+'" target="_blank" style="text-decoration: none;">\n' +
-                            '                         <span class="reply">参与人数('+result[i].userNum+')</span>\n' +
-                            '                     </a>\n' +
-                            '                     <span class="date">发布于'+result[i].createTime+'</span>\n' +
-                            '                </div>\n' +
+                            ' <div class="operate">\n' +
+                                '\n' +
+                                '                     <a href="@{\'/roadmap/strategyDetail?strategyId=\''+result[i].strategyId+'" target="_blank" style="text-decoration: none;">\n' +
+                                '                         <span class="reply">评论人数('+result[i].commentNum+')</span>\n' +
+                                '                     </a>\n' +
+                                '                     <a href="@{\'/roadmap/strategyDetail?strategyId=\''+result[i].strategyId+'" target="_blank" style="text-decoration: none;">\n' +
+                                '                         <span class="reply">点赞人数('+result[i].likeNum+')</span>\n' +
+                                '                     </a>\n' +
+                                '                     <span class="date">发布于'+result[i].createTime+'</span>\n' +
+                                '                </div>' +
                             '            </div>\n' +
                             '        </li>';
                     }
@@ -292,7 +295,7 @@ window.Env = {"qa_page":"index","WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.
                     $("#ulDataAppend").append(html);
                     page  = page+1;
 
-                    if (result.length > 0) {
+                    if (data.data.length > 0) {
                         $("#jiazai").html(' <div class="ft ft_load_btn">\n' +
                             '                    <div class="answer-more _j_add_more_button " onclick="searchRoadmapAjax(' + page + ')">\n' +
                             '                        <a>加载更多<i></i></a>\n' +

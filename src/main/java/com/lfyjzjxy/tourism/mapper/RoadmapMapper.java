@@ -51,7 +51,7 @@ public interface RoadmapMapper{
      * 添加数据
      */
     @Options(useGeneratedKeys = true, keyProperty = "roadmapId",keyColumn="roadmap_id")
-    @Insert("INSERT INTO  `roadmap` ( user_id,title,content,status,create_time,picture) VALUES(#{userId},#{title},#{content},#{status},now(),#{picture})")
+    @Insert("INSERT INTO  `roadmap` ( user_id,title,content,status,create_time,picture) VALUES(#{userId},#{title},#{content}, ,now(),#{picture})")
     int save(RoadmapEntity roadmapEntity);
 
     /**
@@ -63,7 +63,7 @@ public interface RoadmapMapper{
     /**
      * 更新数据
      */
-    @Update("UPDATE `roadmap` set roadmap_id=#{roadmapId},user_id=#{userId},title=#{title},content=#{content},picture=#{picture} where roadmap_id = #{roadmapId}")
+    @Update("UPDATE `roadmap` set roadmap_id=#{roadmapId},user_id=#{userId},title=#{title},content=#{content},picture=#{picture},status=#{status} where roadmap_id = #{roadmapId}")
     void update(RoadmapEntity roadmapEntity);
 
 
@@ -90,7 +90,7 @@ public interface RoadmapMapper{
     @Select("SELECT u.username as username, r.roadmap_id as roadmapId,r.user_id as userId,r.title as title,r.content as content,r.`status` as `status`,r.create_time as createTime,r.picture as picture \n" +
             "FROM `roadmap` r " +
             " join `user` u on r.user_id = u.user_id " +
-            " where r.roadmap_id in(select rs.roadmap_id from roadmap_user rs where  user_id = #{userId}) and r.`status` = 1 order by r.create_time desc")
+            " where r.roadmap_id in(select rs.roadmap_id from roadmap_user rs where  user_id = #{userId})  order by r.create_time desc")
     List<RoadmapVo> findByUser(Integer userId);
 }
 

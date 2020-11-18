@@ -64,11 +64,11 @@ public class ScenicController {
         if (userSession == null){
             return "common/error";
         }
-        ScenicEntity scenicEntity = scenicService.findUserId(userSession.getUserId(),scenicId);
+        /*ScenicEntity scenicEntity = scenicService.findUserId(userSession.getUserId(),scenicId);
         if (scenicEntity==null){
             //return "redirect:detail?scenicId="+scenicId;
             return "common/error";
-        }
+        }*/
         //假如用户没有编辑的权限就定型到详情页
 
         model.addAttribute("scenicId",scenicId);

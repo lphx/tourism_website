@@ -1,8 +1,11 @@
 package com.lfyjzjxy.tourism.api;
 
+import com.alibaba.fastjson.JSONObject;
 import com.lfyjzjxy.tourism.entity.RoadmapStrategyEntity;
+import com.lfyjzjxy.tourism.entity.RoadmapVo;
 import com.lfyjzjxy.tourism.service.RoadmapStrategyService;
 import com.lfyjzjxy.tourism.util.HttpCode;
+import com.lfyjzjxy.tourism.vo.RoadmapStrategyVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,6 +56,14 @@ public class RoadmapStrategyApi {
     @GetMapping("/findAll")
     public List<RoadmapStrategyEntity> findAll() {
         return roadmapStrategyService.findAllList();
+    }
+
+    @GetMapping("/listAjax")
+    public HttpCode listAjax(Integer num, String keyword, Integer searchId , Integer page){
+        JSONObject jsonObject = new JSONObject();
+        List<RoadmapStrategyVo> strategyList = roadmapStrategyService.findAllAndScenicAndCommentAmdLikeList(num, keyword, searchId, page, 10);
+        jsonObject.put("strategyList",strategyList);
+        return HttpCode.success(jsonObject);
     }
 
 }

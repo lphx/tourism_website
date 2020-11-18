@@ -93,6 +93,7 @@ public class RoadmapServiceImpl implements RoadmapService {
                 roadmapScenicMapper.save(roadmapScenicEntity);
             });
         }
+        roadmapUserMapper.updateRoadmap(roadmapVo.getRoadmapId(),roadmapVo.getStatus());
     }
 
     @Override
