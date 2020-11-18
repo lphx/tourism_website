@@ -59,11 +59,11 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
     <div class="view_title clearfix">
 
         <div class="person" data-cs-t="ginfo_person_operate">
-        <a href="/u/57385149.html" target="_blank" class="per_pic"><img width="120" height="120" th:src="${userEntity.photo}" alt=""></a>
-                <strong><a href="/u/57385149.html" target="_blank" class="per_name">[[${userEntity.username}]]</a></strong>
+        <a th:href="'/user/detail?userId='+${userEntity.userId}" target="_blank" class="per_pic"><img width="120" height="120" th:src="${userEntity.photo}" alt=""></a>
+                <strong><a th:href="'/user/detail?userId='+${userEntity.userId}" target="_blank" class="per_name">[[${userEntity.username}]]</a></strong>
             </a>
                 <div class="vc_time">
-            <span class="time">[[${roadmapStrategy.createTime}]]</span>
+            <span class="time">[[${#dates.format(roadmapStrategy.createTime, 'yyyy-MM-dd HH:mm:ss')}]]</span>
                     </div>
             </div>
             

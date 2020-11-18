@@ -47,8 +47,8 @@ window.Env = {"id":21145651,"share_info":{"share_title":"\u65c5\u6e38\u8bdd\u989
             <h2 class="group-hd"><span id="title" th:text="${roadmapVo.title}"></span></h2>
             <div class="wdj clearfix">
                 <div class="info">
-                    <a href="/u/55262643.html" class="author" target="_blank"><img id="userPhoto" th:src="${roadmapVo.photo}" alt=""></a>
-                    <div>发起人 <a href="/u/55262643.html" target="_blank" class="name"><span th:text="${roadmapVo.username}"></span></a></div>
+                    <a th:href="'/user/detail?userId='+${roadmapVo.userId}" class="author" target="_blank"><img id="userPhoto" th:src="${roadmapVo.photo}" alt=""></a>
+                    <div>发起人 <a th:href="'/user/detail?userId='+${roadmapVo.userId}" target="_blank" class="name"><span th:text="${roadmapVo.username}"></span></a></div>
                     <p class="time" id="createTime1" th:text="${#dates.format(roadmapVo.createTime, 'yyyy-MM-dd HH:mm:ss')}">2020-11-11 17:07:17</p>
                     <p th:if="${userId == roadmapVo.userId}"><a th:href="@{'/roadmap/edit?roadmapId='+${roadmapVo.roadmapId}}"> 编辑 </a></p>
                 </div>

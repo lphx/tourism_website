@@ -87,5 +87,10 @@ public interface RoadmapMapper{
     RoadmapVo findById(Integer roadmapId);
 
 
+    @Select("SELECT u.username as username, r.roadmap_id as roadmapId,r.user_id as userId,r.title as title,r.content as content,r.`status` as `status`,r.create_time as createTime,r.picture as picture \n" +
+            "FROM `roadmap` r " +
+            " join `user` u on r.user_id = u.user_id " +
+            " where r.roadmap_id in(select rs.roadmap_id from roadmap_user rs where  user_id = #{userId}) and r.`status` = 1 order by r.create_time desc")
+    List<RoadmapVo> findByUser(Integer userId);
 }
 

@@ -81,12 +81,12 @@ window.Env = {"qa_page":"index","WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.
              </div>
              <div class="container">
                  <div class="avatar">
-                      <a href="/wenda/u/10121911/answer.html" target="_blank" class="_j_filter_click">
+                      <a th:href="'/user/detail?userId='+${roadmapList.userId}"  target="_blank" class="_j_filter_click">
                             <img class="_j_filter_click" th:src="${roadmapList.photo}">
                       </a>
                  </div>
                  <div class="user-info">
-                     <a class="name _j_filter_click" href="/wenda/u/10121911/answer.html" target="_blank">[[${roadmapList.username}]]</a>
+                     <a class="name _j_filter_click" th:href="'/user/detail?userId='+${roadmapList.userId}" target="_blank">[[${roadmapList.username}]]</a>
                      <span class="name level _j_filter_click"  target="_blank">[[${roadmapList.status == 1?'结伴中':'结伴结束'}]]</span>
                  </div>
                  <div class="desc clearfix">

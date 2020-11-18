@@ -19,6 +19,8 @@ public interface RoadmapService{
    RoadmapVo findById(Integer roadmapId);
 
     List<RoadmapVo> findAllAndScnicList(Integer num, String keyword,Integer searchId,Integer page,Integer pageSize);
+
+    List<RoadmapVo> findByUser(Integer userId);
 }
 
 

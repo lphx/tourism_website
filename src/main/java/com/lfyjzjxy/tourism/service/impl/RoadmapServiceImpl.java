@@ -120,6 +120,11 @@ public class RoadmapServiceImpl implements RoadmapService {
         return roadmapMapper.findAllAndScnicList(null,null,searchId,page,pageSize);
     }
 
+    @Override
+    public List<RoadmapVo> findByUser(Integer userId) {
+        return roadmapMapper.findByUser(userId);
+    }
+
 
 }
 

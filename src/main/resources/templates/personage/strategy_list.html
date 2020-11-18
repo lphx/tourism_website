@@ -86,12 +86,12 @@ window.Env = {"qa_page":"index","WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.
              </div>
              <div class="container">
                  <div class="avatar">
-                      <a href="/wenda/u/10121911/answer.html" target="_blank" class="_j_filter_click">
+                      <a th:href="'/user/detail?userId='+${strategyList.userId}" target="_blank" class="_j_filter_click">
                             <img class="_j_filter_click" th:src="${strategyList.photo}">
                       </a>
                  </div>
                  <div class="user-info">
-                     <a class="name _j_filter_click" href="/wenda/u/10121911/answer.html" target="_blank">[[${strategyList.username}]]</a>
+                     <a class="name _j_filter_click" th:href="'/user/detail?userId='+${strategyList.userId}" target="_blank">[[${strategyList.username}]]</a>
 
                  </div>
                  <div class="desc clearfix">
