@@ -35,8 +35,8 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
 <div class="main">
     
     <div class="set_index" id="_j_cover_box" style="height: 506.333px;">
-                <div class="set_bg _j_load_cover" th:style="'z-index: 1; background-image: url('+${roadmapStrategy.headImg}+'); opacity: 1;'">
-        <img src="https://p1-q.mafengwo.net/s13/M00/A5/9B/wKgEaVx1MnuAS1MpAAloy7SiZ3c60.jpeg?imageMogr2%2Fstrip" th:src="${roadmapStrategy.headImg}" style="display: none">
+                <div class="set_bg _j_load_cover" th:style="'z-index: 1; background-image: url('+${travelEntity.picture}+'); opacity: 1;'">
+        <img src="https://p1-q.mafengwo.net/s13/M00/A5/9B/wKgEaVx1MnuAS1MpAAloy7SiZ3c60.jpeg?imageMogr2%2Fstrip" th:src="${travelEntity.picture}" style="display: none">
     </div>
                     
     <div class="fully_loading" style="display: none;">
@@ -48,7 +48,7 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
         <div class="title_bg"></div>
         <div class="view_info" data-length="13">
             <div class="vi_con">
-                <h1 data-length="13" class="headtext lh80" style="white-space: nowrap; overflow-wrap: normal;">[[${roadmapStrategy.title}]]</h1>
+                <h1 data-length="13" class="headtext lh80" style="white-space: nowrap; overflow-wrap: normal;">[[${travelEntity.title}]]</h1>
             </div>
         </div>
     </div>
@@ -63,8 +63,8 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
                 <strong><a th:href="'/user/detail?userId='+${userEntity.userId}" target="_blank" class="per_name">[[${userEntity.username}]]</a></strong>
             </a>
                 <div class="vc_time">
-            <span class="time">[[${#dates.format(roadmapStrategy.createTime, 'yyyy-MM-dd HH:mm:ss')}]]</span>
-                    &nbsp;&nbsp;<a th:if="${sessionUser == roadmapStrategy.userId}" th:href="'/roadmap/strategyEdit?strategyId='+${roadmapStrategy.strategyId}"><span >编辑</span></a>
+            <span class="time">[[${#dates.format(travelEntity.createTime, 'yyyy-MM-dd HH:mm:ss')}]]</span>
+                    &nbsp;&nbsp;<a th:if="${sessionUser == travelEntity.userId}" th:href="'/travel/edit?travelId'+${travelEntity.travelId}"><span >编辑</span></a>
                     </div>
             </div>
             
@@ -74,8 +74,8 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
             <div class="bar_share _j_share_father _j_top_share_group" th:if="${sessionUser != 0}">
 
                 <div class="bs_collect " id="likeAddOrDelete">
-                    <a th:if="${strategyLikeEntity == null}" th:onclick="'addLike('+${roadmapStrategy.strategyId}+','+${session.user.userId}+')'" href="javascript:void(0);"  class="aa" ><span></span><strong>点赞</strong></a>
-                    <a th:if="${strategyLikeEntity != null}" th:onclick="'deleteLike('+${strategyLikeEntity.id}+','+${roadmapStrategy.strategyId}+','+${session.user.userId}+')'" href="javascript:void(0);"  class="aa" ><span></span><strong>取消点赞</strong></a>
+                    <a th:if="${travelLikeEntity == null}" th:onclick="'addLike('+${travelEntity.travelId}+','+${session.user.userId}+')'" href="javascript:void(0);"  class="aa" ><span></span><strong>点赞</strong></a>
+                    <a th:if="${travelLikeEntity != null}" th:onclick="'deleteLike('+${travelLikeEntity.likeId}+','+${travelEntity.travelId}+','+${session.user.userId}+')'" href="javascript:void(0);"  class="aa" ><span></span><strong>取消点赞</strong></a>
                 </div>
 
             </div>
@@ -83,16 +83,16 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
 <script>
     var $1=jQuery.noConflict();
-    function addLike(strategyId,userId) {
+    function addLike(travelId,userId) {
 
         $1.ajax({
             type:'post',
-            url:'/strategyLike/save',
+            url:'/travelLike/save',
             cache: false,
-            data:{"strategyId":strategyId,"userId":userId},
+            data:{"travelId":travelId,"userId":userId},
             dataType:'json',
             success:function(data){
-                $1("#likeAddOrDelete").html(' <a onclick="deleteLike('+data+','+strategyId+','+userId+')" href="javascript:void(0);"  class="aa" ><span></span><strong>取消点赞</strong></a>');
+                $1("#likeAddOrDelete").html(' <a onclick="deleteLike('+data+','+travelId+','+userId+')" href="javascript:void(0);"  class="aa" ><span></span><strong>取消点赞</strong></a>');
             },
             error:function(){
                 alert("请求失败")
@@ -101,22 +101,19 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
 
     }
 
-    function deleteLike(id,strategyId,userId) {
+    function deleteLike(id,travelId,userId) {
 
         $1.ajax({
             type:'get',
-            url:'/strategyLike/del',
+            url:'/travelLike/del',
             cache: false,
-            data:{"id":id},
+            data:{"likeId":id},
             dataType:'json',
             success:function(data){
-                $1("#likeAddOrDelete").html(' <a onclick="addLike('+strategyId+','+userId+')" href="javascript:void(0);"   class="aa" ><span></span><strong>点赞</strong></a>');
-            },
-            error:function(){
-                alert("请求失败")
-            }
-        })
 
+            }
+        });
+        $1("#likeAddOrDelete").html(' <a onclick="addLike('+travelId+','+userId+')" href="javascript:void(0);"   class="aa" ><span></span><strong>点赞</strong></a>');
     }
 
 </script>
@@ -132,20 +129,10 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
     <a href="" title="去看看" class="noticeUrl" target="_blank">去看看&gt;</a>
     <a href="javascript:;" class="close noticeClose" title="不再显示">不再显示</a>
 </div>
-                                <div class="travel_directory _j_exscheduleinfo">
-        <div class="tarvel_dir_list clearfix">
-            <ul>
-                               <!-- <li class="time">出发时间<span>/</span>2019-01-30<i></i></li>-->
-                                                <li class="day">出行天数<span>/</span>[[${roadmapStrategy.playDay}]] 天</li>
-                                            <!--    <li class="people">人物<span>/</span>家庭出游</li>-->
-                                                <li class="cost">费用<span>/</span>[[${roadmapStrategy.priceMin}]]RMB-[[${roadmapStrategy.priceMax}]]</li>
-                            </ul>
-        </div>
-            </div>
 
                 
                 <div class="vc_article">
-                    <div th:utext="${roadmapStrategy.content}">
+                    <div th:utext="${travelEntity.content}">
 
                     </div>
                                       <!-- [[aaaaaaaaaaaaaaaaaaaaaaaaa]]-->
@@ -155,168 +142,6 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
             
             <div id="note-reply-bottomReplyApi" data-api=":note:pagelet:bottomReplyApi" data-controller="/js/note/ControllerReply" data-params="{&quot;iid&quot;:12065706,&quot;page&quot;:1}" class=""><div class="mfw-cmt-wrap" id="_j_top_reply_list">
 	</div>
-<div class="mfw-cmt-wrap" id="_j_reply_list">
-    <input type="hidden" th:id="rowNum" th:value="${strategyCommentList.size()}">
-    <form id="formOne" action="/strategyComment/saveAjaxPid" th:if="${sessionUser != 0}">
-<div class="comment-add clearfix _j_word">
-                        <input type="hidden" name="strategyId" th:value="${roadmapStrategy.strategyId}">
-                        <input type="hidden" name="pid" value="0">
-                        <textarea class="_j_content _j_word_check" name="content"></textarea>
-                        <span class="word-count"><span class="_j_word_num">0</span>/<span class="_j_max_num">600</span> 字</span>
-                        <input class="btn-comment _j_publish_comment" type="button" onclick="requestAsync()" value="回复">
-                    </div>
-    </form>
-					<hr>
-<div id="commentPid">
-	    <div class="mfw-cmt _j_reply_item"  data-rid="126114298" th:each="commentList,stat : ${strategyCommentList}" >
-        <div class="mcmt-info">
-           <!-- <div class="mcmt-photo">
-                <a href="/u/57385149.html" title="银发魔男" target="_blank">
-                    <img src="https://b1-q.mafengwo.net/s13/M00/B3/78/wKgEaVy4eYyAO0IsAACpTD8s_Ws40.jpeg?imageMogr2%2Fthumbnail%2F%2148x48r%2Fgravity%2FCenter%2Fcrop%2F%2148x48%2Fquality%2F90" width="48" height="48" alt="银发魔男">
-                </a>
-			</div>-->
-			<div class="mcmt-user">
-				<a th:href="'/user/detail?userId='+${userEntity.userId}" target="_blank" class="name">[[${commentList.username1}]] &nbsp;&nbsp;[[${#dates.format(commentList.createTime, 'yyyy-MM-dd HH:mm:ss')}]]</a>
-                				<!--<a href="/user/lv.php" class="level">LV.28</a>
-							 <a href="javascript:void(0);" class="per_attention" data-japp="following" data-uid="57385149" data-follow_class="hide">-->
-                    </a>
-                			</div>
-			<div class="mcmt-other">
-								
-				<span class="floor">[[${stat.count}]]F</span>
-			</div>
-        </div> 
-		<div class="mcmt-con-wrap clearfix">
-			<div class="mcmt-con" th:id="'commentAdd'+${commentList.id}">
-				<!--<div class="mcmt-quote">
-									<p>引用 一笑 发表于 2020-11-10 00:41:42 的回复：</p>
-					<p>游记很丰富<img src="https://images.mafengwo.net/images/i/face/daily_v2/28@2x.png" style="width:23px;">请问永安寺壁画保留情况如何？值得一看不？</p>
-								</div>-->
-                <div class="mcmt-word" >
-                    <p class="_j_reply_content"  >评论：<span th:text="${commentList.content}">保存情况还可以，没必要特意跑一趟去看，去悬空寺的时候顺路看看</span> &nbsp;<a  th:if="${sessionUser != 0  }"  th:data-id="${commentList.id}" onclick="showAndComment(this.getAttribute('data-id'))" title="回复">回复</a></p>
-                    <form th:id="'formOne'+${commentList.id}" style="display:none;" action="/strategyComment/saveAjaxPid" th:if="${sessionUser != 0 }">
-                        <div class="comment-add clearfix _j_word">
-                            <input type="hidden" name="strategyId" th:value="${roadmapStrategy.strategyId}">
-                            <input type="hidden" name="pid" th:value="${commentList.id}">
-                            <input type="hidden" name="sendUserId" th:value="${session.user.userId}">
-                            <textarea class="_j_content _j_word_check" name="content" style="width: 456px"></textarea>
-                            <span class="word-count"><span class="_j_word_num">0</span>/<span class="_j_max_num">600</span> 字</span>
-                            <input class="btn-comment _j_publish_comment" type="button" th:onclick="'requestAsync1('+${commentList.id}+')'" value="回复">
-                        </div>
-                    </form>
-                </div>
-				<div class="mcmt-word" th:each="childList : ${commentList.childList}" th:id="'ch'+${childList.id}">
-					<p class="_j_reply_content" th:id="'commentShow'+${commentList.id}">[[${childList.username1}]]评论[[${childList.username2}]]：[[${childList.content}]] &nbsp;<a th:if="${sessionUser != 0  }" th:data-id="${childList.id}" onclick="showAndComment(this.getAttribute('data-id'))"  title="回复">回复</a></p>
-                    <form th:id="'formOne'+${childList.id}" style="display:none;" action="/strategyComment/saveAjaxPid" th:if="${sessionUser!= 0  }">
-                        <div class="comment-add clearfix _j_word">
-                            <input type="hidden" name="strategyId" th:value="${roadmapStrategy.strategyId}">
-                            <input type="hidden" name="pid" th:value="${commentList.id}">
-                            <input type="hidden" name="sendUserId" th:value="${session.user.userId}">
-                            <textarea class="_j_content _j_word_check" name="content" style="width: 456px"></textarea>
-                            <span class="word-count"><span class="_j_word_num">0</span>/<span class="_j_max_num">600</span> 字</span>
-                            <input class="btn-comment _j_publish_comment" type="button" th:onclick="'requestAsync1('+${childList.id}+')'" value="回复">
-                        </div>
-                    </form>
-				</div>
-			</div>
-            
-            <div class="mcmt-tag">
-                                                                </div>
-		</div>
-
-    </div>
-</div>
-	</div>
-
-
-
-<script>
-
-    function showAndComment(id) {
-        var aa = "#formOne"+id;
-        $(aa).css('display','block');
-
-
-    }
-
-    var rowNum = $("#rowNum").val()+1;
-    function requestAsync() {
-    alert($("#formOne").serialize());
-        $.ajax({
-            type:'post',
-            url:'/strategyComment/saveAjaxPid',
-            cache: false,
-            data: $("#formOne").serialize(),
-            dataType:'json',
-            success:function(res){
-                var data = res.data;
-                $("#commentPid").append('<div class="mfw-cmt _j_reply_item"  data-rid="126114298"  > ' +
-                    '                    <div class="mcmt-info">\n' +
-                    '                      \n' +
-                    '                        <div class="mcmt-user">\n' +
-                    '                            <a href="/u/57385149.html" target="_blank" class="name">'+data.username1+' &nbsp;&nbsp;&nbsp;'+data.createTime+'</a>\n' +
-                    '                            </a>\n' +
-                    '                        </div>\n' +
-                    '                        <div class="mcmt-other">\n' +
-                    '\n' +
-                    '                            <span class="floor">'+rowNum+'F</span>\n' +
-                    '                        </div>\n' +
-                    '                    </div>\n' +
-                    '                    <div class="mcmt-con-wrap clearfix">\n' +
-                    '                        <div class="mcmt-con">\n' +
-                    '                          \n' +
-                    '                            <div class="mcmt-word" >\n' +
-                    '                                <p class="_j_reply_content" id="commentAdd'+data.id+'" >评论：<span>'+data.content+'</span> &nbsp;<a  onclick="showAndComment('+data.id+')" title="回复">回复</a></p>\n' +
-                    '                            </div>\n' +
-                    '                        </div>\n' +
-                    '                    </div>\n' +
-                    '                </div>')
-                rowNum+=1;
-            },
-            error:function(){
-                alert("请求失败")
-            }
-        })
-    }
-
-    var suser = [[${sessionUser}]];
-    function requestAsync1(id) {
-        var formOne =  '#formOne'+id;
-        $.ajax({
-            type:'post',
-            url:'/strategyComment/saveAjaxPidAndChild',
-            cache: false,
-            data: $(formOne).serialize(),
-            dataType:'json',
-            success:function(res){
-                var data = res.data;
-
-                var commentAdd = "#commentAdd"+id;
-                var html1 = '<div class="mcmt-word" >\n' +
-                    ' <p class="_j_reply_content" >'+data.username1+'评论'+data.username2+'：'+data.content+'</p>&nbsp;';
-
-                    html1 += '<a onclick="showAndComment('+data.id+')" title="回复">回复</a></p>\n';
-
-                   html1+= ' </div>';
-                $(commentAdd).append(html1);
-            },
-            error:function(){
-                alert("请求失败")
-            }
-        })
-
-    }
-
-    function ajaxComment(formId) {
-
-    }
-
-    //展示主评论的回复
-   // var addstrategyId = [[${roadmapStrategy.strategyId}]];
-
-
-
-</script>
 
 </div>
             
@@ -328,29 +153,7 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
         
         
                 
-        <div id="pagelet-block-c255ebf3e6947a68fc7c0f737d4dec11" class="pagelet-block" data-api=":note:pagelet:rightMddApi" data-params="{&quot;iid&quot;:&quot;12065706&quot;}" data-async="1" data-controller="">    <div class="slide-right-container">
-                <div class="relation_mdd">相关目的地：
-                                                                        &nbsp;&nbsp;
-                    <a   target="_blank"  class="_j_mdd_stas" th:each="list : ${roadmapScenicList}" th:href="@{'/roadmap/strategyList?num=1&keyword='+${list.scenicName}}"><span th:text="${list.scenicName}" ></span>&nbsp;<!--山西--></a>
-                                                                                &nbsp;&nbsp;
-
-                                                        </div>
-        <!--<div class="its_others">
-            <div class="mdd_info">
-                &lt;!&ndash;_j_mdd_sta为目的地点击统计，修改注意&ndash;&gt;
-                <a href="/travel-scenic-spot/mafengwo/11241.html" title="大同" class="_j_mdd_stas" target="_blank">
-                    <img src="https://p1-q.mafengwo.net/s9/M00/2B/2D/wKgBs1f6F0iAdBR9AAPmmpuzego60.jpeg?imageMogr2%2Fthumbnail%2F%21200x150r%2Fstrip%2Fgravity%2FCenter%2Fcrop%2F%21200x150%2Fquality%2F90" width="240px" alt="大同">
-                    <i></i>
-                    <strong>大同</strong>
-                </a>
-            </div>
-        </div>
-        <div class="pics_num clearfix">
-            有<strong>181823</strong>张照片<a href="/travel-scenic-spot/mafengwo/11241.html" title="大同" class="view_more _j_mdd_stas" target="_blank"></a>
-        </div>-->
-    </div>
-</div>
-
+  
         
         
         
