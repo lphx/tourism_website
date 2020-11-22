@@ -64,7 +64,7 @@ window.Env = {"mddid":11241,"curr_page":1,"music_url":null,"author_uid":"5738514
             </a>
                 <div class="vc_time">
             <span class="time">[[${#dates.format(travelEntity.createTime, 'yyyy-MM-dd HH:mm:ss')}]]</span>
-                    &nbsp;&nbsp;<a th:if="${sessionUser == travelEntity.userId}" th:href="'/travel/edit?travelId'+${travelEntity.travelId}"><span >编辑</span></a>
+                    &nbsp;&nbsp;<a th:if="${sessionUser == travelEntity.userId}" th:href="'/travel/edit?travelId='+${travelEntity.travelId}"><span >编辑</span></a>
                     </div>
             </div>
             

@@ -60,9 +60,10 @@ window.Env = {"target_uid":62368924,"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"ima
 </div>
                 <ul class="flt2">
                     <li ><a class="tags_link" th:href="'/user/detail?userId='+${userEntity.userId}" >主页</a></li>
-                    <li th:if="${userSession != 0 && session.user.jurisdiction == 1}"><a class="tags_link" th:href="'/user/scenic?userId='+${userEntity.userId}">景点</a></li>
-                    <li class="on"> <a class="tags_link" th:href="'/user/roadmap?userId='+${userEntity.userId}" >线路</a></li>
-                    <li><a class="tags_link" href="/wenda/u/77119521/answer.html" >线路攻略</a></li>
+                    <li class="on" th:if="${userSession != 0 && session.user.jurisdiction == 1}"><a class="tags_link" th:href="'/user/scenic?userId='+${userEntity.userId}">景点</a></li>
+                    <li > <a class="tags_link" th:href="'/user/travel?userId='+${userEntity.userId}" >游记</a></li>
+                    <li > <a class="tags_link" th:href="'/user/roadmap?userId='+${userEntity.userId}" >线路</a></li>
+                    <li><a class="tags_link" th:href="'/user/roadmapStrategy?userId='+${userEntity.userId}" >线路攻略</a></li>
                     </ul>
     </div>
 </div>

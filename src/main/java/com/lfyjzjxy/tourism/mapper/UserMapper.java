@@ -26,7 +26,8 @@ public interface UserMapper{
     /**
      * 添加数据
      */
-    @Insert("INSERT INTO  `user` ( username,password,status,jurisdiction,create_time) VALUES(#{username},#{password},#{status},#{jurisdiction},now())")
+    @Options(useGeneratedKeys = true, keyProperty = "userId",keyColumn="user_id")
+    @Insert("INSERT INTO  `user` ( username,password,status,photo,jurisdiction,create_time) VALUES(#{username},#{password},#{status},#{photo},#{jurisdiction},now())")
     int save(UserEntity userEntity);
 
     /**

@@ -4,12 +4,10 @@ import com.lfyjzjxy.tourism.entity.RoadmapEntity;
 import com.lfyjzjxy.tourism.entity.RoadmapVo;
 import com.lfyjzjxy.tourism.entity.ScenicEntity;
 import com.lfyjzjxy.tourism.entity.UserEntity;
-import com.lfyjzjxy.tourism.service.RoadmapService;
-import com.lfyjzjxy.tourism.service.RoadmapStrategyService;
-import com.lfyjzjxy.tourism.service.ScenicService;
-import com.lfyjzjxy.tourism.service.UserService;
+import com.lfyjzjxy.tourism.service.*;
 import com.lfyjzjxy.tourism.util.RequestUtil;
 import com.lfyjzjxy.tourism.vo.RoadmapStrategyVo;
+import com.lfyjzjxy.tourism.vo.TravelVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +35,9 @@ public class UserController {
 
     @Autowired
     RoadmapStrategyService roadmapStrategyService;
+
+    @Autowired
+    TravelService travelService;
 
 
 
@@ -97,6 +98,30 @@ public class UserController {
         model.addAttribute("userSession",userSession);
         model.addAttribute("userEntity",userEntity);
         return "user/scenic";
+    }
+
+    @GetMapping("/user/travel")
+    public String travel(Integer userId, Model model,HttpServletRequest request){
+        UserEntity userEntity = userService.findOne(userId);
+
+        List<TravelVo> travelList = travelService.findAllListByUser(userId);
+        Integer userSession = RequestUtil.getSession(request)==null?0: RequestUtil.getSession(request).getUserId();
+        model.addAttribute("travelList",travelList);
+        model.addAttribute("userSession",userSession);
+        model.addAttribute("userEntity",userEntity);
+        return "user/travel";
+    }
+
+    @GetMapping("/user/roadmapStrategy")
+    public String roadmapStrategy(Integer userId, Model model,HttpServletRequest request){
+        UserEntity userEntity = userService.findOne(userId);
+
+        List<RoadmapStrategyVo> roadmapStrategyList = roadmapStrategyService.findByUser(userId);
+        Integer userSession = RequestUtil.getSession(request)==null?0: RequestUtil.getSession(request).getUserId();
+        model.addAttribute("roadmapStrategyList",roadmapStrategyList);
+        model.addAttribute("userSession",userSession);
+        model.addAttribute("userEntity",userEntity);
+        return "user/roadmapStrategy";
     }
 
 }

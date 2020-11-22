@@ -51,6 +51,11 @@ public class TravelServiceImpl implements TravelService {
 
     }
 
+    @Override
+    public List<TravelVo> findAllListByUser(Integer userId) {
+        return travelMapper.findAllListByUser(userId);
+    }
+
 }
 
 

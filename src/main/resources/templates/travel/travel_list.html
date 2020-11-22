@@ -63,9 +63,10 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
 </div>
 
 <script>
-    var keyword = $("#keyword").val();
+
     function searchTravel(num) {
-        window.location.href = "travel/list?keyword="+keyword+"&num="+num;
+        var keyword = $("#keyword").val();
+        window.location.href = "/travel/list?keyword="+keyword+"&num="+num;
     }
 
 </script>
@@ -79,14 +80,14 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
     <div class="navbar clearfix">
         <ul class="tn-nav" id="_j_tn_nav">
             
-            <li class="active _j_gs_tab tn-nav-hot">
-                <a href="javascript:void(0);" rel="nofollow" data-type="0" data-objid="0">热门游记</a>
+            <li th:classappend="${num==2} ? 'active _j_gs_tab tn-nav-hot':'_j_gs_tab tn-nav-hot'" class="">
+                <a href="javascript:void(0);" onclick="searchTravel(2)" rel="nofollow" data-type="0" data-objid="0">热门游记</a>
 
-                            <li class="_j_gs_tab tn-nav-new">
-                <a href="javascript:void(0);" rel="nofollow" data-type="7">最新发表</a>
+                            <li th:classappend="${num==1} ? 'active _j_gs_tab tn-nav-new':'_j_gs_tab tn-nav-new'" class="">
+                <a href="javascript:void(0);" onclick="searchTravel(1)" rel="nofollow" data-type="7">最新发表</a>
             </li>
         </ul>
-        <div class="tn-write"><a class="btn-add" href="/note/create_index.php" target="_blank" rel="nofollow"><i></i>写游记</a>
+        <div class="tn-write"><a class="btn-add" href="/travel/add" target="_blank" rel="nofollow"><i></i>写游记</a>
         </div>
         
     </div>
@@ -97,10 +98,10 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
     
     <div id="pagelet-block-895b2a9103ed3252e3947b15cfb081de" class="pagelet-block" data-api=":note:pagelet:recommendNoteApi" data-params="{&quot;type&quot;:&quot;0&quot;}" data-async="1" data-controller="/js/index/ControllerRecommend"><div id="_j_tn_content">
     <div class="tn-list">
-                 <div class="tn-item clearfix">
+                 <div class="tn-item clearfix" th:each="list : ${list}">
                     <div class="tn-image">
-                        <a href="/i/21175327.html" target="_blank">
-                                                            <img class="" data-src="https://p1-q.mafengwo.net/s17/M00/A5/35/CoUBXl-zYdSAOLS6AA2DSSrX6DE489.jpg?imageMogr2%2Fthumbnail%2F%21220x150r%2Fstrip%2Fgravity%2FCenter%2Fcrop%2F%21220x150%2Fquality%2F90" data-rt-src="https://p1-q.mafengwo.net/s17/M00/A5/35/CoUBXl-zYdSAOLS6AA2DSSrX6DE489.jpg?imageMogr2%2Fthumbnail%2F%21440x300r%2Fstrip%2Fgravity%2FCenter%2Fcrop%2F%21440x300%2Fquality%2F90" src="https://p1-q.mafengwo.net/s17/M00/A5/35/CoUBXl-zYdSAOLS6AA2DSSrX6DE489.jpg?imageMogr2%2Fthumbnail%2F%21220x150r%2Fstrip%2Fgravity%2FCenter%2Fcrop%2F%21220x150%2Fquality%2F90" style="display: inline;">
+                        <a href="/i/21175327.html" th:href="'/travel/detail?travelId='+${list.travelId}" target="_blank">
+                                                            <img th:src="${list.picture}" class="" data-src="https://p1-q.mafengwo.net/s17/M00/A5/35/CoUBXl-zYdSAOLS6AA2DSSrX6DE489.jpg?imageMogr2%2Fthumbnail%2F%21220x150r%2Fstrip%2Fgravity%2FCenter%2Fcrop%2F%21220x150%2Fquality%2F90" data-rt-src="https://p1-q.mafengwo.net/s17/M00/A5/35/CoUBXl-zYdSAOLS6AA2DSSrX6DE489.jpg?imageMogr2%2Fthumbnail%2F%21440x300r%2Fstrip%2Fgravity%2FCenter%2Fcrop%2F%21440x300%2Fquality%2F90" src="https://p1-q.mafengwo.net/s17/M00/A5/35/CoUBXl-zYdSAOLS6AA2DSSrX6DE489.jpg?imageMogr2%2Fthumbnail%2F%21220x150r%2Fstrip%2Fgravity%2FCenter%2Fcrop%2F%21220x150%2Fquality%2F90" style="display: inline;">
                             
                             
                         </a>
@@ -108,22 +109,21 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
                     <div class="tn-wrapper">
                         <dl>
                             <dt>
-                                                                <a class="tn-from-app" href="javascript:void(0);"><i></i>APP<img src="//b2-q.mafengwo.net/s12/M00/6E/DD/wKgED1uu232AMKEvAAAz-ljBM0k929.png"></a>
-                                                                <a href="/i/21175327.html" target="_blank">北京3日秋游-故宫/慕田峪长城/天坛/地坛/五道营胡同/雍和宫</a>
+                                  <a href="/i/21175327.html" th:href="'/travel/detail?travelId='+${list.travelId}" target="_blank"><span th:text="${list.title}"></span></a>
                             </dt>
                             <dd>
-                                <a href="/i/21175327.html" target="_blank">2020庚子鼠年，全世界日子似乎都过的不太好，然而不知不觉也过了这么快一年，好像也渐渐习惯这种略受束缚的日子。连今年每次旅行前两周小范围的疫情风波的这种不确定性，都似乎成为了常态，...</a>
+                                <a href="/i/21175327.html" th:href="'/travel/detail?travelId='+${list.travelId}" target="_blank"><span th:text="${list.shortContent}"></span>...</a>
                             </dd>
                                                     </dl>
                         <div class="tn-extra">
 
                                                 <span class="tn-user">
-                        <a href="/u/41427913.html" target="_blank" rel="nofollow">
-                            <img src="https://b1-q.mafengwo.net/s11/M00/17/8E/wKgBEFrPcMCAR5ReAABueIvQnDI30.jpeg?imageMogr2%2Fthumbnail%2F%2116x16r%2Fgravity%2FCenter%2Fcrop%2F%2116x16%2Fquality%2F90">
-                            Elie
+                        <a href="/u/41427913.html" target="_blank" rel="nofollow" th:href="'/user/detail?userId='+${list.userId}">
+                            <img th:src="${list.photo}" src="https://b1-q.mafengwo.net/s11/M00/17/8E/wKgBEFrPcMCAR5ReAABueIvQnDI30.jpeg?imageMogr2%2Fthumbnail%2F%2116x16r%2Fgravity%2FCenter%2Fcrop%2F%2116x16%2Fquality%2F90">
+                            <!--Elie-->[[${list.username}]]
                         </a>
                     </span>
-                            <!--<span class="tn-nums"><i></i>525/1</span>-->
+                            <span class="tn-nums"><i></i>[[${list.likeNum}]]</span>
                         </div>
                     </div>
                 </div>
@@ -163,13 +163,13 @@ window.Env = {"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_H
 
                             
             </div>
-    <div align="right" class="m-pagination" id="_j_tn_pagination" data-type="0" data-objid="0">
+   <!-- <div align="right" class="m-pagination" id="_j_tn_pagination" data-type="0" data-objid="0">
         <span class="count">共2页 / 24条</span>
                     
                                             <span class="pg-current">1</span>
                                                             <a class="pi _j_pageitem" href="javascript:;" data-page="2" rel="nofollow">2</a>
                                                     <a class="pg-next _j_pageitem" href="javascript:;" data-page="2" rel="nofollow">下一页 &gt;&gt;</a>
-                        </div>
+                        </div>-->
 </div>
 </div>
 </div>

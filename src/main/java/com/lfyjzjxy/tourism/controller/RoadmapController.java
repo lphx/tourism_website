@@ -101,13 +101,19 @@ public class RoadmapController {
     }
 
     @GetMapping("/strategyAdd")
-    public String strategyAdd(Integer roadmapId,Model model){
+    public String strategyAdd(Integer roadmapId,Model model,HttpServletRequest request){
+        if (RequestUtil.getSession(request) == null){
+            return "common/error";
+        }
         model.addAttribute("roadmapId",roadmapId);
         return "personage/strategy_add";
     }
 
     @GetMapping("/strategyEdit")
-    public String strategyEdit(Integer strategyId,Model model){
+    public String strategyEdit(Integer strategyId,Model model,HttpServletRequest request){
+        if (RequestUtil.getSession(request) == null){
+            return "common/error";
+        }
         model.addAttribute("strategyId",strategyId);
         return "personage/strategy_edit";
     }

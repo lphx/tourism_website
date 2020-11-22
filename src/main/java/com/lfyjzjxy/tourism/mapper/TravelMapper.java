@@ -57,15 +57,23 @@ public interface TravelMapper{
     int count();
 
     @Select("<script> "+
-            "SELECT t.travel_id as travelId,t.user_id as userId,t.title as title,t.picture as picture,t.content as content,t.shortContent as shortContent,t.create_time as createTime,t.update_time as updateTime,t.status as status," +
-            "(select count(*) from travel_like tl where tl.travel_id = t.travel_id  ) as LikeNum ," +
+            "SELECT t.travel_id as travelId,t.user_id as userId,t.title as title,t.picture as picture,t.content as content,left(t.shortContent,100) as shortContent,t.create_time as createTime,t.update_time as updateTime,t.status as status," +
+            "(select count(*) from travel_like tl where tl.travel_id = t.travel_id  ) as likeNum  ," +
             "u.username as username,u.photo as photo " +
             " FROM `travel` t " +
             " join `user` u on u.user_id = t.user_id " +
-            "WHERE t.title = '%${keyword}%'" +
+            "WHERE t.title like '%${keyword}%'" +
             "<if test='num == 1'> order by  createTime desc</if> "+
             "<if test='num == 2'> order by  LikeNum desc</if> "+
             "</script> ")
     List<TravelVo> findAllListBySearch(String keyword, Integer num);
+
+    @Select( "SELECT t.travel_id as travelId,t.user_id as userId,t.title as title,t.picture as picture,t.content as content,left(t.shortContent,100) as shortContent,t.create_time as createTime,t.update_time as updateTime,t.status as status," +
+            "(select count(*) from travel_like tl where tl.travel_id = t.travel_id  ) as likeNum  ," +
+            "u.username as username,u.photo as photo " +
+            " FROM `travel` t " +
+            " join `user` u on u.user_id = t.user_id " +
+            "WHERE t.user_id = #{userId} ")
+    List<TravelVo> findAllListByUser(Integer userId);
 }
 

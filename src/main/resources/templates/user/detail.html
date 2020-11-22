@@ -84,14 +84,13 @@ window.Env = {"profileSetting":{"banner_cover":"","banner_cover_url":"","banner_
 
 
 </div>
-                <ul class="flt2">
+        <ul class="flt2">
             <li class="on"><a class="tags_link" th:href="'/user/detail?userId='+${userEntity.userId}" >主页</a></li>
-            <li th:if="${userSession != 0 && session.user.jurisdiction == 1}"><a class="tags_link" th:href="'/user/scenic?userId='+${userEntity.userId}">景点</a></li>
-            <li><a class="tags_link" th:href="'/user/roadmap?userId='+${userEntity.userId}" >线路</a></li>
-            <li><a class="tags_link" href="/wenda/u/77119521/answer.html" >线路攻略</a></li>
-         <!--   <li id="_j_pathnav"><a class="tags_link" href="/path/77119521.html" title="TA的足迹">TA的足迹</a></li>
-                        <li><a class="tags_link" href="/u/77119521/together.html" title="TA的结伴">TA的结伴</a></li>-->
-                    </ul>
+            <li  th:if="${userSession != 0 && session.user.jurisdiction == 1}"><a class="tags_link" th:href="'/user/scenic?userId='+${userEntity.userId}">景点</a></li>
+            <li > <a class="tags_link" th:href="'/user/travel?userId='+${userEntity.userId}" >游记</a></li>
+            <li > <a class="tags_link" th:href="'/user/roadmap?userId='+${userEntity.userId}" >线路</a></li>
+            <li><a class="tags_link" th:href="'/user/roadmapStrategy?userId='+${userEntity.userId}" >线路攻略</a></li>
+        </ul>
     </div>
 </div>
 
@@ -191,7 +190,7 @@ window.Env = {"profileSetting":{"banner_cover":"","banner_cover_url":"","banner_
         <div class="content flt2">
                             <div class="common_block main_links">
                     <ul class="clearfix">
-                       <!-- <li><a href="#" target="_blank"><i class="write_note"></i><span>写游记</span></a></li>-->
+                       <li><a href="/travel/add" target="_blank"><i class="write_note"></i><span>写游记</span></a></li>
                         <li class="last"><a href="/roadmap/add" target="_blank"><i class="invite_friends"></i><span>发布线路</span></a></li>
                     </ul>
                                     </div>

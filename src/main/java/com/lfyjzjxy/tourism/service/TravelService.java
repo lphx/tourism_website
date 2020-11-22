@@ -17,6 +17,8 @@ public interface TravelService{
 
 
     List<TravelVo> findAllListBySearch(String keyword, Integer num);
+
+    List<TravelVo> findAllListByUser(Integer userId);
 }
 
 

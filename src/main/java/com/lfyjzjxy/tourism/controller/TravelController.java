@@ -37,14 +37,17 @@ public class TravelController {
 
     @GetMapping("/add")
     public String add(HttpServletRequest request){
-        /*if (RequestUtil.getSession(request) == null){
+       if (RequestUtil.getSession(request) == null){
             return "common/error";
-        }*/
+        }
         return "travel/travel_add";
     }
 
     @GetMapping("/edit")
-    public String edit(Integer travelId, Model model){
+    public String edit(Integer travelId, Model model,HttpServletRequest request){
+        if (RequestUtil.getSession(request) == null){
+            return "common/error";
+        }
         model.addAttribute("travelId",travelId);
         return "travel/travel_edit";
     }
