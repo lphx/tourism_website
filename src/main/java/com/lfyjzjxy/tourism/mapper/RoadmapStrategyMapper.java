@@ -98,7 +98,7 @@ public interface RoadmapStrategyMapper{
     })
     List<RoadmapStrategyVo> findAllAndScenicAndCommentAmdLikeList(String roadmapIds,String keyword,Integer searchId,Integer page,Integer pageSize);
 
-    @Select("SELECT strategy_id as strategyId,user_id as userId,roadmap_id as roadmapId,title as title,content as content,head_img as headImg,price_max as priceMax,price_min as priceMin,play_day as playDay, traffic as  traffic,state as state,create_time as createTime,left(short_content,100) as shortContent FROM `roadmap_strategy` WHERE user_id = #{userId}")
+    @Select("SELECT strategy_id as strategyId,user_id as userId,roadmap_id as roadmapId,title as title,content as content,head_img as headImg,price_max as priceMax,price_min as priceMin,play_day as playDay, traffic as  traffic,state as state,create_time as createTime,left(short_content,100) as shortContent FROM `roadmap_strategy` WHERE state = 1 and user_id = #{userId}")
     List<RoadmapStrategyVo> findByUser(Integer userId);
 }
 

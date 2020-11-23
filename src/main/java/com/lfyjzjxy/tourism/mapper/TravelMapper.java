@@ -62,7 +62,7 @@ public interface TravelMapper{
             "u.username as username,u.photo as photo " +
             " FROM `travel` t " +
             " join `user` u on u.user_id = t.user_id " +
-            "WHERE t.title like '%${keyword}%'" +
+            "WHERE t.title like '%${keyword}%' and t.status =1 " +
             "<if test='num == 1'> order by  createTime desc</if> "+
             "<if test='num == 2'> order by  LikeNum desc</if> "+
             "</script> ")
@@ -73,7 +73,7 @@ public interface TravelMapper{
             "u.username as username,u.photo as photo " +
             " FROM `travel` t " +
             " join `user` u on u.user_id = t.user_id " +
-            "WHERE t.user_id = #{userId} ")
+            "WHERE t.user_id = #{userId} and t.status =1  ")
     List<TravelVo> findAllListByUser(Integer userId);
 }
 
