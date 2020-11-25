@@ -19,6 +19,12 @@ public interface TravelService{
     List<TravelVo> findAllListBySearch(String keyword, Integer num);
 
     List<TravelVo> findAllListByUser(Integer userId);
+
+    List<TravelEntity> findDataTokeywordAndStatus(String keyword, Integer status);
+
+    void removeAll(String ids);
+
+    void updateState(String ids, Integer status);
 }
 
 

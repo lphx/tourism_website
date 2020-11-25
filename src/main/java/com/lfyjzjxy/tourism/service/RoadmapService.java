@@ -21,6 +21,12 @@ public interface RoadmapService{
     List<RoadmapVo> findAllAndScnicList(Integer num, String keyword,Integer searchId,Integer page,Integer pageSize);
 
     List<RoadmapVo> findByUser(Integer userId);
+
+    void updateState(String ids, Integer status);
+
+    void removeAll(String ids);
+
+    List<RoadmapEntity> findDataTokeywordAndStatus(String keyword, Integer status);
 }
 
 

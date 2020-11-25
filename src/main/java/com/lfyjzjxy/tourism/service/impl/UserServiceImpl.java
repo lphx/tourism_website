@@ -56,6 +56,36 @@ public class UserServiceImpl implements UserService {
         return userMapper.findUsername(username);
     }
 
+    @Override
+    public List<UserEntity> findDataTokeywordAndState(String keyword, Integer state) {
+        return userMapper.findDataTokeywordAndState(keyword,state);
+    }
+
+    @Override
+    public void removeAll(String ids) {
+        String[] muchId = ids.split(",");
+        for(int i = 0 ; i < muchId.length ; i ++){
+            //逻辑删除
+            userMapper.updateState(Integer.parseInt(muchId[i]),2);
+        }
+    }
+
+    @Override
+    public void updateState(String ids,Integer state) {
+        String[] muchId = ids.split(",");
+        for(int i = 0 ; i < muchId.length ; i ++){
+            userMapper.updateState(Integer.parseInt(muchId[i]),state);
+        }
+    }
+
+    @Override
+    public void updateJurisdiction(String ids, Integer jurisdiction) {
+        String[] muchId = ids.split(",");
+        for(int i = 0 ; i < muchId.length ; i ++){
+            userMapper.updateJurisdiction(Integer.parseInt(muchId[i]),jurisdiction);
+        }
+    }
+
 }
 
 

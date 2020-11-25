@@ -17,6 +17,14 @@ public interface UserService{
     UserEntity findOneUser(UserEntity userEntity);
 
     UserEntity findUsername(String username);
+
+    List<UserEntity> findDataTokeywordAndState(String keyword, Integer state);
+
+    void removeAll(String ids);
+
+    void updateState(String ids, Integer state);
+
+    void updateJurisdiction(String ids, Integer jurisdiction);
 }
 
 

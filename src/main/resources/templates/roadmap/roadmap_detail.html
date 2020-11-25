@@ -60,7 +60,7 @@ window.Env = {"id":21145651,"share_info":{"share_title":"\u65c5\u6e38\u8bdd\u989
 <div class="event-joined m_b_30">
 
     <div class="tit" id="userStatus">
-        <span th:if="${userIdStatus == 0}"><a th:onclick="addRoadmap([[${roadmapVo.roadmapId}]],[[${roadmapVo.status}]],[[${userId}]])">点击报名</a></span>
+        <span th:if="${userIdStatus == 0}"><a th:onclick="addRoadmap([[${roadmapVo.roadmapId}]],[[${roadmapVo.status1}]],[[${userId}]])">点击报名</a></span>
         <span th:if="${userIdStatus == 1}">已报名</span>
     </div>
     <div class="joined">
@@ -81,7 +81,7 @@ window.Env = {"id":21145651,"share_info":{"share_title":"\u65c5\u6e38\u8bdd\u989
                         <img th:src="${list.photo}" th:alt="${list.username}"><span class="name" th:text="${list.username}">攸声旅游</span>
                     </a>
                 </td>
-                <td class="num" ><span th:if="${list.userId == userId}" ><a th:onclick="deleteRoadmap([[${list.id}]],[[${roadmapVo.roadmapId}]],[[${roadmapVo.status}]],[[${userId}]])">取消加入</a></span></td>
+                <td class="num" ><span th:if="${list.userId == userId}" ><a th:onclick="deleteRoadmap([[${list.id}]],[[${roadmapVo.roadmapId}]],[[${roadmapVo.status1}]],[[${userId}]])">取消加入</a></span></td>
 
             </tr>
             <!--<tr>
@@ -115,14 +115,14 @@ window.Env = {"id":21145651,"share_info":{"share_title":"\u65c5\u6e38\u8bdd\u989
 
 
 <script>
-    function deleteRoadmap(id,roadmapId,status,userId) {
+    function deleteRoadmap(id,roadmapId,status1,userId) {
         $.ajax({
             type:'delete',
             url:'/roadmapUser/remove?id='+id,
             success:function(data){
                 $("#"+id).remove();
                 $("#userStatus").empty();
-                $("#userStatus").html("<span><a onclick='addRoadmap("+roadmapId+","+status+","+userId+")'>点击报名</a></span>");
+                $("#userStatus").html("<span><a onclick='addRoadmap("+roadmapId+","+status1+","+userId+")'>点击报名</a></span>");
             },
             error:function(){
                 alert("delete请求失败")
@@ -131,7 +131,7 @@ window.Env = {"id":21145651,"share_info":{"share_title":"\u65c5\u6e38\u8bdd\u989
 
 
     }
-    function addRoadmap(id,status,userId) {
+    function addRoadmap(id,status1,userId) {
         if (userId == 0){
             alert("请先登录");
             return;
@@ -140,7 +140,7 @@ window.Env = {"id":21145651,"share_info":{"share_title":"\u65c5\u6e38\u8bdd\u989
             type:'post',
             url:'/roadmapUser/save',
             cache: false,
-            data:{"roadmapId":id,"status":status},
+            data:{"roadmapId":id,"status1":status1},
             dataType:'json',
             success:function(data){
                 $("#userStatus").empty();
@@ -151,7 +151,7 @@ window.Env = {"id":21145651,"share_info":{"share_title":"\u65c5\u6e38\u8bdd\u989
                     "                        <img src='"+data.photo+"'><span class=\"name\" >"+data.username+"</span>\n" +
                     "                    </a>\n" +
                     "                </td>\n" +
-                    "                <td class=\"num\" ><span ><a onclick=\"deleteRoadmap("+data.id+","+data.status+","+data.userId+")\">取消加入</a></span></td> " +
+                    "                <td class=\"num\" ><span ><a onclick=\"deleteRoadmap("+data.id+","+data.status1+","+data.userId+")\">取消加入</a></span></td> " +
                     "            </tr>")
             },
             error:function(){

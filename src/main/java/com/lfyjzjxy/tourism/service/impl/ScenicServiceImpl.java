@@ -90,6 +90,29 @@ public class ScenicServiceImpl implements ScenicService {
         return scenicMapper.findScenicByProvince(pid,cid);
     }
 
+    @Override
+    public void removeAll(String ids) {
+        String[] muchId = ids.split(",");
+        for(int i = 0 ; i < muchId.length ; i ++){
+            //逻辑删除
+            scenicMapper.updateState(Integer.parseInt(muchId[i]),3);
+        }
+    }
+
+    @Override
+    public void updateState(String ids, Integer status) {
+        String[] muchId = ids.split(",");
+        for(int i = 0 ; i < muchId.length ; i ++){
+            //逻辑删除
+            scenicMapper.updateState(Integer.parseInt(muchId[i]),status);
+        }
+    }
+
+    @Override
+    public List<ScenicEntity> findDataTokeywordAndStatus(String keyword, Integer status) {
+        return scenicMapper.findDataTokeywordAndStatus(keyword,status);
+    }
+
 }
 
 

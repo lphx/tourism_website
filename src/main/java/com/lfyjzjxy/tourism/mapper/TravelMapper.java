@@ -75,5 +75,15 @@ public interface TravelMapper{
             " join `user` u on u.user_id = t.user_id " +
             "WHERE t.user_id = #{userId} and t.status =1  ")
     List<TravelVo> findAllListByUser(Integer userId);
+
+    @Select("<script>" +
+            "SELECT travel_id as travelId,user_id as userId,title as title,picture as picture,content as content,shortContent as shortContent,create_time as createTime,update_time as updateTime,status as status " +
+            "FROM `travel` WHERE   title like '%${keyword}%'" +
+            "<if test='status != null'> and status in(#{status}) </if> " +
+            "</script>")
+    List<TravelEntity> findDataTokeywordAndStatus(String keyword, Integer status);
+
+    @Update("UPDATE `travel` set status=#{status},update_time=now() where travel_id = #{travelId}")
+    void updateState(int travelId, int status);
 }
 

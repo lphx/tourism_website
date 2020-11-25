@@ -87,7 +87,7 @@ window.Env = {"qa_page":"index","WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.
                  </div>
                  <div class="user-info">
                      <a class="name _j_filter_click" th:href="'/user/detail?userId='+${roadmapList.userId}" target="_blank">[[${roadmapList.username}]]</a>
-                     <span class="name level _j_filter_click"  target="_blank">[[${roadmapList.status == 1?'结伴中':'结伴结束'}]]</span>
+                     <span class="name level _j_filter_click"  target="_blank">[[${roadmapList.status1 == 1?'结伴中':'结伴结束'}]]</span>
                  </div>
                  <div class="desc clearfix">
                      <a th:href="@{'/roadmap/detail?roadmapId='+${roadmapList.roadmapId}}" target="_blank" style="color: #666;">

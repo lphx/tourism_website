@@ -1,8 +1,12 @@
 package com.lfyjzjxy.tourism.api;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lfyjzjxy.tourism.entity.RoadmapEntity;
 import com.lfyjzjxy.tourism.entity.RoadmapVo;
+import com.lfyjzjxy.tourism.entity.ScenicEntity;
 import com.lfyjzjxy.tourism.service.RoadmapScenicService;
 import com.lfyjzjxy.tourism.service.RoadmapService;
 import com.lfyjzjxy.tourism.service.RoadmapUserService;
@@ -14,7 +18,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -86,6 +92,37 @@ public class RoadmapApi {
         return HttpCode.success(jsonObject);
     }
 
+
+    @GetMapping("/search")
+    public Map<String,Object> listStrategy(
+            @RequestParam(value="keyword",required=false,defaultValue="" ) String keyword,
+            @RequestParam(value="status",required=false,defaultValue="" ) Integer status,
+            @RequestParam(value="pageCount",required=false,defaultValue="10") int pageCount,
+            @RequestParam(value="pageSize",required=false,defaultValue="1") int pageSize,
+            Model model) {
+        Page<?> page = PageHelper.startPage(pageSize, pageCount);
+        List<RoadmapEntity> dataTokeywordAndState = roadmapService.findDataTokeywordAndStatus(keyword, status);
+        PageInfo<?> pageInfo = page.toPageInfo();
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("code",0);
+        map.put("count",pageInfo.getTotal());
+        map.put("data",dataTokeywordAndState);
+        return map;
+
+    }
+
+    @DeleteMapping("/removeAll")
+    public String removeAll(String ids) {
+        roadmapService.removeAll(ids);
+        return "success";
+    }
+
+    @PutMapping("/updateStatus")
+    public String updateState(String ids,Integer status){
+        roadmapService.updateState(ids,status);
+        return "success";
+    }
 
 }
 

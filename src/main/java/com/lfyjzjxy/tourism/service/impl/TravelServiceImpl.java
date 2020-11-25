@@ -56,6 +56,28 @@ public class TravelServiceImpl implements TravelService {
         return travelMapper.findAllListByUser(userId);
     }
 
+    @Override
+    public List<TravelEntity> findDataTokeywordAndStatus(String keyword, Integer status) {
+        return travelMapper.findDataTokeywordAndStatus(keyword,status);
+    }
+
+    @Override
+    public void removeAll(String ids) {
+        String[] muchId = ids.split(",");
+        for(int i = 0 ; i < muchId.length ; i ++){
+            //逻辑删除
+            travelMapper.updateState(Integer.parseInt(muchId[i]),3);
+        }
+    }
+
+    @Override
+    public void updateState(String ids, Integer status) {
+        String[] muchId = ids.split(",");
+        for(int i = 0 ; i < muchId.length ; i ++){
+            travelMapper.updateState(Integer.parseInt(muchId[i]),status);
+        }
+    }
+
 }
 
 

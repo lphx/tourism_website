@@ -66,7 +66,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">状态</label>
                     <div class="layui-input-inline">
-                        <select name="status" id="status"    lay-filter="status">
+                        <select name="status1" id="status1"    lay-filter="status1">
                             <option value="0">起草</option>
                             <option value="1">结伴中</option>
                             <option value="2">结伴结束</option>
@@ -137,7 +137,7 @@
                             $('#title').val(result.title);
                             $('#picture').val(result.picture);
                             $('#demo2').html('<img src="'+ result.picture +'"  class="gl_list">')
-                            $("#status option[value='" + result.status + "']").attr("selected", "selected");
+                            $("#status1 option[value='" + result.status1 + "']").attr("selected", "selected");
                             //$('#content').val(result.content);
                             //这个监听器是亮点
                             ueditor.addListener('ready', function () {

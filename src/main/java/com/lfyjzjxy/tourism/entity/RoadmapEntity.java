@@ -21,6 +21,7 @@ public class RoadmapEntity {
     private String picture;
 
     private Integer status;
+    private Integer status1;
 
     private Date createTime;
     

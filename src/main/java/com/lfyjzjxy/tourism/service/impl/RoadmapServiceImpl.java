@@ -126,6 +126,29 @@ public class RoadmapServiceImpl implements RoadmapService {
         return roadmapMapper.findByUser(userId);
     }
 
+    @Override
+    public void updateState(String ids, Integer status) {
+        String[] muchId = ids.split(",");
+        for(int i = 0 ; i < muchId.length ; i ++){
+            //逻辑删除
+            roadmapMapper.updateState(Integer.parseInt(muchId[i]),status);
+        }
+    }
+
+    @Override
+    public void removeAll(String ids) {
+        String[] muchId = ids.split(",");
+        for(int i = 0 ; i < muchId.length ; i ++){
+            //逻辑删除
+            roadmapMapper.updateState(Integer.parseInt(muchId[i]),3);
+        }
+    }
+
+    @Override
+    public List<RoadmapEntity> findDataTokeywordAndStatus(String keyword, Integer status) {
+        return roadmapMapper.findDataTokeywordAndStatus(keyword,status);
+    }
+
 
 }
 

@@ -26,6 +26,7 @@ public class RoadmapVo {
 
     private String picture;
 
+    private Integer status1;
     private Integer status;
 
     private Integer userNum;
@@ -39,13 +40,13 @@ public class RoadmapVo {
     private List<RoadmapScenicVo> roadmapScenicList;
 
     public String getStatusName(){
-        if (this.status == 1){
+        if (this.status1 == 1){
             return "结伴中";
-        }else if(this.status == 2){
+        }else if(this.status1 == 2){
             return "结伴结束";
-        }else if(this.status == 3){
+        }else if(this.status1 == 3){
             return "旅行结束";
-        }else if(this.status == 4){
+        }else if(this.status1 == 4){
             return "取消";
         }else{
             return "起草";

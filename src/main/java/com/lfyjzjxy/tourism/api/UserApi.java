@@ -1,11 +1,15 @@
 package com.lfyjzjxy.tourism.api;
 
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lfyjzjxy.tourism.service.UserService;
 import com.lfyjzjxy.tourism.entity.UserEntity;
 import com.lfyjzjxy.tourism.util.HttpCode;
 import com.lfyjzjxy.tourism.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -68,7 +72,7 @@ public class UserApi {
     public HttpCode findByUsernameAndPassword(UserEntity userEntity,HttpServletRequest request) {
         //按照账号和密码去查询，null表示用户不存在，不允许登录
         UserEntity oneUser = userService.findOneUser(userEntity);
-        if (null == oneUser){
+        if (null == oneUser || oneUser.getStatus() != 1){
             return new HttpCode(500,"账号或者密码错误",null);
         }
 
@@ -77,6 +81,42 @@ public class UserApi {
         return new HttpCode(200,"",null);
     }
 
+    @GetMapping("/search")
+    public Map<String,Object> listStrategy(
+            @RequestParam(value="keyword",required=false,defaultValue="" ) String keyword,
+            @RequestParam(value="status",required=false,defaultValue="" ) Integer status,
+            @RequestParam(value="pageCount",required=false,defaultValue="10") int pageCount,
+            @RequestParam(value="pageSize",required=false,defaultValue="1") int pageSize,
+            Model model) {
+        Page<?> page = PageHelper.startPage(pageSize, pageCount);
+        List<UserEntity> dataTokeywordAndState = userService.findDataTokeywordAndState(keyword, status);
+        PageInfo<?> pageInfo = page.toPageInfo();
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("code",0);
+        map.put("count",pageInfo.getTotal());
+        map.put("data",dataTokeywordAndState);
+        return map;
+
+    }
+
+    @DeleteMapping("/removeAll")
+    public String removeAll(String ids) {
+        userService.removeAll(ids);
+        return "success";
+    }
+
+    @PutMapping("/updateStatus")
+    public String updateState(String ids,Integer status){
+        userService.updateState(ids,status);
+        return "success";
+    }
+
+    @PutMapping("/updateJurisdiction")
+    public String updateJurisdiction(String ids,Integer jurisdiction){
+        userService.updateJurisdiction(ids,jurisdiction);
+        return "success";
+    }
 
     private Map<Integer,String> getPhotot(){
         Map<Integer,String> map = new HashMap<>();

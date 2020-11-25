@@ -20,6 +20,7 @@ public class ScenicEntity {
     private Integer provinceId;
 
     private Integer cityId;
+    private Integer status;
 
 
 

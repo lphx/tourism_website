@@ -60,5 +60,19 @@ public interface UserMapper{
 
     @Select("SELECT user_id as userId,username as username,password as password,status as status ,photo as photo, jurisdiction as jurisdiction,create_time as createTime FROM  `user` where username = #{username} ")
     UserEntity findUsername(String username);
+
+
+    @Select("<script>" +
+            "SELECT user_id as userId,username as username,password as password,status as status,photo as photo , jurisdiction as jurisdiction,create_time as createTime " +
+            "FROM `user` WHERE   username like '%${keyword}%'" +
+            "<if test='status != null'> and status in(#{status}) </if> " +
+            "</script>")
+    List<UserEntity> findDataTokeywordAndState(@Param("keyword") String keyword, @Param("status") Integer status);
+
+    @Update("UPDATE `user` set status=#{status} where user_id = #{userId}")
+    void updateState(int userId, Integer status);
+
+    @Update("UPDATE `user` set jurisdiction=#{jurisdiction} where user_id = #{userId}")
+    void updateJurisdiction(int userId, Integer jurisdiction);
 }
 

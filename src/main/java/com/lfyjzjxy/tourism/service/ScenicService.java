@@ -21,6 +21,12 @@ public interface ScenicService{
     List<ScenicVo> findKeywordAndProvince(String keyword, Integer provinceId, Integer cityId);
 
     List<ScenicEntity> findScenicByProvince(Integer pid, Integer cid);
+
+    void removeAll(String ids);
+
+    void updateState(String ids, Integer status);
+
+    List<ScenicEntity> findDataTokeywordAndStatus(String keyword, Integer status);
 }
 
 
